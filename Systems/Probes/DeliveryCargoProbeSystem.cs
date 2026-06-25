@@ -20,6 +20,7 @@
 namespace PublicWorksPlus
 {
     using Colossal.Serialization.Entities;
+    using CS2Shared.RiverMochi;
     using Game;
     using Game.Economy;
     using Game.Prefabs;

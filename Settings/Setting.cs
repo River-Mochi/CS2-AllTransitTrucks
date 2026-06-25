@@ -12,7 +12,9 @@
 namespace PublicWorksPlus
 {
     using System;                   // Exception
+    using System.IO;                // Path
     using Colossal.IO.AssetDatabase; // FileLocation
+    using Colossal.PSI.Environment; // EnvPath
     using CS2Shared.RiverMochi;     // LogUtils, ShellOpen
     using Game;                     // IsGame
     using Game.Modding;             // IMod, ModSetting
@@ -267,7 +269,14 @@ namespace PublicWorksPlus
         [SettingsUISection(AboutTab, DebugGroup)]
         public bool OpenReportButton
         {
-            set => ShellOpen.OpenFolderSafe(ShellOpen.GetModsDataFolder(), "OpenReport");
+            set
+            {
+                if (value)
+                {
+                    string reportFolder = Path.Combine(EnvPath.kUserDataPath, "ModsData", Mod.ModId);
+                    ShellOpen.OpenFolder(reportFolder, "OpenReport");
+                }
+            }
         }
 
         [SettingsUISection(AboutTab, DebugGroup)]
@@ -277,7 +286,13 @@ namespace PublicWorksPlus
         [SettingsUISection(AboutTab, DebugGroup)]
         public bool OpenLogButton
         {
-            set => ShellOpen.OpenFolderSafe(ShellOpen.GetLogsFolder(), "OpenLog");
+            set
+            {
+                if (value)
+                {
+                    ShellOpen.OpenModLogOrLogsFolder();
+                }
+            }
         }
 
         // ------------------------

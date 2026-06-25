@@ -44,6 +44,8 @@ namespace PublicWorksPlus
 
         public void OnLoad(UpdateSystem updateSystem)
         {
+            ShellOpen.Configure(s_Log, ModId, ModTag);
+
             if (!s_BannerLogged)
             {
                 s_BannerLogged = true;

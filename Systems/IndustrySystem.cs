@@ -22,6 +22,7 @@
 namespace PublicWorksPlus
 {
     using Colossal.Serialization.Entities;
+    using CS2Shared.RiverMochi;
     using Game;
     using Game.Common;
     using Game.Companies;

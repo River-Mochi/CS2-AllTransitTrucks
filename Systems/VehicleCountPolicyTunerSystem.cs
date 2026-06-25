@@ -18,6 +18,7 @@ namespace PublicWorksPlus
 {
     using Colossal.Mathematics;              // Bounds1 (min/max float range)
     using Colossal.Serialization.Entities;   // Purpose
+    using CS2Shared.RiverMochi;               // LogUtils
     using Game;                              // GameMode
     using Game.Prefabs;                      // PrefabSystem, UITransportConfiguration*
     using Game.Routes;                       // RouteModifierData, RouteModifierType

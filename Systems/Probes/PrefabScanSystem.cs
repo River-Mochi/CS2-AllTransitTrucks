@@ -16,6 +16,7 @@
 
 namespace PublicWorksPlus
 {
+    using CS2Shared.RiverMochi;
     using Game;
     using Game.Companies;
     using Game.Net;

@@ -16,6 +16,7 @@
 namespace PublicWorksPlus
 {
     using Colossal.Serialization.Entities;
+    using CS2Shared.RiverMochi;
     using Game;
     using Game.Prefabs;
     using Game.SceneFlow;

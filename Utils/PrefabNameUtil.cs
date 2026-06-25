@@ -14,6 +14,7 @@
 
 namespace PublicWorksPlus
 {
+    using CS2Shared.RiverMochi;
     using Game.Prefabs;
     using System;
     using Unity.Entities;

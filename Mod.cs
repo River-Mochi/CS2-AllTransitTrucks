@@ -3,6 +3,8 @@
 
 namespace PublicWorksPlus
 {
+    using System;                         // Exception
+    using System.Reflection;              // Assembly
     using Colossal;                       // IDictionarySource
     using Colossal.IO.AssetDatabase;      // AssetDatabase.LoadSettings
     using Colossal.Localization;          // LocalizationManager
@@ -12,16 +14,14 @@ namespace PublicWorksPlus
     using Game.Prefabs;                    // VehicleCapacitySystem, DeliveryTruckSelectData
     using Game.SceneFlow;                 // GameManager
     using Game.Simulation;                // game ECS systems for ordering hooks
-    using System;                         // Exception
-    using System.Reflection;              // Assembly
 
     /// <summary>Mod entry point: registers settings, locales, and ECS systems.</summary>
     public sealed class Mod : IMod
     {
-        public const string ModName = "Public Works Plus";
-        public const string ShortName = "Public Works +";
-        public const string ModId = "PublicWorksPlus";
-        public const string ModTag = "[PWP]";
+        public const string ModName = "All Transit + Industry";
+        public const string ShortName = "All Transit+Industry";
+        public const string ModId = "AllTransitIndustry";
+        public const string ModTag = "[ATI]";
 
         public static readonly string ModVersion =
             Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";

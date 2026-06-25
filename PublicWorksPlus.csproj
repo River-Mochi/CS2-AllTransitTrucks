@@ -7,8 +7,13 @@
 
         <!-- where Paradox publish metadata lives -->
         <PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>
+        <!-- Path to the PowerShell that syncs PublishConfiguration.xml + mod.json with $(Version). -->
+        <PublishConfigScript>$(MSBuildProjectDirectory)\Scripts\Update-PublishConfig.ps1</PublishConfigScript>
+
+
 
         <!-- Single source of truth for version number -->
+        <GameVersion>1.6.*</GameVersion>
         <Version>2.1.1</Version>
         <AssemblyVersion>$(Version).0</AssemblyVersion>
         <FileVersion>$(Version).0</FileVersion>
@@ -86,12 +91,18 @@
         </None>
     </ItemGroup>
 
-    <!-- AUTO UPDATE PublishConfiguration ModVersion using CSPROJ Version number
-	     remove bom, make EOL=CRLF, and left-align text -->
-    <Target Name="UpdatePublishConfigVersion" BeforeTargets="Build" Condition="'$(Configuration)' == 'Release'         AND Exists('$(MSBuildProjectDirectory)\Scripts\Update-PublishConfig.ps1')          AND Exists('$(MSBuildProjectDirectory)\$(PublishConfigurationPath)')">
+    <!-- Always run npm build AFTER C# build; webpack writes directly into the CS2 Mods folder. -->
+    <Target Name="BuildUI" AfterTargets="Build" DependsOnTargets="NpmInstallIfNeeded" Condition="Exists('$(ProjectDir)UI\package.json')">
 
-        <Message Text="PwP PublishConfig: syncing ModVersion + normalizing EOL/BOM + left-align blocks..." Importance="high" />
+        <Message Text="$(AssemblyTitle) UI: npm run build ($(Configuration))..." Importance="high" />
 
-        <Exec Command="&quot;$(SystemRoot)\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\Scripts\Update-PublishConfig.ps1&quot; -Path &quot;$(MSBuildProjectDirectory)\$(PublishConfigurationPath)&quot; -Version &quot;$(Version)&quot; -Eol crlf -LeftAlignBlocks" />
+        <Exec Command="npm run build" WorkingDirectory="$(ProjectDir)UI" IgnoreExitCode="true" Timeout="$(RRSNpmBuildTimeoutMs)">
+            <Output TaskParameter="ExitCode" PropertyName="NpmBuildExit" />
+        </Exec>
+
+        <Error Condition="'$(Configuration)'=='Release' AND '$(NpmBuildExit)'!='0'" Text="$(AssemblyTitle) UI: 'npm run build' failed (exit $(NpmBuildExit)). Release build aborted." />
+
+        <Warning Condition="'$(Configuration)'!='Release' AND '$(NpmBuildExit)'!='0'" Text="$(AssemblyTitle) UI: 'npm run build' failed (exit $(NpmBuildExit)). Continuing (non-Release)." />
     </Target>
+
 </Project>

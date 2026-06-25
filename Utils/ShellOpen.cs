@@ -1,75 +1,162 @@
-// File: Utils/ShellOpen.cs
-// Purpose: Cross-platform-ish folder opening helper for Options UI buttons.
-// Notes:
-// - First attempt: Unity Application.OpenURL with a file:// URI.
-// - Fallback: OS shell open (Windows/macOS/Linux).
-// - Safe: catches exceptions; no crash on failure.
+// <copyright file="ShellOpen.cs" company="River-Mochi">
+// Copyright (c) 2026 River-Mochi. All rights reserved.
+// Licensed under the MIT License. You may not use this file except in compliance with this License.
+// See LICENSE file in the project root for full license information.
+// This notice and the MIT License notice must be kept with
+// all copies or substantial portions of this code.
+// ================= </copyright> ======================
 
-namespace PublicWorksPlus
+// File: Utils/ShellOpen.cs
+// Version: 0.3.1
+// Purpose: File/folder opening helpers for CS2 Options UI buttons.
+// Based on River-Mochi shared CS2 utilities.
+
+namespace CS2Shared.RiverMochi
 {
-    using Colossal.PSI.Environment;
     using System;
     using System.Diagnostics;
     using System.IO;
+    using Colossal.Logging;
     using UnityEngine;
 
-    internal static class ShellOpen
+    public static class ShellOpen
     {
-        internal static void OpenFolderSafe(string folderPath, string logLabel)
+        private static ILog? s_Log;
+        private static string s_ModId = string.Empty;
+        private static string s_ModTag = "[CS2Shared]";
+
+        public static void Configure(ILog log, string modId, string modTag)
+        {
+            s_Log = log;
+
+            if (!string.IsNullOrWhiteSpace(modId))
+            {
+                s_ModId = Path.GetFileNameWithoutExtension(modId.Trim());
+
+                // Also configures LogUtils default logger, so short LogUtils.Info(...) calls work.
+                LogUtils.Configure(s_ModId, log);
+            }
+
+            if (!string.IsNullOrWhiteSpace(modTag))
+            {
+                s_ModTag = modTag.Trim();
+            }
+        }
+
+        public static void OpenModLogOrLogsFolder()
+        {
+            string logsFolder = GetLogsFolder();
+            string logPath = string.Empty;
+
+            if (!string.IsNullOrEmpty(logsFolder) && !string.IsNullOrEmpty(s_ModId))
+            {
+                logPath = Path.Combine(logsFolder, s_ModId + ".log");
+            }
+
+            // Prefer the exact mod log; fall back to the Logs folder before the first log exists.
+            if (!string.IsNullOrEmpty(logPath) && File.Exists(logPath))
+            {
+                OpenPathSafe(logPath, isFolder: false, logLabel: "OpenLogFile");
+                return;
+            }
+
+            OpenPathSafe(logsFolder, isFolder: true, logLabel: "OpenLogsFolder");
+        }
+
+        public static string GetLogsFolder()
         {
             try
             {
-                if (string.IsNullOrEmpty(folderPath))
+                // CS2 puts Player.log beside the Logs folder.
+                string consoleLogPath = Application.consoleLogPath;
+                if (string.IsNullOrEmpty(consoleLogPath))
                 {
-                    LogUtils.Info(Mod.s_Log, () => $"{Mod.ModTag} {logLabel}: folder path is empty.");
+                    return string.Empty;
+                }
+
+                string? rootFolder = Path.GetDirectoryName(consoleLogPath);
+                if (string.IsNullOrEmpty(rootFolder))
+                {
+                    return string.Empty;
+                }
+
+                string logsFolder = Path.Combine(rootFolder, "Logs");
+                return Directory.Exists(logsFolder) ? logsFolder : rootFolder;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public static void OpenFolder(string folderPath, string logLabel = "OpenFolder")
+        {
+            OpenPathSafe(folderPath, isFolder: true, logLabel: logLabel);
+        }
+
+        public static void OpenFile(string filePath, string logLabel = "OpenFile")
+        {
+            OpenPathSafe(filePath, isFolder: false, logLabel: logLabel);
+        }
+
+        private static void OpenPathSafe(string path, bool isFolder, string logLabel)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(path))
+                {
+                    LogInfo(logLabel, "path is empty.");
                     return;
                 }
 
-                string fullPath = Path.GetFullPath(folderPath);
+                string fullPath = Path.GetFullPath(path);
 
-                if (!Directory.Exists(fullPath))
+                if (isFolder)
                 {
-                    LogUtils.Info(Mod.s_Log, () => $"{Mod.ModTag} {logLabel}: folder not found: {fullPath}");
+                    if (!Directory.Exists(fullPath))
+                    {
+                        LogInfo(logLabel, "folder not found: " + fullPath);
+                        return;
+                    }
+                }
+                else if (!File.Exists(fullPath))
+                {
+                    LogInfo(logLabel, "file not found: " + fullPath);
                     return;
                 }
 
-                if (TryOpenWithUnityFileUrl(fullPath))
+                if (TryOpenWithOsShell(fullPath))
                 {
                     return;
                 }
 
-                TryOpenWithOsShell(fullPath);
+                if (TryOpenWithUnityFileUrl(fullPath, isFolder))
+                {
+                    return;
+                }
+
+                LogInfo(logLabel, "could not open path: " + fullPath);
             }
             catch (Exception ex)
             {
-                LogUtils.Warn(Mod.s_Log, () => $"{Mod.ModTag} {logLabel}: failed opening folder: {ex.GetType().Name}: {ex.Message}");
+                LogWarn(logLabel, "failed opening path: " + ex.GetType().Name + ": " + ex.Message, ex);
             }
         }
 
-        internal static string GetLogsFolder()
-        {
-            return Path.Combine(EnvPath.kUserDataPath, "Logs");
-        }
-
-        internal static string GetModsDataFolder()
-        {
-            return Path.Combine(EnvPath.kUserDataPath, "ModsData", Mod.ModId);
-        }
-
-        private static bool TryOpenWithUnityFileUrl(string fullPath)
+        private static bool TryOpenWithUnityFileUrl(string fullPath, bool isFolder)
         {
             try
             {
                 string path = fullPath;
 
-                if (!path.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) &&
+                if (isFolder &&
+                    !path.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) &&
                     !path.EndsWith(Path.AltDirectorySeparatorChar.ToString(), StringComparison.Ordinal))
                 {
                     path += Path.DirectorySeparatorChar;
                 }
 
-                string uri = new Uri(path).AbsoluteUri;
-                Application.OpenURL(uri);
+                Application.OpenURL(new Uri(path).AbsoluteUri);
                 return true;
             }
             catch
@@ -78,7 +165,7 @@ namespace PublicWorksPlus
             }
         }
 
-        private static void TryOpenWithOsShell(string fullPath)
+        private static bool TryOpenWithOsShell(string fullPath)
         {
             try
             {
@@ -86,68 +173,84 @@ namespace PublicWorksPlus
 
                 if (platform == RuntimePlatform.WindowsPlayer || platform == RuntimePlatform.WindowsEditor)
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo(fullPath)
+                    Process.Start(new ProcessStartInfo(fullPath)
                     {
                         UseShellExecute = true,
                         ErrorDialog = false,
                         Verb = "open",
-                    };
+                    });
 
-                    Process.Start(psi);
-                    return;
+                    return true;
                 }
 
                 if (platform == RuntimePlatform.OSXPlayer || platform == RuntimePlatform.OSXEditor)
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo("open", QuoteArg(fullPath))
+                    Process.Start(new ProcessStartInfo("open", QuoteArg(fullPath))
                     {
                         UseShellExecute = false,
                         CreateNoWindow = true,
-                    };
+                    });
 
-                    Process.Start(psi);
-                    return;
+                    return true;
                 }
 
                 if (platform == RuntimePlatform.LinuxPlayer || platform == RuntimePlatform.LinuxEditor)
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo("xdg-open", QuoteArg(fullPath))
+                    Process.Start(new ProcessStartInfo("xdg-open", QuoteArg(fullPath))
                     {
                         UseShellExecute = false,
                         CreateNoWindow = true,
-                    };
+                    });
 
-                    Process.Start(psi);
-                    return;
+                    return true;
                 }
 
-                ProcessStartInfo psiGeneric = new ProcessStartInfo(fullPath)
+                Process.Start(new ProcessStartInfo(fullPath)
                 {
                     UseShellExecute = true,
                     ErrorDialog = false,
-                };
+                });
 
-                Process.Start(psiGeneric);
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                LogUtils.Warn(Mod.s_Log, () => $"{Mod.ModTag} ShellOpen: OS fallback failed: {ex.GetType().Name}: {ex.Message}");
+                return false;
             }
         }
 
-        private static string QuoteArg(string s)
+        private static void LogInfo(string logLabel, string message)
         {
-            if (string.IsNullOrEmpty(s))
+            ILog? log = s_Log;
+            if (log == null)
+            {
+                return;
+            }
+
+            LogUtils.Info(log, () => s_ModTag + " " + logLabel + ": " + message);
+        }
+
+        private static void LogWarn(string logLabel, string message, Exception exception)
+        {
+            ILog? log = s_Log;
+            if (log == null)
+            {
+                return;
+            }
+
+            LogUtils.Warn(log, () => s_ModTag + " " + logLabel + ": " + message, exception);
+        }
+
+        private static string QuoteArg(string value)
+        {
+            if (string.IsNullOrEmpty(value))
             {
                 return "\"\"";
             }
 
-            if (s.IndexOf(' ') >= 0 || s.IndexOf('\t') >= 0)
-            {
-                return "\"" + s.Replace("\"", "\\\"") + "\"";
-            }
-
-            return s;
+            return value.IndexOfAny(new[] { ' ', '\t', '"' }) >= 0
+                ? "\"" + value.Replace("\"", "\\\"") + "\""
+                : value;
         }
     }
 }

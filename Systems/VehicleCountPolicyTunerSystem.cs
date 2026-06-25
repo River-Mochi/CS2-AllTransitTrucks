@@ -1,3 +1,11 @@
+// <copyright file="VehicleCountPolicyTunerSystem.cs" company="River-Mochi">
+// Copyright (c) 2026 River-Mochi. All rights reserved.
+// Licensed under the MIT License. You may not use this file except in compliance with this License.
+// See LICENSE file in the project root for full license information.
+// This notice and the MIT License notice must be kept with
+// all copies or substantial portions of this code.
+// ================= </copyright> ======================
+
 // File: Systems/VehicleCountPolicyTunerSystem.cs
 // Purpose: Optional toggle to adjust VehicleCountPolicy VehicleInterval modifier so the vanilla transit line panel
 //          can reach as low as ~1 vehicle, while keeping max from going too high.

@@ -1,3 +1,11 @@
+// <copyright file="TransitSystem.cs" company="River-Mochi">
+// Copyright (c) 2026 River-Mochi. All rights reserved.
+// Licensed under the MIT License. You may not use this file except in compliance with this License.
+// See LICENSE file in the project root for full license information.
+// This notice and the MIT License notice must be kept with
+// all copies or substantial portions of this code.
+// ================= </copyright> ======================
+
 // File: Systems/TransitSystem.cs
 // Purpose: Apply multipliers for depot max vehicles and passenger max riders.
 // Notes:

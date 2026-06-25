@@ -1,3 +1,11 @@
+// <copyright file="Mod.cs" company="River-Mochi">
+// Copyright (c) 2026 River-Mochi. All rights reserved.
+// Licensed under the MIT License. You may not use this file except in compliance with this License.
+// See LICENSE file in the project root for full license information.
+// This notice and the MIT License notice must be kept with
+// all copies or substantial portions of this code.
+// ================= </copyright> ======================
+
 // File: Mod.cs
 // Entrypoint: registers settings, locales, and the ECS systems.
 
@@ -9,6 +17,7 @@ namespace PublicWorksPlus
     using Colossal.IO.AssetDatabase;      // AssetDatabase.LoadSettings
     using Colossal.Localization;          // LocalizationManager
     using Colossal.Logging;               // ILog, defines shared s_Log
+    using CS2Shared.RiverMochi;           // LogUtils, ShellOpen
     using Game;                           // UpdateSystem, GameManager, SystemUpdatePhase
     using Game.Modding;                   // IMod
     using Game.Prefabs;                    // VehicleCapacitySystem, DeliveryTruckSelectData

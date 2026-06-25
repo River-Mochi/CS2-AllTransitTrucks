@@ -1,3 +1,11 @@
+// <copyright file="IndustrySystem.cs" company="River-Mochi">
+// Copyright (c) 2026 River-Mochi. All rights reserved.
+// Licensed under the MIT License. You may not use this file except in compliance with this License.
+// See LICENSE file in the project root for full license information.
+// This notice and the MIT License notice must be kept with
+// all copies or substantial portions of this code.
+// ================= </copyright> ======================
+
 // File: Systems/IndustrySystem.cs
 // Purpose: Apply industry/logistics tuning based on current settings:
 //          - Extractor fleet max trucks (TransportCompanyData.m_MaxTransports for industrial companies)

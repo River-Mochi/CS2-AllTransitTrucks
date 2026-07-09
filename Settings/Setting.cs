@@ -7,7 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Settings/Setting.cs
-// Purpose: Options UI + saved settings for Public Works Plus (Public Transit + Industry + Parks/Roads + About).
+// Purpose: Options UI + saved settings for All Transit + Trucks (Public Transit + Industry + Parks/Roads + About).
 
 namespace PublicWorksPlus
 {
@@ -23,7 +23,7 @@ namespace PublicWorksPlus
     using Unity.Entities;           // World
     using UnityEngine;              // Application.OpenURL
 
-    [FileLocation("ModsSettings/PublicWorksPlus/PublicWorksPlus")]
+    [FileLocation("ModsSettings/AllTransitandTrucks/AllTransitandTrucks")]
     [SettingsUITabOrder(PublicTransitTab, IndustryTab, ParksRoadsTab, AboutTab)]
     [SettingsUIGroupOrder(
         LineVehiclesGroup, DepotGroup, PassengerGroup,

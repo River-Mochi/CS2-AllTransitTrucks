@@ -27,10 +27,10 @@ namespace PublicWorksPlus
     /// <summary>Mod entry point: registers settings, locales, and ECS systems.</summary>
     public sealed class Mod : IMod
     {
-        public const string ModName = "All Transit + Industry";
-        public const string ShortName = "All Transit+Industry";
-        public const string ModId = "AllTransitIndustry";
-        public const string ModTag = "[ATI]";
+        public const string ModName = "All Transit + Trucks";
+        public const string ShortName = "All Transit + Trucks";
+        public const string ModId = "AllTransitandTrucks";
+        public const string ModTag = "[ATT]";
 
         public static readonly string ModVersion =
             Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
@@ -49,7 +49,7 @@ namespace PublicWorksPlus
             if (!s_BannerLogged)
             {
                 s_BannerLogged = true;
-                LogUtils.Info(s_Log, () => $"{ModName} v{ModVersion} OnLoad");
+                LogUtils.Info(s_Log, () => $"{ModName} v{ModVersion} LOADED.");
             }
 
             // Settings first so locale labels can resolve.
@@ -121,13 +121,10 @@ namespace PublicWorksPlus
             updateSystem.UpdateAt<LaneWearProbeSystem>(SystemUpdatePhase.GameSimulation);
 #endif
 
-            LogUtils.Info(s_Log, () => $"{ModId}.{nameof(OnLoad)} Completed.");
         }
 
         public void OnDispose()
-        {
-            LogUtils.Info(s_Log, () => "OnDispose");
-
+        {  
             if (Settings != null)
             {
                 Settings.UnregisterInOptionsUI();

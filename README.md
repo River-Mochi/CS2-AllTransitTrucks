@@ -1,6 +1,6 @@
-# Public Works Plus
+# All Transit + Trucks
 
-Public Works Plus lets you scale **fleet sizes** and **vehicle capacities** in *Cities: Skylines II*.
+All Transit + Trucks lets you scale **public transit**, **passenger capacity**, **industry trucks**, **deliveries**, **cargo fleets**, and **parks/road repair vehicles** in *Cities: Skylines II*.
 
 ## Features
 

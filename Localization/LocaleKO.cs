@@ -11,8 +11,8 @@
 
 namespace PublicWorksPlus
 {
-    using Colossal;
     using System.Collections.Generic;
+    using Colossal;
 
     public sealed class LocaleKO : IDictionarySource
     {
@@ -326,14 +326,14 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableDebugLogging)), "상세 디버그 로그" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableDebugLogging)),
-                    "문제 해결용 추가 세부 정보를 <PublicWorksPlus.log> 로 보냅니다.\n" +
+                    "문제 해결용 추가 세부 정보를 <AllTransitTrucks.log> 로 보냅니다.\n" +
                     "일반 플레이에서는 **비활성화**하세요.\n" +
                     "<이 옵션은 로깅만 늘리며 게임플레이 값은 변경하지 않습니다.>" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenLogButton)), "로그 폴더 열기" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenLogButton)),
                     "로그 폴더를 엽니다.\n" +
-                    "다음: 텍스트 편집기로 <PublicWorksPlus.log> 를 여세요 (Notepad++ 권장)." },
+                    "다음: 텍스트 편집기로 <AllTransitTrucks.log> 를 여세요 (Notepad++ 권장)." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenReportButton)), "보고서 폴더 열기" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenReportButton)),

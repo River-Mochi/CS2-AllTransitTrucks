@@ -11,8 +11,8 @@
 
 namespace PublicWorksPlus
 {
-    using Colossal;
     using System.Collections.Generic;
+    using Colossal;
 
     public sealed class LocaleZH_HANT : IDictionarySource
     {
@@ -326,14 +326,14 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableDebugLogging)), "詳細除錯日誌" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableDebugLogging)),
-                    "將額外細節寫入 <PublicWorksPlus.log> 以便排查問題。\n" +
+                    "將額外細節寫入 <AllTransitTrucks.log> 以便排查問題。\n" +
                     "正常遊玩請**停用**。\n" +
                     "<這只會增加日誌記錄，不會改變遊戲數值。>" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenLogButton)), "開啟日誌資料夾" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenLogButton)),
                     "開啟日誌資料夾。\n" +
-                    "下一步：用文字編輯器開啟 <PublicWorksPlus.log>（推薦 Notepad++）。" },
+                    "下一步：用文字編輯器開啟 <AllTransitTrucks.log>（推薦 Notepad++）。" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenReportButton)), "開啟報告資料夾" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenReportButton)),

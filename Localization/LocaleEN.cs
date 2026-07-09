@@ -11,8 +11,8 @@
 
 namespace PublicWorksPlus
 {
-    using Colossal;
     using System.Collections.Generic;
+    using Colossal;
 
     public sealed class LocaleEN : IDictionarySource
     {
@@ -328,14 +328,14 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableDebugLogging)), "Verbose debug logs" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableDebugLogging)),
-                    "Sends extra details to <PublicWorksPlus.log> for troubleshooting.\n" +
+                    "Sends extra details to <AllTransitTrucks.log> for troubleshooting.\n" +
                     "**Disable** for normal gameplay.\n" +
                     "<This only increases logging and does not change gameplay values.>" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenLogButton)), "Open log folder" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenLogButton)),
                     "Open the logs folder.\n" +
-                    "Next: open <PublicWorksPlus.log> with your text editor (Notepad++ recommended)." },
+                    "Next: open <AllTransitTrucks.log> with your text editor (Notepad++ recommended)." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenReportButton)), "Open report folder" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenReportButton)),

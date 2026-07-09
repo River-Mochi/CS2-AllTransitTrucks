@@ -1,3 +1,10 @@
 <Solution>
+  <Folder Name="/NewFolder1/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
   <Project Path="AllTransitTrucks/AllTransitTrucks.csproj" />
 </Solution>

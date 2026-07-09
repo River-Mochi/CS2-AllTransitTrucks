@@ -70,9 +70,9 @@ English, Français, Deutsch, Español, Italiano, 한국어, 日本語, 简体中
 - StarQ — technical advice
 
 ## Links
-- GitHub: https://github.com/River-Mochi/PublicWorksPlus
+- GitHub: https://github.com/River-Mochi/CS2-AllTransitTrucks
 - Paradox Mods: https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime
-- Support Discord: https://discord.gg/HTav7ARPs2
+- Support Discord: https://discord.gg/gwXgvtyhjc
 
 ## License
 MIT

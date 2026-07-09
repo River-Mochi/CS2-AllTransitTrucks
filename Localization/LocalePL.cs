@@ -316,7 +316,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.RunPrefabScanButton)),
                     "Tworzy <jednorazowy> raport do debugowania.\n" +
                     "Nie jest potrzebny do normalnej rozgrywki.\n" +
-                    "Lokalizacja pliku: <ModsData/PublicWorksPlus/ScanReport-Prefabs.txt>\n" +
+                    "Lokalizacja pliku: <ModsData/AllTransitTrucks/ScanReport-Prefabs.txt>\n" +
                     "Wskazówka: kliknij <raz>; gdy status pokaże Gotowe, użyj <Otwórz folder raportów>." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PrefabScanStatus)), "Status skanowania prefabów" },

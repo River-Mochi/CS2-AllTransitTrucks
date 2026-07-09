@@ -31,7 +31,7 @@ All Transit + Trucks lets you scale **public transit**, **passenger capacity**, 
 - **Road wear speed** (alpha)
 
 ### Debug Tools (About tab)
-- **Prefab Scan Report** (writes `ModsData/PublicWorksPlus/ScanReport-Prefabs.txt`)
+- **Prefab Scan Report** (writes `ModsData/AllTransitTrucks/ScanReport-Prefabs.txt`)
 - **Cargo station resource watch** inside scan report
 - **Live delivery cargo snapshot** inside scan report
 - **Open log folder** / **Open report folder**

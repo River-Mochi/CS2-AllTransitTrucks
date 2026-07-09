@@ -8,7 +8,7 @@
 
 // File: Systems/Probes/PrefabScanSystem.cs
 // Purpose: One-shot prefab scan triggered by Options UI button.
-// Output: Writes report to {EnvPath.kUserDataPath}/ModsData/PublicWorksPlus/ScanReport-Prefabs.txt
+// Output: Writes report to {EnvPath.kUserDataPath}/ModsData/AllTransitTrucks/ScanReport-Prefabs.txt
 // Notes:
 // - Runs only when requested.
 // - Main scan flow stays here.
@@ -16,6 +16,10 @@
 
 namespace PublicWorksPlus
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Text;
     using CS2Shared.RiverMochi;
     using Game;
     using Game.Companies;
@@ -23,10 +27,6 @@ namespace PublicWorksPlus
     using Game.Prefabs;
     using Game.Routes;
     using Game.SceneFlow;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Text;
     using Unity.Collections;
     using Unity.Entities;
 

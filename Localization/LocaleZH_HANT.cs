@@ -316,7 +316,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.RunPrefabScanButton)),
                     "建立用於除錯的<一次性>報告。\n" +
                     "正常遊玩不需要。\n" +
-                    "檔案位置：<ModsData/PublicWorksPlus/ScanReport-Prefabs.txt>\n" +
+                    "檔案位置：<ModsData/AllTransitTrucks/ScanReport-Prefabs.txt>\n" +
                     "提示：點擊<一次>；當狀態顯示為完成時，使用 <開啟報告資料夾>。" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PrefabScanStatus)), "Prefab 掃描狀態" },

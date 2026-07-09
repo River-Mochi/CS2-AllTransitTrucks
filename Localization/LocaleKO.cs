@@ -316,7 +316,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.RunPrefabScanButton)),
                     "디버깅용 <1회성> 보고서를 생성합니다.\n" +
                     "일반 플레이에는 필요하지 않습니다.\n" +
-                    "파일 위치: <ModsData/PublicWorksPlus/ScanReport-Prefabs.txt>\n" +
+                    "파일 위치: <ModsData/AllTransitTrucks/ScanReport-Prefabs.txt>\n" +
                     "팁: <한 번> 클릭하고, 상태가 완료로 표시되면 <보고서 폴더 열기>를 사용하세요." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PrefabScanStatus)), "Prefab 스캔 상태" },

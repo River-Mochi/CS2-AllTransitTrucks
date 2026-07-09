@@ -4,14 +4,11 @@
 	<!--Name of the mod to display to players-->
 	<DisplayName Value="All Transit + Trucks" />
 	<!--Short description of the mod-->
-	<ShortDescription Value="Scale Transit, Passengers, Industry Deliveries + Cargo, and increase Transit Line slider limits." />
+	<ShortDescription Value="Adjust all Transit, Passengers, Industry Trucks Deliveries + Cargo, and increase Transit Line slider limits." />
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
 ### All Transit + Trucks (ATT)
-
-**Big update to Delivery Trucks in 2.1.0**
-
 
 Everything is OPTIONAL - you choose!
 
@@ -20,7 +17,7 @@ Everything is OPTIONAL - you choose!
 - Industry Delivery vehicles, Cargo stations, Extractors.
 - Parks/Roads Maintenance
 
-**NEW Company Deliveries will now actually use the increase truck/van amounts you set, reducing traffic with fewer trips.**
+**NEW Company Deliveries will now actually use the increase truck/van larger capacities you set, reducing traffic with fewer trips.**
 Storage Transfers are also improved. Future: other dispatch paths may be improved (more research needed).
 
 ### Features
@@ -66,10 +63,9 @@ All details not above might be answered in forums or in tool tips of the mod men
 ### Performance advantage
 This is designed to *not* run in the city per-frame. Make changes in Options Menu > then mod goes idle. Debug tools are optional.
 
-### 11 Languages
-
-- English, Français, Deutsch, Español, Italiano, Polski Polish, Português Brazilian
-- 한국어, 日本語, 简体中文 (Simplified Chinese), 繁體中文 Traditional Chinese
+### 11+ Languages Supported
+- English, Français, Deutsch, Español, Italiano, Polski, Português Brazilian
+- 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt
 
 ### Tip:
 If you want to increase maximum of the transit route slider a little more, add some stops to the route.
@@ -101,6 +97,7 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 	<Dependency Id="" />
 	<!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
+- adds Vietnamese translation
 - rename to All Transit + Trucks (ATT)
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->

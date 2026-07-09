@@ -57,8 +57,7 @@ All details not above might be answered in forums or in tool tips of the mod men
 - River-Mochi: author
 - yenyang: code review and testing.
 - The Transit section is inspired by Wayz's original Depot Capacity Changer.
-- Necko1996: testing
-- BugsyG: testing
+- BugsyG, Necko1996: testing
 
 ### Performance advantage
 This is designed to *not* run in the city per-frame. Make changes in Options Menu > then mod goes idle. Debug tools are optional.

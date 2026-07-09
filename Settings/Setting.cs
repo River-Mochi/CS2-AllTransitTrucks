@@ -23,7 +23,7 @@ namespace PublicWorksPlus
     using Unity.Entities;           // World
     using UnityEngine;              // Application.OpenURL
 
-    [FileLocation("ModsSettings/AllTransitandTrucks/AllTransitandTrucks")]
+    [FileLocation("ModsSettings/AllTransitTrucks/AllTransitTrucks")]
     [SettingsUITabOrder(PublicTransitTab, IndustryTab, ParksRoadsTab, AboutTab)]
     [SettingsUIGroupOrder(
         LineVehiclesGroup, DepotGroup, PassengerGroup,

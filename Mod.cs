@@ -29,7 +29,7 @@ namespace PublicWorksPlus
     {
         public const string ModName = "All Transit + Trucks";
         public const string ShortName = "All Transit + Trucks";
-        public const string ModId = "AllTransitandTrucks";
+        public const string ModId = "AllTransitTrucks";
         public const string ModTag = "[ATT]";
 
         public static readonly string ModVersion =
@@ -49,7 +49,7 @@ namespace PublicWorksPlus
             if (!s_BannerLogged)
             {
                 s_BannerLogged = true;
-                LogUtils.Info(s_Log, () => $"{ModName} v{ModVersion} LOADED.");
+                LogUtils.Info(s_Log, () => $"{ModName} v{ModVersion} Loaded.");
             }
 
             // Settings first so locale labels can resolve.

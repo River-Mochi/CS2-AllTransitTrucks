@@ -79,11 +79,12 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 	<Thumbnail Value="Properties/Thumbnail-PwP03.jpg" />
 	<!--Screenshot, can be set multiple times-->
 	<Screenshot Value="Properties/image10-Transit.jpg" />
-    <Screenshot Value="Properties/image15-PwP-Before-After.jpg" />
+    <Screenshot Value="Properties/image15-Before-After.jpg" />
 	<Screenshot Value="Properties/image20-Passengers.jpg" />
 	<Screenshot Value="Properties/image30-Industry.jpg" />
+    <Screenshot Value="Properties/image35-IndustryTrucks.jpg" />
 	<Screenshot Value="Properties/image40-Maintenance.jpg" />
-    <Screenshot Value="Properties/image50-Senryu-PwP.jpg" />
+    <Screenshot Value="Properties/image50-Senryu-Bus.jpg" />
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
@@ -97,6 +98,7 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 	<!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
 - adds Vietnamese translation
+- removes verbose logging option from Release build
 - rename to All Transit + Trucks (ATT)
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->

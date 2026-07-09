@@ -122,7 +122,6 @@ namespace PublicWorksPlus
             SetDefaults_Industry();
             SetDefaults_ParksRoads();
 
-            // Debug defaults.
             EnableDebugLogging = false;
         }
 
@@ -219,7 +218,9 @@ namespace PublicWorksPlus
             }
         }
 
-        // DEBUG/LOGGING
+        // ----------------
+        // Reports / logs
+        // ----------------
 
         [SettingsUIButtonGroup(DebugGroup)]
         [SettingsUIButton]
@@ -279,8 +280,18 @@ namespace PublicWorksPlus
             }
         }
 
+#if DEBUG
         [SettingsUISection(AboutTab, DebugGroup)]
         public bool EnableDebugLogging { get; set; }
+#else
+        // Release builds never expose or honor verbose debug logging.
+        // Old .coc files may contain true, but the setter ignores it and the getter always returns false.
+        public bool EnableDebugLogging
+        {
+            get => false;
+            set { }
+        }
+#endif
 
         [SettingsUIButton]
         [SettingsUISection(AboutTab, DebugGroup)]
@@ -305,7 +316,9 @@ namespace PublicWorksPlus
             RepairAndClamp_Industry();
             RepairAndClamp_ParksRoads();
 
-            // Debug toggle is a bool; no repair needed.
+#if !DEBUG
+            EnableDebugLogging = false;
+#endif
         }
 
         private static float ClampPercentOrVanilla(float value, float min, float max, float vanilla)

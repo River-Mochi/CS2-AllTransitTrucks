@@ -19,7 +19,7 @@ namespace PublicWorksPlus
     using CS2Shared.RiverMochi;           // LogUtils, ShellOpen
     using Game;                           // UpdateSystem, GameManager, SystemUpdatePhase
     using Game.Modding;                   // IMod
-    using Game.Prefabs;                    // VehicleCapacitySystem, DeliveryTruckSelectData
+    using Game.Prefabs;                   // VehicleCapacitySystem, DeliveryTruckSelectData
     using Game.SceneFlow;                 // GameManager
     using Game.Simulation;                // game ECS systems for ordering hooks
 
@@ -84,8 +84,6 @@ namespace PublicWorksPlus
                 LogUtils.Warn(s_Log, () => $"{ModTag} Localization registration failed: {ex.GetType().Name}: {ex.Message}");
             }
 
-
-
             // Load settings (.coc) into the instance.
             // The default instance passed here provides defaults for missing fields.
             AssetDatabase.global.LoadSettings(ModId, setting, new Setting(this));
@@ -95,7 +93,7 @@ namespace PublicWorksPlus
 
             setting.RegisterInOptionsUI();
 
-            // Systems
+            // Systems.
             updateSystem.UpdateAfter<TransitSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<MaintenanceSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<LaneWearSystem>(SystemUpdatePhase.PrefabUpdate);
@@ -114,44 +112,36 @@ namespace PublicWorksPlus
             updateSystem.UpdateAfter<CompanyShoppingCapacitySystem, BuyingCompanySystem>(SystemUpdatePhase.GameSimulation);
             updateSystem.UpdateBefore<CompanyShoppingCapacitySystem, ResourceBuyerSystem>(SystemUpdatePhase.GameSimulation);
 
-
-            // Industry (prefab editing window)
+            // Industry (prefab editing window).
             // Critical: run IndustrySystem BEFORE VehicleCapacitySystem so the game's
             // DeliveryTruckSelectData table is rebuilt from the updated truck capacities.
             updateSystem.UpdateAfter<IndustrySystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateBefore<IndustrySystem, VehicleCapacitySystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateBefore<IndustrySystem>(SystemUpdatePhase.PrefabReferences);
 
-
-            // Allow transit lines range to be 1-and higher than vanilla
+            // Allow transit lines range to be 1-and higher than vanilla.
             updateSystem.UpdateAfter<VehicleCountPolicyTunerSystem>(SystemUpdatePhase.PrefabUpdate);
 
-            // Prefab scan: must work even while Options UI is open
+            // Prefab scan: must work even while Options UI is open.
             updateSystem.UpdateAt<PrefabScanSystem>(SystemUpdatePhase.PrefabUpdate);
 
+#if DEBUG
             // Live delivery cargo proof logger.
-            // Safe for Release because runtime work is gated by EnableDebugLogging inside the system.
             updateSystem.UpdateAt<DeliveryCargoProbeSystem>(SystemUpdatePhase.GameSimulation);
 
-#if DEBUG
-            // Debug probe: logs LaneCondition.m_Wear deltas (runtime)
+            // Debug probe: logs LaneCondition.m_Wear deltas (runtime).
             updateSystem.UpdateAt<LaneWearProbeSystem>(SystemUpdatePhase.GameSimulation);
 #endif
-
         }
 
         public void OnDispose()
-        {  
+        {
             if (Settings != null)
             {
                 Settings.UnregisterInOptionsUI();
                 Settings = null;
             }
         }
-
-        //---------------
-        // HELPERS
-        //---------------   
 
         internal static string L(string id, string fallback)
         {

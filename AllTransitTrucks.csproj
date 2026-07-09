@@ -18,7 +18,7 @@
         <!-- for file properties -->
 
         <!-- Assembly DLL name and default namespace -->
-        <AssemblyName>PublicWorksPlus</AssemblyName>
+        <AssemblyName>AllTransitTrucks</AssemblyName>
         <RootNamespace>PublicWorksPlus</RootNamespace>
         <AssemblyTitle>All Transit + Trucks</AssemblyTitle>
         <Product>All Transit + Trucks</Product>

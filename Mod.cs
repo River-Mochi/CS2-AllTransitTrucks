@@ -13,7 +13,6 @@ namespace PublicWorksPlus
 {
     using System;                         // Exception
     using System.Reflection;              // Assembly
-    using Colossal;                       // IDictionarySource
     using Colossal.IO.AssetDatabase;      // AssetDatabase.LoadSettings
     using Colossal.Localization;          // LocalizationManager
     using Colossal.Logging;               // ILog, defines shared s_Log
@@ -56,19 +55,36 @@ namespace PublicWorksPlus
             Setting setting = new(this);
             Settings = setting;
 
-            // Register ALL languages (keep these lines!)
-            AddLocaleSource("en-US", new LocaleEN(setting));
-            AddLocaleSource("fr-FR", new LocaleFR(setting));
-            AddLocaleSource("es-ES", new LocaleES(setting));
-            AddLocaleSource("de-DE", new LocaleDE(setting));
-            AddLocaleSource("it-IT", new LocaleIT(setting));
-            AddLocaleSource("ja-JP", new LocaleJA(setting));
-            AddLocaleSource("ko-KR", new LocaleKO(setting));
-            AddLocaleSource("pl-PL", new LocalePL(setting));
-            AddLocaleSource("pt-BR", new LocalePT_BR(setting));
-            AddLocaleSource("zh-HANS", new LocaleZH_CN(setting));    // Simplified Chinese
-            AddLocaleSource("zh-HANT", new LocaleZH_HANT(setting));  // Traditional Chinese
-            AddLocaleSource("vi-VN", new LocaleVI(setting));
+            try
+            {
+                LocalizationManager? localizationManager = GameManager.instance?.localizationManager;
+                if (localizationManager == null)
+                {
+                    LogUtils.Warn(s_Log, () => $"{ModTag} LocalizationManager is null; locale sources were not registered.");
+                }
+                else
+                {
+                    // Register localization before settings/options UI reads the dictionary.
+                    localizationManager.AddSource("en-US", new LocaleEN(setting));
+                    localizationManager.AddSource("fr-FR", new LocaleFR(setting));
+                    localizationManager.AddSource("es-ES", new LocaleES(setting));
+                    localizationManager.AddSource("de-DE", new LocaleDE(setting));
+                    localizationManager.AddSource("it-IT", new LocaleIT(setting));
+                    localizationManager.AddSource("ja-JP", new LocaleJA(setting));
+                    localizationManager.AddSource("ko-KR", new LocaleKO(setting));
+                    localizationManager.AddSource("pl-PL", new LocalePL(setting));
+                    localizationManager.AddSource("pt-BR", new LocalePT_BR(setting));
+                    localizationManager.AddSource("vi-VN", new LocaleVI(setting));
+                    localizationManager.AddSource("zh-HANS", new LocaleZH_CN(setting));    // Simplified Chinese
+                    localizationManager.AddSource("zh-HANT", new LocaleZH_HANT(setting));  // Traditional Chinese
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.Warn(s_Log, () => $"{ModTag} Localization registration failed: {ex.GetType().Name}: {ex.Message}");
+            }
+
+
 
             // Load settings (.coc) into the instance.
             // The default instance passed here provides defaults for missing fields.
@@ -135,31 +151,7 @@ namespace PublicWorksPlus
 
         //---------------
         // HELPERS
-        //---------------
-
-        private static void AddLocaleSource(string localeId, IDictionarySource source)
-        {
-            if (string.IsNullOrEmpty(localeId))
-            {
-                return;
-            }
-
-            LocalizationManager? lm = GameManager.instance?.localizationManager;
-            if (lm == null)
-            {
-                LogUtils.Warn(s_Log, () => $"AddLocaleSource: No LocalizationManager; cannot add source for '{localeId}'.");
-                return;
-            }
-
-            try
-            {
-                lm.AddSource(localeId, source);
-            }
-            catch (Exception ex)
-            {
-                LogUtils.Warn(s_Log, () => $"AddLocaleSource: AddSource for '{localeId}' failed: {ex.GetType().Name}: {ex.Message}");
-            }
-        }
+        //---------------   
 
         internal static string L(string id, string fallback)
         {

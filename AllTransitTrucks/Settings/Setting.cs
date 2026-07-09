@@ -284,8 +284,8 @@ namespace PublicWorksPlus
         [SettingsUISection(AboutTab, DebugGroup)]
         public bool EnableDebugLogging { get; set; }
 #else
-        // Release builds never expose or honor verbose debug logging.
-        // Old .coc files may contain true, but the setter ignores it and the getter always returns false.
+        // Hidden from Release Options UI and forced off even if old .coc had it enabled.
+        [SettingsUIHidden]
         public bool EnableDebugLogging
         {
             get => false;
@@ -316,9 +316,6 @@ namespace PublicWorksPlus
             RepairAndClamp_Industry();
             RepairAndClamp_ParksRoads();
 
-#if !DEBUG
-            EnableDebugLogging = false;
-#endif
         }
 
         private static float ClampPercentOrVanilla(float value, float min, float max, float vanilla)

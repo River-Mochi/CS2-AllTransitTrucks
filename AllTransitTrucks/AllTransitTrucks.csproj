@@ -79,13 +79,15 @@
         <None Include="$(ModTargetsFile)" Link="Properties\Mod.targets" />
     </ItemGroup>
 
-    <!-- Keep docs visible in Solution Explorer, but never compile/copy/publish them -->
+    <!-- Local private docs: visible in Solution Explorer, never copied/published. Git ignores docs/. -->
     <ItemGroup>
-        <None Update="docs\**\*.*">
+        <None Include="..\docs\**\*.*"
+              Link="docs\%(RecursiveDir)%(Filename)%(Extension)">
             <CopyToOutputDirectory>Never</CopyToOutputDirectory>
             <CopyToPublishDirectory>Never</CopyToPublishDirectory>
         </None>
     </ItemGroup>
+
 
     <!-- AUTO UPDATE PublishConfiguration.xml GameVersion + ModVersion + nested mod.json "version" from $(Version). -->
     <Target Name="UpdatePublishConfigVersion" BeforeTargets="PrepareForBuild" Condition="Exists('$(PublishConfigScript)') AND Exists('$(MSBuildProjectDirectory)\$(PublishConfigurationPath)')">

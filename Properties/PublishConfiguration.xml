@@ -96,13 +96,12 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 	<!--Version of the mod-->
 	<ModVersion Value="2.1.2" />
 	<!--Recommended version of the base game to use the mod-->
-	<GameVersion Value="1.5.*" />
+	<GameVersion Value="1.6.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
 - rename to All Transit + Trucks (ATT)
-
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 <ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />

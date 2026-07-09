@@ -68,6 +68,7 @@ namespace PublicWorksPlus
             AddLocaleSource("pt-BR", new LocalePT_BR(setting));
             AddLocaleSource("zh-HANS", new LocaleZH_CN(setting));    // Simplified Chinese
             AddLocaleSource("zh-HANT", new LocaleZH_HANT(setting));  // Traditional Chinese
+            AddLocaleSource("vi-VN", new LocaleVI(setting));
 
             // Load settings (.coc) into the instance.
             // The default instance passed here provides defaults for missing fields.

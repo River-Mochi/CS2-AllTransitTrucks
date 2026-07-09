@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <!-- keep configs -->
         <Configurations>Debug;Release</Configurations>
@@ -10,8 +10,6 @@
         <!-- Path to the PowerShell that syncs PublishConfiguration.xml + mod.json with $(Version). -->
         <PublishConfigScript>$(MSBuildProjectDirectory)\Scripts\Update-PublishConfig.ps1</PublishConfigScript>
 
-
-
         <!-- Single source of truth for version number -->
         <GameVersion>1.6.*</GameVersion>
         <Version>2.1.2</Version>
@@ -19,8 +17,13 @@
         <FileVersion>$(Version).0</FileVersion>
         <!-- for file properties -->
 
+        <!-- Assembly DLL name and default namespace -->
         <AssemblyName>PublicWorksPlus</AssemblyName>
         <RootNamespace>PublicWorksPlus</RootNamespace>
+        <AssemblyTitle>All Transit + Trucks</AssemblyTitle>
+        <Product>All Transit + Trucks</Product>
+        <Copyright>Copyright © 2026 River-Mochi</Copyright>
+
     </PropertyGroup>
 
     <!-- CS2 toolchain -->
@@ -84,18 +87,12 @@
         </None>
     </ItemGroup>
 
-    <!-- Always run npm build AFTER C# build; webpack writes directly into the CS2 Mods folder. -->
-    <Target Name="BuildUI" AfterTargets="Build" DependsOnTargets="NpmInstallIfNeeded" Condition="Exists('$(ProjectDir)UI\package.json')">
+    <!-- AUTO UPDATE PublishConfiguration.xml GameVersion + ModVersion + nested mod.json "version" from $(Version). -->
+    <Target Name="UpdatePublishConfigVersion" BeforeTargets="PrepareForBuild" Condition="Exists('$(PublishConfigScript)') AND Exists('$(MSBuildProjectDirectory)\$(PublishConfigurationPath)')">
 
-        <Message Text="$(AssemblyTitle) UI: npm run build ($(Configuration))..." Importance="high" />
+        <Message Text="$(AssemblyTitle) PublishConfig: syncing ModVersion/GameVersion + normalizing EOL/BOM + left-aligning blocks..." Importance="high" />
 
-        <Exec Command="npm run build" WorkingDirectory="$(ProjectDir)UI" IgnoreExitCode="true" Timeout="$(RRSNpmBuildTimeoutMs)">
-            <Output TaskParameter="ExitCode" PropertyName="NpmBuildExit" />
-        </Exec>
-
-        <Error Condition="'$(Configuration)'=='Release' AND '$(NpmBuildExit)'!='0'" Text="$(AssemblyTitle) UI: 'npm run build' failed (exit $(NpmBuildExit)). Release build aborted." />
-
-        <Warning Condition="'$(Configuration)'!='Release' AND '$(NpmBuildExit)'!='0'" Text="$(AssemblyTitle) UI: 'npm run build' failed (exit $(NpmBuildExit)). Continuing (non-Release)." />
+        <Exec Command="&quot;$(SystemRoot)\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -File &quot;$(PublishConfigScript)&quot; -Path &quot;$(MSBuildProjectDirectory)\$(PublishConfigurationPath)&quot; -Version &quot;$(Version)&quot; -GameVersion &quot;$(GameVersion)&quot; -Eol lf -LeftAlignBlocks" />
     </Target>
 
 </Project>

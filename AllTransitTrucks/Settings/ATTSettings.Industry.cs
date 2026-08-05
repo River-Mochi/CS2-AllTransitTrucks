@@ -21,6 +21,7 @@ namespace PublicWorksPlus
     {
         private bool m_EnableFullLoadDispatchHelper;
         private bool m_EnableExtractorTruckControl = true;
+        private bool m_ResetExtractorsToVanillaRequested;
 
         // Delivery vehicles are stored as percent values.
         private float m_SemiTruckCargoScalar = kVanillaPercent;
@@ -40,6 +41,15 @@ namespace PublicWorksPlus
 
         internal bool ShouldRunFullLoadDispatchHelper =>
             m_EnableFullLoadDispatchHelper && HasCustomDeliveryCapacity;
+
+        internal bool ConsumeExtractorResetRequest()
+        {
+            if (!m_ResetExtractorsToVanillaRequested)
+                return false;
+
+            m_ResetExtractorsToVanillaRequested = false;
+            return true;
+        }
 
         [SettingsUISection(IndustryTab, DeliveryGroup)]
         public bool EnableFullLoadDispatchHelper
@@ -132,12 +142,20 @@ namespace PublicWorksPlus
                 if (m_EnableExtractorTruckControl == value) return;
 
                 m_EnableExtractorTruckControl = value;
+
+                // Turning control off removes ATT's last live override once.
+                if (!value)
+                {
+                    m_ResetExtractorsToVanillaRequested = true;
+                }
+
                 OnIndustryChanged();
             }
         }
 
         [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(EnableExtractorTruckControl), true)]
         public float ExtractorMaxTrucksScalar
         {
             get => m_ExtractorMaxTrucksScalar;
@@ -204,6 +222,7 @@ namespace PublicWorksPlus
             // Keep live request helpers opt-in until large-city testing is solid.
             m_EnableFullLoadDispatchHelper = false;
             m_EnableExtractorTruckControl = true;
+            m_ResetExtractorsToVanillaRequested = false;
 
             m_SemiTruckCargoScalar = kVanillaPercent;
             m_DeliveryVanCargoScalar = kVanillaPercent;

@@ -108,7 +108,18 @@ namespace PublicWorksPlus
             // Only one mod should own extractor m_MaxTransports.
             if (settings.EnableExtractorTruckControl)
             {
-                ApplyExtractorFleet(settings, ref ecb, ref anyPrefabTaggedUpdated);
+                ApplyExtractorFleet(
+                    settings.ExtractorMaxTrucksScalar,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
+            }
+            else if (settings.ConsumeExtractorResetRequest())
+            {
+                // Restore vanilla once, then leave extractor counts alone.
+                ApplyExtractorFleet(
+                    1f,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
             }
 
             if (anyPrefabTaggedUpdated)
@@ -276,12 +287,12 @@ namespace PublicWorksPlus
         }
 
         private void ApplyExtractorFleet(
-            ATTSettings settings,
+            float requestedScalar,
             ref EntityCommandBuffer ecb,
             ref bool anyPrefabTaggedUpdated)
         {
             float scalar = ScalarMath.ClampScalar(
-                settings.ExtractorMaxTrucksScalar,
+                requestedScalar,
                 ATTSettings.CargoStationMinScalar,
                 ATTSettings.CargoStationMaxScalar);
 

@@ -226,7 +226,8 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableExtractorTruckControl)), "Adjust extractor trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableExtractorTruckControl)),
                     "Leave ON to use ATT's extractor truck slider.\n" +
-                    "Turn OFF when another mod controls extractor company truck counts.\n" +
+                    "Turn OFF to restore vanilla extractor truck counts and hide the slider.\n" +
+                    "Use OFF when another mod controls extractor company trucks.\n" +
                     "<[x] Default ON>." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Total trucks: extractors" },

@@ -85,8 +85,8 @@ bool verbose = Mod.Settings.EnableDebugLogging;
 #endif
 
             float percent = Mod.Settings.RoadWearScalar; // 100 = vanilla
-            if (percent < Setting.RoadWearMinPercent) percent = Setting.RoadWearMinPercent;
-            if (percent > Setting.RoadWearMaxPercent) percent = Setting.RoadWearMaxPercent;
+            if (percent < ATTSettings.RoadWearMinPercent) percent = ATTSettings.RoadWearMinPercent;
+            if (percent > ATTSettings.RoadWearMaxPercent) percent = ATTSettings.RoadWearMaxPercent;
 
             float scalar = percent / 100f;
 

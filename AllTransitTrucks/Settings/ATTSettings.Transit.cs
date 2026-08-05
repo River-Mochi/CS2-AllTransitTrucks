@@ -1,4 +1,4 @@
-// <copyright file="Setting.Transit.cs" company="River-Mochi">
+// <copyright file="ATTSettings.Transit.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
 // Licensed under the MIT License. You may not use this file except in compliance with this License.
 // See LICENSE file in the project root for full license information.
@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Settings/Setting.Transit.cs
+// File: Settings/ATTSettings.Transit.cs
 // Purpose: Public Transit settings (depots, passengers, line vehicle policy toggle).
 
 namespace PublicWorksPlus
@@ -16,7 +16,7 @@ namespace PublicWorksPlus
     using Game.Settings;     // Settings UI attributes
     using Game.UI;           // Unit
 
-    public sealed partial class Setting
+    public sealed partial class ATTSettings
     {
         private bool m_EnableLineVehicleCountTuner;
 

@@ -138,7 +138,7 @@ namespace PublicWorksPlus
                 return;
             }
 
-            Setting settings = Mod.Settings;
+            ATTSettings settings = Mod.Settings;
 
 #if DEBUG
             bool debug = settings.EnableDebugLogging;
@@ -374,7 +374,7 @@ namespace PublicWorksPlus
             return true;
         }
 
-        private static float GetDepotScalar(Setting settings, TransportType type)
+        private static float GetDepotScalar(ATTSettings settings, TransportType type)
         {
             float percent;
             switch (type)
@@ -388,10 +388,10 @@ namespace PublicWorksPlus
                 default: return 1f;
             }
 
-            return ScalarMath.PercentToScalarClamped(percent, Setting.DepotMinPercent, Setting.MaxPercent);
+            return ScalarMath.PercentToScalarClamped(percent, ATTSettings.DepotMinPercent, ATTSettings.MaxPercent);
         }
 
-        private static float GetPassengerScalar(Setting settings, TransportType type)
+        private static float GetPassengerScalar(ATTSettings settings, TransportType type)
         {
             float percent;
             switch (type)
@@ -406,7 +406,7 @@ namespace PublicWorksPlus
                 default: return 1f;
             }
 
-            return ScalarMath.PercentToScalarClamped(percent, Setting.PassengerMinPercent, Setting.MaxPercent);
+            return ScalarMath.PercentToScalarClamped(percent, ATTSettings.PassengerMinPercent, ATTSettings.MaxPercent);
         }
     }
 }

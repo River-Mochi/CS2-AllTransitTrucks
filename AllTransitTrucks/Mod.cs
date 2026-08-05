@@ -39,7 +39,7 @@ namespace PublicWorksPlus
         public static readonly ILog s_Log =
             LogManager.GetLogger(ModId).SetShowsErrorsInUI(false);
 
-        public static Setting? Settings;
+        public static ATTSettings? Settings;
 
         public void OnLoad(UpdateSystem updateSystem)
         {
@@ -52,7 +52,7 @@ namespace PublicWorksPlus
             }
 
             // Settings first so locale labels can resolve.
-            Setting setting = new(this);
+            ATTSettings setting = new(this);
             Settings = setting;
 
             try
@@ -86,7 +86,7 @@ namespace PublicWorksPlus
 
             // Load settings (.coc) into the instance.
             // The default instance passed here provides defaults for missing fields.
-            AssetDatabase.global.LoadSettings(ModId, setting, new Setting(this));
+            AssetDatabase.global.LoadSettings(ModId, setting, new ATTSettings(this));
 
             // Repair missing/out-of-range/invalid values in-memory (no auto-save).
             setting.SanitizeAfterLoad();

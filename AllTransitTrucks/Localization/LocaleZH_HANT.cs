@@ -16,9 +16,9 @@ namespace PublicWorksPlus
 
     public sealed class LocaleZH_HANT : IDictionarySource
     {
-        private readonly Setting m_Setting;
+        private readonly ATTSettings m_Setting;
 
-        public LocaleZH_HANT(Setting setting)
+        public LocaleZH_HANT(ATTSettings setting)
         {
             m_Setting = setting;
         }
@@ -42,20 +42,20 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetSettingsLocaleID(), title },
 
-                // Tabs (match Setting.cs tab ids)
-                { m_Setting.GetOptionTabLocaleID(Setting.PublicTransitTab), "大眾運輸" },
-                { m_Setting.GetOptionTabLocaleID(Setting.IndustryTab),      "工業" },
-                { m_Setting.GetOptionTabLocaleID(Setting.ParksRoadsTab),    "公園-道路" },
-                { m_Setting.GetOptionTabLocaleID(Setting.AboutTab),         "關於" },
+                // Tabs (match ATTSettings.cs tab ids)
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "大眾運輸" },
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "工業" },
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "公園-道路" },
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "關於" },
 
                 // --------------------
                 // Public-Transit tab
                 // --------------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.LineVehiclesGroup), "交通路線（遊戲內滑桿範圍）" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.LineVehiclesGroup), "交通路線（遊戲內滑桿範圍）" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableLineVehicleCountTuner)), "擴充交通路線最小/最大值" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableLineVehicleCountTuner)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "擴充交通路線最小/最大值" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
                     "增加每條路線的遊戲內交通路線滑桿**範圍**。\n" +
                     "在所有已測試路線上，**最低可到 (1)**。\n" +
                     "**最大上限會變動**；但都比原版高 3× 或更多。\n" +
@@ -69,104 +69,104 @@ namespace PublicWorksPlus
                 },
 
                 // Depot Capacity sliders
-                { m_Setting.GetOptionGroupLocaleID(Setting.DepotGroup), "車庫容量（每個車庫最大車輛數）" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.DepotGroup), "車庫容量（每個車庫最大車輛數）" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.BusDepotScalar)), "公車車庫" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.BusDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusDepotScalar)), "公車車庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusDepotScalar)),
                     "修改每個**公車車庫**可維護/生成的公車數量。\n" +
                     "**100%** = 原版（遊戲預設值）。\n" +
                     "**1000%** = 10× 更多。\n" +
                     "適用於基礎建築。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.FerryDepotScalar)), "渡輪車庫" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.FerryDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.FerryDepotScalar)), "渡輪車庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.FerryDepotScalar)),
                     "**渡輪車庫**每棟建築的最大車輛數。\n" +
                     "**100%** = 原版（遊戲預設值）。\n" +
                     "適用於基礎建築。"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SubwayDepotScalar)), "地鐵車庫" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SubwayDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayDepotScalar)), "地鐵車庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayDepotScalar)),
                     "修改每個**地鐵車庫**可維護的地鐵車輛數量。\n" +
                     "適用於基礎建築。"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TaxiDepotScalar)), "計程車車庫" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TaxiDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TaxiDepotScalar)), "計程車車庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TaxiDepotScalar)),
                     "每個**計程車車庫**可維護的計程車數量。\n" +
                     "若設到最大，可能會出現數量過多、甚至有點滑稽的計程車。"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TramDepotScalar)), "電車車庫" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TramDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramDepotScalar)), "電車車庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramDepotScalar)),
                     "修改每個**電車車庫**可維護的電車數量。\n" +
                     "適用於基礎建築。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TrainDepotScalar)), "火車車庫" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TrainDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainDepotScalar)), "火車車庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainDepotScalar)),
                     "修改每個**火車車庫**可維護的火車數量。\n" +
                     "適用於基礎建築。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetDepotToVanillaButton)), "重設車庫預設值" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetDepotToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)), "重設車庫預設值" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "將所有車庫滑桿恢復到 **100%**（遊戲預設值 / 原版）。" },
 
                 // Passenger capacity sliders
-                { m_Setting.GetOptionGroupLocaleID(Setting.PassengerGroup), "載客量（每輛車最大人數）" },
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.BusPassengerScalar)), "公車" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.BusPassengerScalar)),
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "載客量（每輛車最大人數）" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "公車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusPassengerScalar)),
                     "修改**公車乘客**容量。\n" +
                     "**10%** = 原版座位數的 10%。\n" +
                     "**100%** = 原版座位數（遊戲預設值）。\n" +
                     "**1000%** = 10× 更多座位。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TramPassengerScalar)), "電車" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TramPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramPassengerScalar)), "電車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramPassengerScalar)),
                     "修改**電車乘客**容量。\n" +
                     "**10%** = 原版座位數的 10%。\n" +
                     "**100%** = 原版座位數（遊戲預設值）。\n" +
                     "**1000%** = 10× 更多座位。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TrainPassengerScalar)), "火車" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TrainPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainPassengerScalar)), "火車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainPassengerScalar)),
                     "修改**火車乘客**容量。\n" +
                     "適用於車頭與車廂段。\n" +
                     "**10%** = 原版座位數的 10%。\n" +
                     "**100%** = 原版座位數（遊戲預設值）。\n" +
                     "**1000%** = 10× 更多座位。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SubwayPassengerScalar)), "地鐵" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SubwayPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayPassengerScalar)), "地鐵" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayPassengerScalar)),
                     "修改**地鐵乘客**容量。\n" +
                     "**10%** = 原版座位數的 10%。\n" +
                     "**100%** = 原版座位數（遊戲預設值）。\n" +
                     "**1000%** = 10× 更多座位。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ShipPassengerScalar)), "船" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ShipPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShipPassengerScalar)), "船" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShipPassengerScalar)),
                     "修改**客船**容量（不包含貨船）。\n" +
                     "**100%** = 原版座位數（遊戲預設值）。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.FerryPassengerScalar)), "渡輪" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.FerryPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.FerryPassengerScalar)), "渡輪" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.FerryPassengerScalar)),
                     "修改**渡輪乘客**容量。\n" +
                     "**10%** = 原版座位數的 10%。\n" +
                     "**100%** = 原版座位數（遊戲預設值）。\n" +
                     "**1000%** = 10× 更多座位。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.AirplanePassengerScalar)), "飛機" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.AirplanePassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.AirplanePassengerScalar)), "飛機" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.AirplanePassengerScalar)),
                     "修改**飛機乘客**容量。\n" +
                     "**10%** = 原版座位數的 10%。\n" +
                     "**100%** = 原版座位數（遊戲預設值）。\n" +
                     "**1000%** = 10× 更多座位。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DoublePassengersButton)), "雙倍" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.DoublePassengersButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.DoublePassengersButton)), "雙倍" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.DoublePassengersButton)),
                     "將所有乘客滑桿設為 **200%**。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetPassengerToVanillaButton)), "重設所有乘客設定" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetPassengerToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetPassengerToVanillaButton)), "重設所有乘客設定" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetPassengerToVanillaButton)),
                     "將所有乘客滑桿恢復到 **100%**\n" +
                     "（遊戲預設值 / 原版）。" },
 
@@ -174,10 +174,10 @@ namespace PublicWorksPlus
                 // INDUSTRY tab
                 // ----------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.DeliveryGroup), "配送車輛（貨物容量）" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "配送車輛（貨物容量）" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SemiTruckCargoScalar)), "半掛卡車" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SemiTruckCargoScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "半掛卡車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "半掛卡車的**載貨容量**。\n" +
                     "**100% = 25t**（原版）\n" +
                     "**500% = 125t**。\n" +
@@ -187,37 +187,37 @@ namespace PublicWorksPlus
                     "這與本地郵件投遞不同。"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DeliveryVanCargoScalar)), "配送廂型車" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.DeliveryVanCargoScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.DeliveryVanCargoScalar)), "配送廂型車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.DeliveryVanCargoScalar)),
                     "**配送廂型車**\n" +
                     "**100% = 4t**（原版）\n" +
                     "**500% = 20t**。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CoalTruckScalar)), "原材料卡車" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.CoalTruckScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CoalTruckScalar)), "原材料卡車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CoalTruckScalar)),
                     "**原材料卡車**（石油、煤炭、礦石、石材，以及用於工業廢棄物的傾卸卡車 - 屬於同一種共用卡車類型）\n" +
                     "**100% = 20t**（原版）\n" +
                     "**500% = 100t**。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.MotorbikeDeliveryCargoScalar)), "配送機車" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.MotorbikeDeliveryCargoScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.MotorbikeDeliveryCargoScalar)), "配送機車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.MotorbikeDeliveryCargoScalar)),
                     "**機車配送**通常會把藥品送到醫院/診所。\n" +
                     "**100% = 0.1t**（原版）\n" +
                     "**500% = 0.5t**。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetDeliveryToVanillaButton)), "重設配送預設值" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetDeliveryToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)), "重設配送預設值" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "將配送滑桿恢復到 **100%**（遊戲預設值 / 原版）。" },
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.CargoStationsGroup), "貨運車隊（港口、鐵路、機場）" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "貨運車隊（港口、鐵路、機場）" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CargoStationMaxTrucksScalar)), "貨運站最大車隊" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.CargoStationMaxTrucksScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "貨運站最大車隊" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "修改**貨運運輸站**的最大活躍運輸車輛數。\n" +
                     "**1×** = 原版，**5×** = 5× 更多。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ExtractorMaxTrucksScalar)), "採集設施車隊" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ExtractorMaxTrucksScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "採集設施車隊" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "修改工業**採集設施最大卡車數**。\n" +
                     "（農場、漁業、林業、礦石、石油、煤炭、石材）。\n" +
                     "**1×** = 原版\n" +
@@ -225,58 +225,58 @@ namespace PublicWorksPlus
                     "原版通常允許每個採集設施建築擁有 5 輛卡車。"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetCargoStationsToVanillaButton)), "重設貨運 + 採集設施車隊" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetCargoStationsToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "重設貨運 + 採集設施車隊" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "將貨運站 + 採集設施倍率恢復到 **1×**（遊戲預設值 / 原版）。" },
 
                 // -------------------
                 // Parks-Roads
                 // -------------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.ParkMaintenanceGroup), "公園維護" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "公園維護" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ParkMaintenanceVehicleCapacityScalar)), "工作班次容量" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ParkMaintenanceVehicleCapacityScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "工作班次容量" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
                     "**工作班次容量**（車輛容量）的倍率。\n" +
                     "卡車在返回建築前可完成的總工作量。\n" +
                     "可以理解為：補給更多 = 在外工作更久。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ParkMaintenanceVehicleRateScalar)), "車輛工作速率" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ParkMaintenanceVehicleRateScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "車輛工作速率" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
                     "**車輛工作速率**的倍率。\n" +
                     "速率 = 車輛停下時每個模擬 tick 完成的工作量。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ParkMaintenanceDepotScalar)), "車庫車隊規模" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ParkMaintenanceDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "車庫車隊規模" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
                     "車庫建築**最大車輛數**的倍率。\n" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetParkMaintenanceToVanillaButton)), "重設公園維護" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetParkMaintenanceToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "重設公園維護" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
                     "將所有數值重設回 **100%**（遊戲預設值 / 原版）。" },
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.RoadMaintenanceGroup), "道路維護" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "道路維護" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadMaintenanceDepotScalar)), "車庫車隊規模" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadMaintenanceDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "車庫車隊規模" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
                     "每棟建築**車庫最大車輛數**的倍率。\n" +
                     "越高 = 卡車越多。\n" +
                     "<平衡說明：太少或太多都可能傷害交通。>" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadMaintenanceVehicleCapacityScalar)), "工作班次容量" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadMaintenanceVehicleCapacityScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "工作班次容量" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
                     "**工作班次容量**的倍率。\n" +
                     "卡車在返回車庫前可完成的總工作量。\n" +
                     "**越高 = 返回主建築次數越少。** 效率更高。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadMaintenanceVehicleRateScalar)), "修理速率" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadMaintenanceVehicleRateScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "修理速率" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
                     "速率 = 車輛停下時每個模擬 tick 完成的工作量。\n" +
                     "即使在最高速率下，卡車仍會短暫停車再前進；只是每次停車完成更多工作。\n" +
                     "原版中，一次停車不一定能把道路修到 100%，所以這個功能會隨時間推移變得更有幫助。\n"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadWearScalar)), "道路磨損" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadWearScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "道路磨損" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
                     "<Beta feature>\n" +
                     "控制道路因**時間與交通**因素而劣化的速度。\n" +
                     "**10%** = 磨損速度慢 10×（所需維修更少）\n" +
@@ -288,55 +288,55 @@ namespace PublicWorksPlus
                     "查看道路資訊檢視：嚴重損壞的道路會顯示為紅色，並減慢車輛速度。"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetRoadMaintenanceToVanillaButton)), "重設道路維護" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetRoadMaintenanceToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "重設道路維護" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
                     "將所有數值恢復到 **100%**（遊戲預設值 / 原版）。" },
 
                 // -------------------
                 // About tab
                 // -------------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.AboutInfoGroup), "資訊" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.AboutLinksGroup), "支援連結" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.DebugGroup), "除錯 / 日誌" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.AboutInfoGroup), "資訊" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.AboutLinksGroup), "支援連結" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.DebugGroup), "除錯 / 日誌" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ModNameDisplay)), "模組" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ModNameDisplay)), "此模組的顯示名稱。" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ModNameDisplay)), "模組" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModNameDisplay)), "此模組的顯示名稱。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ModVersionDisplay)), "版本" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ModVersionDisplay)), "目前模組版本。" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ModVersionDisplay)), "版本" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModVersionDisplay)), "目前模組版本。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenParadoxMods)), "Paradox" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxMods)), "開啟作者模組的 Paradox Mods 網站。" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenParadoxMods)), "Paradox" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenParadoxMods)), "開啟作者模組的 Paradox Mods 網站。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenDiscord)), "Discord" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenDiscord)), "在瀏覽器中開啟社群 Discord。" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenDiscord)), "Discord" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenDiscord)), "在瀏覽器中開啟社群 Discord。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RunPrefabScanButton)), "掃描報告（prefab）" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RunPrefabScanButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RunPrefabScanButton)), "掃描報告（prefab）" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RunPrefabScanButton)),
                     "建立用於除錯的<一次性>報告。\n" +
                     "正常遊玩不需要。\n" +
                     "檔案位置：<ModsData/AllTransitTrucks/ScanReport-Prefabs.txt>\n" +
                     "提示：點擊<一次>；當狀態顯示為完成時，使用 <開啟報告資料夾>。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PrefabScanStatus)), "Prefab 掃描狀態" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.PrefabScanStatus)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Prefab 掃描狀態" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
                     "顯示掃描狀態：閒置 / 排隊中 / 執行中 / 完成 / 無資料。\n" +
                     "排隊中/執行中 會顯示已用時間；完成 會顯示耗時 + 完成時間。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableDebugLogging)), "詳細除錯日誌" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableDebugLogging)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "詳細除錯日誌" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),
                     "將額外細節寫入 <AllTransitTrucks.log> 以便排查問題。\n" +
                     "正常遊玩請**停用**。\n" +
                     "<這只會增加日誌記錄，不會改變遊戲數值。>" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenLogButton)), "開啟日誌資料夾" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenLogButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenLogButton)), "開啟日誌資料夾" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenLogButton)),
                     "開啟日誌資料夾。\n" +
                     "下一步：用文字編輯器開啟 <AllTransitTrucks.log>（推薦 Notepad++）。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenReportButton)), "開啟報告資料夾" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenReportButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenReportButton)), "開啟報告資料夾" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenReportButton)),
                     "開啟報告資料夾。\n" +
                     "下一步：用文字編輯器開啟 <ScanReport-Prefabs.txt>（例如 Notepad++）。" },
 

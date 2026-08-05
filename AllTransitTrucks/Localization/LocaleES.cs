@@ -16,9 +16,9 @@ namespace PublicWorksPlus
 
     public sealed class LocaleES : IDictionarySource
     {
-        private readonly Setting m_Setting;
+        private readonly ATTSettings m_Setting;
 
-        public LocaleES(Setting setting)
+        public LocaleES(ATTSettings setting)
         {
             m_Setting = setting;
         }
@@ -42,20 +42,20 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetSettingsLocaleID(), title },
 
-                // Tabs (match Setting.cs tab ids)
-                { m_Setting.GetOptionTabLocaleID(Setting.PublicTransitTab), "Transporte público" },
-                { m_Setting.GetOptionTabLocaleID(Setting.IndustryTab),      "Industria" },
-                { m_Setting.GetOptionTabLocaleID(Setting.ParksRoadsTab),    "Parques-Carreteras" },
-                { m_Setting.GetOptionTabLocaleID(Setting.AboutTab),         "Acerca de" },
+                // Tabs (match ATTSettings.cs tab ids)
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Transporte público" },
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Industria" },
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Parques-Carreteras" },
+                { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "Acerca de" },
 
                 // --------------------
                 // Public-Transit tab
                 // --------------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.LineVehiclesGroup), "Líneas de transporte (rango del deslizador en juego)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.LineVehiclesGroup), "Líneas de transporte (rango del deslizador en juego)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableLineVehicleCountTuner)), "Ampliar mín/máx de líneas de transporte" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableLineVehicleCountTuner)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Ampliar mín/máx de líneas de transporte" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
                     "Aumenta el **rango** del deslizador de líneas de transporte en juego para cada ruta.\n" +
                     "**Tan bajo como (1)** en todas las rutas probadas.\n" +
                     "El **límite máximo varía**; pero todos son 3× o más altos que vanilla.\n" +
@@ -69,104 +69,104 @@ namespace PublicWorksPlus
                 },
 
                 // Depot Capacity sliders
-                { m_Setting.GetOptionGroupLocaleID(Setting.DepotGroup), "Capacidad de depósitos (vehículos máx por depósito)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.DepotGroup), "Capacidad de depósitos (vehículos máx por depósito)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.BusDepotScalar)), "Depósito de autobuses" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.BusDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusDepotScalar)), "Depósito de autobuses" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusDepotScalar)),
                     "Cambia cuántos autobuses puede mantener/generar cada **depósito de autobuses**.\n" +
                     "**100%** = vanilla (valor predeterminado del juego).\n" +
                     "**1000%** = 10× más.\n" +
                     "Se aplica al edificio base." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.FerryDepotScalar)), "Depósito de ferris" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.FerryDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.FerryDepotScalar)), "Depósito de ferris" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.FerryDepotScalar)),
                     "**Depósito de ferris**: vehículos máximos por edificio.\n" +
                     "**100%** = vanilla (valor predeterminado del juego).\n" +
                     "Se aplica al edificio base."
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SubwayDepotScalar)), "Depósito de metro" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SubwayDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayDepotScalar)), "Depósito de metro" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayDepotScalar)),
                     "Cambia cuántos vehículos de metro puede mantener cada **depósito de metro**.\n" +
                     "Se aplica al edificio base."
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TaxiDepotScalar)), "Depósito de taxis" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TaxiDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TaxiDepotScalar)), "Depósito de taxis" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TaxiDepotScalar)),
                     "Cuántos taxis puede mantener cada **depósito de taxis**.\n" +
                     "Si se pone al máximo, podría causar una cantidad excesiva y cómica de taxis."
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TramDepotScalar)), "Depósito de tranvías" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TramDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramDepotScalar)), "Depósito de tranvías" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramDepotScalar)),
                     "Cambia cuántos tranvías puede mantener cada **depósito de tranvías**.\n" +
                     "Se aplica al edificio base." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TrainDepotScalar)), "Depósito de trenes" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TrainDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainDepotScalar)), "Depósito de trenes" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainDepotScalar)),
                     "Cambia cuántos trenes puede mantener cada **depósito de trenes**.\n" +
                     "Se aplica al edificio base." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetDepotToVanillaButton)), "Restablecer depósitos" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetDepotToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)), "Restablecer depósitos" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Devuelve todos los deslizadores de depósitos a **100%** (valor predeterminado del juego / vanilla)." },
 
                 // Passenger capacity sliders
-                { m_Setting.GetOptionGroupLocaleID(Setting.PassengerGroup), "Capacidad de pasajeros (máx personas por vehículo)" },
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.BusPassengerScalar)), "Autobús" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.BusPassengerScalar)),
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Capacidad de pasajeros (máx personas por vehículo)" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Autobús" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusPassengerScalar)),
                     "Cambia la capacidad de **pasajeros del autobús**.\n" +
                     "**10%** = 10% de los asientos vanilla.\n" +
                     "**100%** = asientos vanilla (valor predeterminado del juego).\n" +
                     "**1000%** = 10× más asientos." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TramPassengerScalar)), "Tranvía" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TramPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramPassengerScalar)), "Tranvía" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramPassengerScalar)),
                     "Cambia la capacidad de **pasajeros del tranvía**.\n" +
                     "**10%** = 10% de los asientos vanilla.\n" +
                     "**100%** = asientos vanilla (valor predeterminado del juego).\n" +
                     "**1000%** = 10× más asientos." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.TrainPassengerScalar)), "Tren" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.TrainPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainPassengerScalar)), "Tren" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainPassengerScalar)),
                     "Cambia la capacidad de **pasajeros del tren**.\n" +
                     "Se aplica a locomotoras y secciones.\n" +
                     "**10%** = 10% de los asientos vanilla.\n" +
                     "**100%** = asientos vanilla (valor predeterminado del juego).\n" +
                     "**1000%** = 10× más asientos." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SubwayPassengerScalar)), "Metro" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SubwayPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayPassengerScalar)), "Metro" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayPassengerScalar)),
                     "Cambia la capacidad de **pasajeros del metro**.\n" +
                     "**10%** = 10% de los asientos vanilla.\n" +
                     "**100%** = asientos vanilla (valor predeterminado del juego).\n" +
                     "**1000%** = 10× más asientos." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ShipPassengerScalar)), "Barco" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ShipPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShipPassengerScalar)), "Barco" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShipPassengerScalar)),
                     "Cambia la capacidad de **barcos de pasajeros** (no barcos de carga).\n" +
                     "**100%** = asientos vanilla (valor predeterminado del juego)." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.FerryPassengerScalar)), "Ferri" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.FerryPassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.FerryPassengerScalar)), "Ferri" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.FerryPassengerScalar)),
                     "Cambia la capacidad de **pasajeros del ferri**.\n" +
                     "**10%** = 10% de los asientos vanilla.\n" +
                     "**100%** = asientos vanilla (valor predeterminado del juego).\n" +
                     "**1000%** = 10× más asientos." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.AirplanePassengerScalar)), "Avión" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.AirplanePassengerScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.AirplanePassengerScalar)), "Avión" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.AirplanePassengerScalar)),
                     "Cambia la capacidad de **pasajeros del avión**.\n" +
                     "**10%** = 10% de los asientos vanilla.\n" +
                     "**100%** = asientos vanilla (valor predeterminado del juego).\n" +
                     "**1000%** = 10× más asientos." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DoublePassengersButton)), "Duplicar" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.DoublePassengersButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.DoublePassengersButton)), "Duplicar" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.DoublePassengersButton)),
                     "Ajusta todos los deslizadores de pasajeros a **200%**." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetPassengerToVanillaButton)), "Restablecer todos los pasajeros" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetPassengerToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetPassengerToVanillaButton)), "Restablecer todos los pasajeros" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetPassengerToVanillaButton)),
                     "Devuelve todos los deslizadores de pasajeros a **100%**\n" +
                     "(valor predeterminado del juego / vanilla)." },
 
@@ -174,10 +174,10 @@ namespace PublicWorksPlus
                 // INDUSTRY tab
                 // ----------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.DeliveryGroup), "Vehículos de reparto (capacidad de carga)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Vehículos de reparto (capacidad de carga)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SemiTruckCargoScalar)), "Camiones articulados" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SemiTruckCargoScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Camiones articulados" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "Capacidad de los **camiones articulados**.\n" +
                     "**100% = 25t** (vanilla)\n" +
                     "**500% = 125t**.\n" +
@@ -187,37 +187,37 @@ namespace PublicWorksPlus
                     "No es lo mismo que el reparto local de correo."
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DeliveryVanCargoScalar)), "Furgonetas de reparto" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.DeliveryVanCargoScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.DeliveryVanCargoScalar)), "Furgonetas de reparto" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.DeliveryVanCargoScalar)),
                     "**Furgonetas de reparto**\n" +
                     "**100% = 4t** (vanilla)\n" +
                     "**500% = 20t**." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CoalTruckScalar)), "Camiones de materias primas" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.CoalTruckScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CoalTruckScalar)), "Camiones de materias primas" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CoalTruckScalar)),
                     "**Camiones de materias primas** (petróleo, carbón, mineral, piedra, camiones volquete para residuos industriales - mismo tipo de camión compartido)\n" +
                     "**100% = 20t** (vanilla)\n" +
                     "**500% = 100t**." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.MotorbikeDeliveryCargoScalar)), "Moto de reparto" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.MotorbikeDeliveryCargoScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.MotorbikeDeliveryCargoScalar)), "Moto de reparto" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.MotorbikeDeliveryCargoScalar)),
                     "**El reparto en moto** normalmente lleva productos farmacéuticos a un hospital/una clínica.\n" +
                     "**100% = 0.1t** (vanilla)\n" +
                     "**500% = 0.5t**." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetDeliveryToVanillaButton)), "Restablecer reparto" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetDeliveryToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)), "Restablecer reparto" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Devuelve los deslizadores de reparto a **100%** (valor predeterminado del juego / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.CargoStationsGroup), "Flota de carga (puerto, tren, aeropuerto)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Flota de carga (puerto, tren, aeropuerto)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CargoStationMaxTrucksScalar)), "Flota máx de estación de carga" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.CargoStationMaxTrucksScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Flota máx de estación de carga" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Cambia el máximo de transportistas activos de las **estaciones de transporte de carga**.\n" +
                     "**1×** = vanilla, **5×** = 5× más." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ExtractorMaxTrucksScalar)), "Flota de extractores" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ExtractorMaxTrucksScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Flota de extractores" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Cambia el **máximo de camiones** de los extractores industriales.\n" +
                     "(granjas, pesca, silvicultura, mineral, petróleo, carbón, piedra).\n" +
                     "**1×** = vanilla\n" +
@@ -225,58 +225,58 @@ namespace PublicWorksPlus
                     "Vanilla normalmente permite 5 camiones por edificio extractor."
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetCargoStationsToVanillaButton)), "Restablecer carga + extractores" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetCargoStationsToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Restablecer carga + extractores" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "Devuelve los multiplicadores de estaciones de carga + extractores a **1×** (valor predeterminado del juego / vanilla)." },
 
                 // -------------------
                 // Parks-Roads
                 // -------------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.ParkMaintenanceGroup), "Mantenimiento de parques" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Mantenimiento de parques" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ParkMaintenanceVehicleCapacityScalar)), "Capacidad del turno de trabajo" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ParkMaintenanceVehicleCapacityScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Capacidad del turno de trabajo" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
                     "Multiplicador para la **capacidad del turno de trabajo** (capacidad del vehículo).\n" +
                     "Trabajo total que puede hacer un camión antes de volver al edificio.\n" +
                     "Piénsalo así: más suministros = permanece fuera más tiempo." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ParkMaintenanceVehicleRateScalar)), "Ritmo del vehículo" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ParkMaintenanceVehicleRateScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Ritmo del vehículo" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
                     "Multiplicador para la **tasa de trabajo del vehículo**.\n" +
                     "Tasa = cuánto trabajo hace por tick de simulación mientras está parado." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ParkMaintenanceDepotScalar)), "Tamaño de flota del depósito" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ParkMaintenanceDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Tamaño de flota del depósito" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
                     "Multiplicador para los **vehículos máximos** del edificio depósito.\n" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetParkMaintenanceToVanillaButton)), "Restablecer mantenimiento de parques" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetParkMaintenanceToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Restablecer mantenimiento de parques" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
                     "Restablece todos los valores a **100%** (valor predeterminado del juego / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.RoadMaintenanceGroup), "Mantenimiento de carreteras" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Mantenimiento de carreteras" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadMaintenanceDepotScalar)), "Tamaño de flota del depósito" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadMaintenanceDepotScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Tamaño de flota del depósito" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
                     "Multiplicador para los **vehículos máximos del depósito** por edificio.\n" +
                     "Más alto = más camiones.\n" +
                     "<Nota de equilibrio: demasiado pocos o demasiados pueden perjudicar el tráfico.>" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadMaintenanceVehicleCapacityScalar)), "Capacidad del turno de trabajo" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadMaintenanceVehicleCapacityScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Capacidad del turno de trabajo" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
                     "Multiplicador para la **capacidad del turno de trabajo**.\n" +
                     "Trabajo total que puede hacer un camión antes de volver al depósito.\n" +
                     "**Más alto = menos regresos** necesarios al edificio principal. Más eficiente." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadMaintenanceVehicleRateScalar)), "Tasa de reparación" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadMaintenanceVehicleRateScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Tasa de reparación" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
                     "Tasa = cuánto trabajo hace por tick de simulación mientras está parado.\n" +
                     "Los camiones aún hacen una parada+avance rápido incluso con la tasa más alta; simplemente hacen más trabajo por parada.\n" +
                     "En vanilla, una sola parada no necesariamente deja la carretera al 100% de reparación, así que esta función mejora con el tiempo.\n"
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RoadWearScalar)), "Desgaste de carreteras" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RoadWearScalar)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Desgaste de carreteras" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
                     "<Beta feature>\n" +
                     "Controla qué tan rápido se deterioran las carreteras por factores de **tiempo y tráfico**.\n" +
                     "**10%** = desgaste 10× más lento (se necesitan menos reparaciones)\n" +
@@ -288,55 +288,55 @@ namespace PublicWorksPlus
                     "Ver infovista de carreteras: muestra en rojo las carreteras muy dañadas que ralentizan a los vehículos."
                 },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetRoadMaintenanceToVanillaButton)), "Restablecer mantenimiento de carreteras" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetRoadMaintenanceToVanillaButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Restablecer mantenimiento de carreteras" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
                     "Devuelve todos los valores a **100%** (valor predeterminado del juego / vanilla)." },
 
                 // -------------------
                 // About tab
                 // -------------------
 
-                { m_Setting.GetOptionGroupLocaleID(Setting.AboutInfoGroup), "Info" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.AboutLinksGroup), "Enlaces de soporte" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.DebugGroup), "Depuración / Registro" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.AboutInfoGroup), "Info" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.AboutLinksGroup), "Enlaces de soporte" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.DebugGroup), "Depuración / Registro" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ModNameDisplay)), "Mod" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ModNameDisplay)), "Nombre mostrado de este mod." },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ModNameDisplay)), "Mod" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModNameDisplay)), "Nombre mostrado de este mod." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ModVersionDisplay)), "Versión" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ModVersionDisplay)), "Versión actual del mod." },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Versión" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Versión actual del mod." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenParadoxMods)), "Paradox" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxMods)), "Abre el sitio web de Paradox Mods para los mods del autor." },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenParadoxMods)), "Paradox" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenParadoxMods)), "Abre el sitio web de Paradox Mods para los mods del autor." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenDiscord)), "Discord" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenDiscord)), "Abre el Discord de la comunidad en un navegador." },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenDiscord)), "Discord" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenDiscord)), "Abre el Discord de la comunidad en un navegador." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.RunPrefabScanButton)), "Informe de escaneo (prefabs)" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.RunPrefabScanButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RunPrefabScanButton)), "Informe de escaneo (prefabs)" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RunPrefabScanButton)),
                     "Crea un informe <único> para depuración.\n" +
                     "No es necesario para una partida normal.\n" +
                     "Ubicación del archivo: <ModsData/AllTransitTrucks/ScanReport-Prefabs.txt>\n" +
                     "Consejo: haz clic <una vez>; si el estado muestra Hecho, usa <Abrir carpeta de informes>." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PrefabScanStatus)), "Estado del escaneo de prefabs" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.PrefabScanStatus)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Estado del escaneo de prefabs" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
                     "Muestra el estado del escaneo: Idle / Queued / Running / Done / No Data.\n" +
                     "Queued/Running shows elapsed time; Done shows duration + finish time." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableDebugLogging)), "Registros debug detallados" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableDebugLogging)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "Registros debug detallados" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),
                     "Envía detalles adicionales a <AllTransitTrucks.log> para solucionar problemas.\n" +
                     "**Desactivar** para una partida normal.\n" +
                     "<Esto solo aumenta el registro y no cambia los valores de juego.>" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenLogButton)), "Abrir carpeta de logs" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenLogButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenLogButton)), "Abrir carpeta de logs" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenLogButton)),
                     "Abre la carpeta de logs.\n" +
                     "Siguiente: abrir <AllTransitTrucks.log> con el editor de texto (se recomienda Notepad++)." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenReportButton)), "Abrir carpeta de informes" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenReportButton)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenReportButton)), "Abrir carpeta de informes" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenReportButton)),
                     "Abre la carpeta de informes.\n" +
                     "Siguiente: abrir <ScanReport-Prefabs.txt> con el editor de texto (por ejemplo, Notepad++)." },
 

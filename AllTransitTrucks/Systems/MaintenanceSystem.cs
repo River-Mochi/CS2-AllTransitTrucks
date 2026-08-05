@@ -89,7 +89,7 @@ namespace PublicWorksPlus
                 return;
             }
 
-            Setting settings = Mod.Settings;
+            ATTSettings settings = Mod.Settings;
 
 #if DEBUG
 bool verbose = settings.EnableDebugLogging;
@@ -101,33 +101,33 @@ bool verbose = settings.EnableDebugLogging;
             // Scalars computed once.
             float roadDepotScalar = ScalarMath.PercentToScalarClamped(
                 settings.RoadMaintenanceDepotScalar,
-                Setting.MaintenanceMinPercent,
-                Setting.MaintenanceMaxPercent);
+                ATTSettings.MaintenanceMinPercent,
+                ATTSettings.MaintenanceMaxPercent);
 
             float parkDepotScalar = ScalarMath.PercentToScalarClamped(
                 settings.ParkMaintenanceDepotScalar,
-                Setting.MaintenanceMinPercent,
-                Setting.MaintenanceMaxPercent);
+                ATTSettings.MaintenanceMinPercent,
+                ATTSettings.MaintenanceMaxPercent);
 
             float roadCapScalar = ScalarMath.PercentToScalarClamped(
                 settings.RoadMaintenanceVehicleCapacityScalar,
-                Setting.MaintenanceMinPercent,
-                Setting.MaintenanceMaxPercent);
+                ATTSettings.MaintenanceMinPercent,
+                ATTSettings.MaintenanceMaxPercent);
 
             float roadRateScalar = ScalarMath.PercentToScalarClamped(
                 settings.RoadMaintenanceVehicleRateScalar,
-                Setting.MaintenanceMinPercent,
-                Setting.MaintenanceMaxPercent);
+                ATTSettings.MaintenanceMinPercent,
+                ATTSettings.MaintenanceMaxPercent);
 
             float parkCapScalar = ScalarMath.PercentToScalarClamped(
                 settings.ParkMaintenanceVehicleCapacityScalar,
-                Setting.MaintenanceMinPercent,
-                Setting.MaintenanceMaxPercent);
+                ATTSettings.MaintenanceMinPercent,
+                ATTSettings.MaintenanceMaxPercent);
 
             float parkRateScalar = ScalarMath.PercentToScalarClamped(
                 settings.ParkMaintenanceVehicleRateScalar,
-                Setting.MaintenanceMinPercent,
-                Setting.MaintenanceMaxPercent);
+                ATTSettings.MaintenanceMinPercent,
+                ATTSettings.MaintenanceMaxPercent);
 
             // ------------------------------------------
             // Maintenance depots: max vehicles (prefabs)

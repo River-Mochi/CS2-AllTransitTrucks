@@ -60,8 +60,12 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
-            Setting? settings = Mod.Settings;
-            if (settings == null || !settings.HasCustomDeliveryCapacity)
+           if (Mod.Settings is not ATTSettings settings)
+            {
+                return;
+            }
+
+            if (!settings.HasCustomDeliveryCapacity)
             {
                 return;
             }

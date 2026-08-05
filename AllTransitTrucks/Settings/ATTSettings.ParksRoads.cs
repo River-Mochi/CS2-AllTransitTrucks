@@ -1,4 +1,4 @@
-// <copyright file="Setting.ParksRoads.cs" company="River-Mochi">
+// <copyright file="ATTSettings.ParksRoads.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
 // Licensed under the MIT License. You may not use this file except in compliance with this License.
 // See LICENSE file in the project root for full license information.
@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Settings/Setting.ParksRoads.cs
+// File: Settings/ATTSettings.ParksRoads.cs
 // Purpose: Parks/Roads settings (maintenance + road wear).
 
 namespace PublicWorksPlus
@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using Game.Settings;     // Settings UI attributes
     using Game.UI;           // Unit
 
-    public sealed partial class Setting
+    public sealed partial class ATTSettings
     {
         // ------------------------
         // Parks-Roads (percent)

@@ -74,7 +74,7 @@ namespace PublicWorksPlus
                 return;
 
 
-            Setting settings = Mod.Settings!;
+            ATTSettings settings = Mod.Settings!;
             if (Mod.Settings == null)   // Bail out, keep runtime safe.
             {
                 return;

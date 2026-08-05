@@ -1,4 +1,4 @@
-// <copyright file="Setting.cs" company="River-Mochi">
+// <copyright file="ATTSettings.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
 // Licensed under the MIT License. You may not use this file except in compliance with this License.
 // See LICENSE file in the project root for full license information.
@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Settings/Setting.cs
+// File: Settings/ATTSettings.cs
 // Purpose: Options UI + saved settings for All Transit + Trucks (Public Transit + Industry + Parks/Roads + About).
 
 namespace PublicWorksPlus
@@ -37,7 +37,7 @@ namespace PublicWorksPlus
         RoadMaintenanceGroup, ParkMaintenanceGroup,
         AboutLinksGroup, DebugGroup
     )]
-    public sealed partial class Setting : ModSetting
+    public sealed partial class ATTSettings : ModSetting
     {
         // Tab ids (must match Locale ids).
         public const string PublicTransitTab = "Public-Transit";
@@ -100,7 +100,7 @@ namespace PublicWorksPlus
         private const string UrlDiscord =
             "https://discord.gg/HTav7ARPs2";
 
-        public Setting(IMod mod)
+        public ATTSettings(IMod mod)
             : base(mod)
         {
             // New install starts with defaults. LoadSettings overwrites when .coc exists.

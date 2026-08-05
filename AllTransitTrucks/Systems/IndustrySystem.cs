@@ -107,7 +107,7 @@ namespace PublicWorksPlus
                 return;
             }
 
-            Setting settings = Mod.Settings;
+            ATTSettings settings = Mod.Settings;
 #if DEBUG
             bool verbose = settings.EnableDebugLogging;
 #else
@@ -127,8 +127,8 @@ namespace PublicWorksPlus
             {
                 float scalar = ScalarMath.ClampScalar(
                     settings.CargoStationMaxTrucksScalar,
-                    Setting.CargoStationMinScalar,
-                    Setting.CargoStationMaxScalar);
+                    ATTSettings.CargoStationMinScalar,
+                    ATTSettings.CargoStationMaxScalar);
 
                 foreach ((RefRW<TransportCompanyData> companyRef, Entity prefabEntity) in SystemAPI
                              .Query<RefRW<TransportCompanyData>>()
@@ -170,10 +170,10 @@ namespace PublicWorksPlus
             // Convert those percent values back into a scalar here.
             // -------------------------------------------------------------------
             {
-                float semiScalar = ScalarMath.PercentToScalarClamped(settings.SemiTruckCargoScalar, Setting.DeliveryMinPercent, Setting.DeliveryMaxPercent);
-                float vanScalar = ScalarMath.PercentToScalarClamped(settings.DeliveryVanCargoScalar, Setting.DeliveryMinPercent, Setting.DeliveryMaxPercent);
-                float rawScalar = ScalarMath.PercentToScalarClamped(settings.CoalTruckScalar, Setting.DeliveryMinPercent, Setting.DeliveryMaxPercent);
-                float mbikeScalar = ScalarMath.PercentToScalarClamped(settings.MotorbikeDeliveryCargoScalar, Setting.DeliveryMinPercent, Setting.DeliveryMaxPercent);
+                float semiScalar = ScalarMath.PercentToScalarClamped(settings.SemiTruckCargoScalar, ATTSettings.DeliveryMinPercent, ATTSettings.DeliveryMaxPercent);
+                float vanScalar = ScalarMath.PercentToScalarClamped(settings.DeliveryVanCargoScalar, ATTSettings.DeliveryMinPercent, ATTSettings.DeliveryMaxPercent);
+                float rawScalar = ScalarMath.PercentToScalarClamped(settings.CoalTruckScalar, ATTSettings.DeliveryMinPercent, ATTSettings.DeliveryMaxPercent);
+                float mbikeScalar = ScalarMath.PercentToScalarClamped(settings.MotorbikeDeliveryCargoScalar, ATTSettings.DeliveryMinPercent, ATTSettings.DeliveryMaxPercent);
 
                 foreach ((RefRW<DeliveryTruckData> truckRef, Entity prefabEntity) in SystemAPI
                              .Query<RefRW<DeliveryTruckData>>()
@@ -247,8 +247,8 @@ namespace PublicWorksPlus
             {
                 float scalar = ScalarMath.ClampScalar(
                     settings.ExtractorMaxTrucksScalar,
-                    Setting.CargoStationMinScalar,
-                    Setting.CargoStationMaxScalar);
+                    ATTSettings.CargoStationMinScalar,
+                    ATTSettings.CargoStationMaxScalar);
 
                 int matched = 0;
                 int changed = 0;

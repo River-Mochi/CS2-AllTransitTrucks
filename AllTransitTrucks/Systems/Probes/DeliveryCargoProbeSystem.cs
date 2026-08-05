@@ -7,15 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Systems/Probes/DeliveryCargoProbeSystem.cs
-// Purpose: Runtime proof logger for delivery cargo loads vs vanilla/current caps.
-// Notes:
-// - Reads Game.Vehicles.DeliveryTruck (m_Amount, m_Resource, m_State) on live vehicles.
-// - Uses PrefabRef to look up the vehicle prefab.
-// - Reads vanilla cap from managed prefab component (Game.Prefabs.DeliveryTruck) via PrefabSystem.
-// - Reads current cap from live prefab-entity DeliveryTruckData.
-// - Classifies into the same buckets as IndustrySystem for readable summaries.
-// - Runs only when Verbose debug logs is enabled.
-// - Section title reduces repeated text on each line.
+// Purpose: Debug proof that live delivery loads respect vanilla and slider caps.
 
 namespace PublicWorksPlus
 {
@@ -31,7 +23,7 @@ namespace PublicWorksPlus
 
     public sealed partial class DeliveryCargoProbeSystem : GameSystemBase
     {
-        public static readonly int UpdatesPerDay = 64; // interval = 4096 sim frames
+        public static readonly int UpdatesPerDay = 64; // 4096 sim frames between scans
 
         private const int kBucketCount = 5;
         private const int kTopN = 5;
@@ -95,6 +87,7 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
+            // Full live-truck scan. Debug-only and opt-in.
             if (Mod.Settings == null || !Mod.Settings.EnableDebugLogging)
             {
                 return;
@@ -209,14 +202,9 @@ namespace PublicWorksPlus
                         });
                 }
 
-
                 bool isOverVanilla = amount > vanillaCap;
 
-                // Category hints from live DeliveryTruck flags.
-                // - CompanyShopping = Buying and not StorageTransfer / UpkeepDelivery
-                // - StorageTransfer = StorageTransfer
-                // - FacilityOwnedDispatch = UpkeepDelivery
-                // - OC-Transfer is not isolated cleanly in this one-shot live probe
+                // OC transfers share StorageTransfer, so this probe cannot split them cleanly.
                 if ((truck.m_State & Game.Vehicles.DeliveryTruckFlags.StorageTransfer) != 0)
                 {
                     storageTransferCarrying++;
@@ -232,7 +220,6 @@ namespace PublicWorksPlus
                     companyShoppingCarrying++;
                     if (isOverVanilla) companyShoppingOverVanilla++;
                 }
-
 
                 if (amount > currentCap)
                 {
@@ -303,7 +290,6 @@ namespace PublicWorksPlus
                 $"Raw={FmtBucketSummary(m_Stats[(int)VehicleHelpers.DeliveryBucket.RawMaterials])} " +
                 $"OverCap={totalOverCurrentCap}");
 
-
             LogUtils.Info(
                 Mod.s_Log,
                 () =>
@@ -312,7 +298,6 @@ namespace PublicWorksPlus
                 $"StorageTransfer={FmtCategorySummary(storageTransferOverVanilla, storageTransferCarrying)} " +
                 $"OC-Transfer=not isolated " +
                 $"FacilityOwnedDispatch={FmtCategorySummary(facilityOwnedDispatchOverVanilla, facilityOwnedDispatchCarrying)}");
-
 
             LogUtils.Info(Mod.s_Log, () => "============================================================");
         }
@@ -478,12 +463,12 @@ namespace PublicWorksPlus
                 return text;
             }
 
-            ulong raw = Convert.ToUInt64(resource);
+            ulong raw = (ulong)resource;
             List<string> names = new();
 
             foreach (Resource value in Enum.GetValues(typeof(Resource)))
             {
-                ulong bits = Convert.ToUInt64(value);
+                ulong bits = (ulong)value;
                 if (bits == 0 || !IsSingleBit(bits))
                 {
                     continue;

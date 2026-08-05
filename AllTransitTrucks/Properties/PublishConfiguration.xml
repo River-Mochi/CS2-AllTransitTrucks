@@ -97,7 +97,8 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 	<Dependency Id="" />
 	<!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
-- improve performance for storage transfer and delivery dispatch.
+- Improved large-city performance for industry deliveries and storage transfers.
+- Improved settings save.
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
     <ExternalLink Type="discord" Url="https://discord.gg/gwXgvtyhjc" />

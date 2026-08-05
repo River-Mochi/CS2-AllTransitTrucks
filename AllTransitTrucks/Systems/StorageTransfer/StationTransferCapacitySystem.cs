@@ -7,15 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Systems/StorageTransfer/StationTransferCapacitySystem.cs
-// Purpose: Promote storage-company / OC outbound car storage-transfer requests
-//          up to at least one full currently selectable truck.
-// Notes:
-// - Targets runtime StorageCompany entities and outside-connection entities.
-// - Targets outbound CAR requests only.
-// - Mirrors the same promoted amount into the matching incoming request
-//   when the counterpart buffer exists.
-// - Does no request scanning when all delivery capacity sliders are vanilla.
-// - Narrow scope by design: no ships, trains, or station preference logic.
+// Purpose: Fill storage-company and OC car requests to one truck load.
 
 namespace PublicWorksPlus
 {
@@ -36,6 +28,7 @@ namespace PublicWorksPlus
         {
             if (phase == SystemUpdatePhase.GameSimulation)
             {
+                // Match the game's car transfer request system.
                 return 16;
             }
 
@@ -48,7 +41,7 @@ namespace PublicWorksPlus
 
             m_VehicleCapacitySystem = World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
 
-            // Filter to the only request owners this system can change before making an entity array.
+            // Only storage companies and OCs. Broader scans hurt large cities.
             m_RequestQuery = SystemAPI.QueryBuilder()
                 .WithAll<Game.Companies.StorageTransferRequest>()
                 .WithAny<Game.Companies.StorageCompany, Game.Objects.OutsideConnection>()
@@ -60,7 +53,8 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
-           if (Mod.Settings is not ATTSettings settings)
+            // Vanilla delivery settings should cost almost nothing.
+            if (Mod.Settings is not ATTSettings settings)
             {
                 return;
             }
@@ -113,6 +107,7 @@ namespace PublicWorksPlus
                     requests[i] = request;
                     changed++;
 
+                    // Keep both sides of the transfer request in sync.
                     bool mirroredThisOne = TryPromoteMatchingIncomingRequest(
                         requestLookup,
                         entity,
@@ -163,6 +158,8 @@ namespace PublicWorksPlus
             }
 
             DynamicBuffer<Game.Companies.StorageTransferRequest> targetRequests = requestLookup[targetEntity];
+
+            // The target copy keeps the same flags plus Incoming.
             Game.Companies.StorageTransferFlags expectedIncomingFlags =
                 outgoingFlags | Game.Companies.StorageTransferFlags.Incoming;
 

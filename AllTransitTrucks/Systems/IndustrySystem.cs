@@ -7,17 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Systems/IndustrySystem.cs
-// Purpose: Apply industry/logistics tuning based on current settings:
-//          - Extractor fleet max trucks (TransportCompanyData.m_MaxTransports for industrial companies)
-//          - Cargo station max fleet (TransportCompanyData.m_MaxTransports for CargoTransportStationData)
-//          - Delivery truck cargo capacity (DeliveryTruckData.m_CargoCapacity)
-// Notes:
-// - SystemAPI queries.
-// - PrefabBase authoring data is the vanilla source of truth for delivery truck capacities.
-// - Delivery sliders are now stored as percent values (100..500), so they are converted to scalars here.
-// - Cargo station / extractor fleet sliders still use direct scalar values (1..5).
-// - Scales all delivery-truck prefabs by bucket (Semi / Van / Raw / Motorbike).
-// - Tags changed prefab entities with Updated via ECB (structural change safe).
+// Purpose: Apply industry fleet and delivery-capacity settings.
 
 namespace PublicWorksPlus
 {
@@ -37,7 +27,7 @@ namespace PublicWorksPlus
     {
         private PrefabSystem m_PrefabSystem = null!;
 
-        // Prefab base caches (per city/session) — prevents stacking when sliders are moved multiple times.
+        // Cache vanilla values so repeated slider changes never stack.
         private Dictionary<Entity, int> m_CargoStationBaseMaxTransports = null!;
         private Dictionary<Entity, int> m_DeliveryTruckBaseCargoCapacity = null!;
         private Dictionary<Entity, int> m_ExtractorCompanyBaseMaxTransports = null!;
@@ -66,6 +56,7 @@ namespace PublicWorksPlus
 
             RequireForUpdate(anyRelevantPrefabQuery);
 
+            // One-shot system. Loading or settings changes re-enable it.
             Enabled = false;
         }
 
@@ -82,6 +73,7 @@ namespace PublicWorksPlus
                 return;
             }
 
+            // New city means new prefab entities and new vanilla bases.
             m_CargoStationBaseMaxTransports.Clear();
             m_DeliveryTruckBaseCargoCapacity.Clear();
             m_ExtractorCompanyBaseMaxTransports.Clear();
@@ -120,10 +112,7 @@ namespace PublicWorksPlus
             EntityCommandBuffer ecb = new(Allocator.Temp);
             bool anyPrefabTaggedUpdated = false;
 
-            // -----------------------------------------------------------------
-            // Cargo Stations: max trucks (TransportCompanyData.m_MaxTransports)
-            // These sliders still use direct scalar values (1x..5x).
-            // -----------------------------------------------------------------
+            // Cargo station fleet.
             {
                 float scalar = ScalarMath.ClampScalar(
                     settings.CargoStationMaxTrucksScalar,
@@ -164,12 +153,9 @@ namespace PublicWorksPlus
                 }
             }
 
-            // -------------------------------------------------------------------
-            // Delivery trucks: buckets (semi / vans / raw materials / motorbikes)
-            // Delivery sliders are now stored as percent values (100..500).
-            // Convert those percent values back into a scalar here.
-            // -------------------------------------------------------------------
+            // Delivery cargo capacities.
             {
+                // Settings store percent; prefab math uses scalar.
                 float semiScalar = ScalarMath.PercentToScalarClamped(settings.SemiTruckCargoScalar, ATTSettings.DeliveryMinPercent, ATTSettings.DeliveryMaxPercent);
                 float vanScalar = ScalarMath.PercentToScalarClamped(settings.DeliveryVanCargoScalar, ATTSettings.DeliveryMinPercent, ATTSettings.DeliveryMaxPercent);
                 float rawScalar = ScalarMath.PercentToScalarClamped(settings.CoalTruckScalar, ATTSettings.DeliveryMinPercent, ATTSettings.DeliveryMaxPercent);
@@ -240,10 +226,7 @@ namespace PublicWorksPlus
                 }
             }
 
-            // -------------------------------------------------------------------------------
-            // Extractor transport company: max fleet (TransportCompanyData.m_MaxTransports)
-            // These sliders still use direct scalar values (1x..5x).
-            // -------------------------------------------------------------------------------
+            // Extractor fleet.
             {
                 float scalar = ScalarMath.ClampScalar(
                     settings.ExtractorMaxTrucksScalar,
@@ -313,10 +296,9 @@ namespace PublicWorksPlus
             Enabled = false;
         }
 
-        // SystemAPI is valid in non-static SystemBase methods.
-        // This helper tags only changed prefab entities.
         private void TagPrefabUpdatedIfMissing(Entity prefabEntity, ref EntityCommandBuffer ecb, ref bool anyPrefabTaggedUpdated)
         {
+            // Updated tells the prefab pipeline to rebuild changed data.
             if (!SystemAPI.HasComponent<Updated>(prefabEntity))
             {
                 ecb.AddComponent<Updated>(prefabEntity);
@@ -352,6 +334,7 @@ namespace PublicWorksPlus
                 return baseMax;
             }
 
+            // Managed prefab keeps the vanilla authoring value.
             int vanilla;
             if (TryGetCargoStationVanillaMax(prefabEntity, out vanilla) && vanilla > 0)
             {
@@ -386,6 +369,7 @@ namespace PublicWorksPlus
                 return baseCap;
             }
 
+            // Managed prefab keeps the vanilla authoring value.
             int vanilla;
             if (TryGetDeliveryTruckVanillaCargo(prefabEntity, out vanilla) && vanilla >= 0)
             {
@@ -420,6 +404,7 @@ namespace PublicWorksPlus
                 return baseMax;
             }
 
+            // No managed vanilla lookup here; first value becomes the base.
             baseMax = currentValue;
             m_ExtractorCompanyBaseMaxTransports[prefabEntity] = baseMax;
             return baseMax;

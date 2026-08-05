@@ -7,15 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Systems/StorageTransfer/CompanyShoppingCapacitySystem.cs
-// Purpose: Promote industrial/company shopping requests toward one full truck load.
-// Notes:
-// - Runs after BuyingCompanySystem creates ResourceBuyer.
-// - Runs before ResourceBuyerSystem turns ResourceBuyer into TripNeeded.
-// - Targets company buyers only (entities with BuyingCompany).
-// - Uses current truck capacities from VehicleCapacitySystem.
-// - Does no request scanning when all delivery capacity sliders are vanilla.
-// - Caps promoted request size to a safe selected truck capacity so live buying trucks
-//   do not exceed the actual prefab cap after loading.
+// Purpose: Raise company input requests toward one truck load.
 
 namespace PublicWorksPlus
 {
@@ -41,6 +33,7 @@ namespace PublicWorksPlus
 
         public override int GetUpdateInterval(SystemUpdatePhase phase)
         {
+            // Match ResourceBuyerSystem. No need to run every tick.
             return 16;
         }
 
@@ -52,6 +45,7 @@ namespace PublicWorksPlus
             m_ResourceSystem = World.GetOrCreateSystemManaged<ResourceSystem>();
             m_VehicleCapacitySystem = World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
 
+            // Only companies actively waiting to buy an input.
             m_BuyerQuery = SystemAPI.QueryBuilder()
                 .WithAll<ResourceBuyer, BuyingCompany, PrefabRef>()
                 .WithNone<Deleted, Temp>()
@@ -62,7 +56,8 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
-           if (Mod.Settings is not ATTSettings settings)
+            // Vanilla delivery settings should cost almost nothing.
+            if (Mod.Settings is not ATTSettings settings)
             {
                 return;
             }
@@ -260,6 +255,7 @@ namespace PublicWorksPlus
                     storageLimit = limitData.m_Limit;
                 }
 
+                // Respect storage already used or already on the way.
                 int totalKnownWeightedUsed = GetTotalKnownWeightedStorageUsed(entity, process);
                 int storageLeft = storageLimit == int.MaxValue
                     ? int.MaxValue
@@ -283,6 +279,7 @@ namespace PublicWorksPlus
                     continue;
                 }
 
+                // Never request more than a truck the game can select.
                 if (!StationTransferAmountUtil.TryGetSafeSelectedTruckCapacity(
                         truckSelectData,
                         resource,

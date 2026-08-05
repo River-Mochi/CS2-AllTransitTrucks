@@ -66,13 +66,15 @@ namespace PublicWorksPlus
 
             DeliveryTruckSelectData truckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData();
 
+#if DEBUG
             ComponentLookup<Game.Objects.OutsideConnection> ocLookup =
                 SystemAPI.GetComponentLookup<Game.Objects.OutsideConnection>(isReadOnly: true);
 
+            bool verbose = settings.EnableDebugLogging;
+#endif
+
             BufferLookup<Game.Companies.StorageTransferRequest> requestLookup =
                 SystemAPI.GetBufferLookup<Game.Companies.StorageTransferRequest>(isReadOnly: false);
-
-            bool verbose = settings.EnableDebugLogging;
 
             using NativeArray<Entity> entities = m_RequestQuery.ToEntityArray(Allocator.Temp);
 
@@ -82,7 +84,11 @@ namespace PublicWorksPlus
             for (int e = 0; e < entities.Length; e++)
             {
                 Entity entity = entities[e];
+
+#if DEBUG
                 bool isOC = ocLookup.HasComponent(entity);
+#endif
+
                 DynamicBuffer<Game.Companies.StorageTransferRequest> requests = requestLookup[entity];
 
                 for (int i = 0; i < requests.Length; i++)
@@ -121,27 +127,29 @@ namespace PublicWorksPlus
                         mirrored++;
                     }
 
+#if DEBUG
                     if (verbose)
                     {
                         string kind = isOC ? "OC-Transfer" : "StorageTransfer";
 
                         LogUtils.Info(
                             Mod.s_Log,
-                            () =>
                             $"{Mod.ModTag} [DISPATCH][StorageTransfer] SOURCE ENTITY ID {entity.Index}:{entity.Version} " +
                             $"TARGET ENTITY ID {request.m_Target.Index}:{request.m_Target.Version} " +
                             $"kind={kind} Resource={request.m_Resource} Request={adjustedAmount} Flags={request.m_Flags} Mirrored={mirroredThisOne}");
                     }
+#endif
                 }
             }
 
+#if DEBUG
             if (changed > 0 && verbose)
             {
                 LogUtils.Info(
                     Mod.s_Log,
-                    () =>
                     $"{Mod.ModTag} StationTransferCapacity: promoted {changed} storage-company/OC outbound car request(s) to full truck size; mirrored {mirrored} matching incoming request(s).");
             }
+#endif
         }
 
         private static bool TryPromoteMatchingIncomingRequest(

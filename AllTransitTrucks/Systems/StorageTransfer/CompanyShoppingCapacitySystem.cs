@@ -26,7 +26,9 @@ namespace PublicWorksPlus
 
     public sealed partial class CompanyShoppingCapacitySystem : GameSystemBase
     {
+#if DEBUG
         private PrefabSystem m_PrefabSystem = null!;
+#endif
         private ResourceSystem m_ResourceSystem = null!;
         private VehicleCapacitySystem m_VehicleCapacitySystem = null!;
         private EntityQuery m_BuyerQuery;
@@ -41,7 +43,9 @@ namespace PublicWorksPlus
         {
             base.OnCreate();
 
+#if DEBUG
             m_PrefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
+#endif
             m_ResourceSystem = World.GetOrCreateSystemManaged<ResourceSystem>();
             m_VehicleCapacitySystem = World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
 
@@ -100,7 +104,10 @@ namespace PublicWorksPlus
                 SystemAPI.GetBufferLookup<LayoutElement>(isReadOnly: true);
 
             ResourcePrefabs resourcePrefabs = m_ResourceSystem.GetPrefabs();
+
+#if DEBUG
             bool verbose = settings.EnableDebugLogging;
+#endif
 
             bool IsWeightedResource(Resource resource)
             {
@@ -299,25 +306,27 @@ namespace PublicWorksPlus
                 buyerLookup[entity] = buyer;
                 changed++;
 
+#if DEBUG
                 if (verbose)
                 {
                     string prefabName = PrefabNameUtil.GetNameSafe(m_PrefabSystem, prefab);
 
                     LogUtils.Info(
                         Mod.s_Log,
-                        () =>
                         $"{Mod.ModTag} [DISPATCH][CompanyShopping] ENTITY ID {entity.Index}:{entity.Version} " +
                         $"prefab='{prefabName}' Resource={resource} Request={desiredRequest} SafeTruckCap={safeSelectedCapacity}");
                 }
+#endif
             }
 
+#if DEBUG
             if (changed > 0 && verbose)
             {
                 LogUtils.Info(
                     Mod.s_Log,
-                    () =>
                     $"{Mod.ModTag} CompanyShoppingCapacity: promoted {changed} company buyer request(s) toward full truck size.");
             }
+#endif
         }
     }
 }

@@ -51,7 +51,7 @@ namespace PublicWorksPlus
             AppendCapped(sb, ref lines, ref truncated, "Proof: small set of lane prefabs power many road types.");
             AppendCapped(sb, ref lines, ref truncated, "");
 
-            HashSet<Entity> wearPrefabs = new HashSet<Entity>();
+            HashSet<Entity> wearPrefabs = new();
 
             foreach ((RefRO<LaneDeteriorationData> _, Entity prefabEntity) in SystemAPI
                          .Query<RefRO<LaneDeteriorationData>>()

@@ -143,7 +143,7 @@ namespace PublicWorksPlus
 
             try
             {
-                StringBuilder sb = new StringBuilder(256 * 1024);
+                StringBuilder sb = new(256 * 1024);
                 int lines = 0;
                 bool truncated = false;
 
@@ -559,7 +559,7 @@ namespace PublicWorksPlus
                 Append("== Industrial Extractor TransportCompanies (for Extractor trucks slider) ==");
                 Append("Filter: name starts with Industrial_ AND contains Extractor/Coal/Stone/Mine/Quarry. Skips CurMaxTransports=0. Deduped by name.");
 
-                HashSet<string> seenExtractors = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                HashSet<string> seenExtractors = new(StringComparer.OrdinalIgnoreCase);
 
                 foreach ((RefRO<TransportCompanyData> tcRef, Entity e) in SystemAPI
                              .Query<RefRO<TransportCompanyData>>()

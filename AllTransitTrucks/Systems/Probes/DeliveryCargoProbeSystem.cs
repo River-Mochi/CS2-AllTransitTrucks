@@ -39,7 +39,7 @@ namespace PublicWorksPlus
         private PrefabSystem m_PrefabSystem = null!;
         private SimulationSystem m_Sim = null!;
 
-        private readonly Dictionary<Entity, int> m_VanillaCapByPrefab = new Dictionary<Entity, int>();
+        private readonly Dictionary<Entity, int> m_VanillaCapByPrefab = new();
         private readonly BucketStats[] m_Stats = new BucketStats[kBucketCount];
         private readonly List<BucketHit>[] m_TopOverVanilla = new List<BucketHit>[kBucketCount];
         private readonly List<BucketHit>[] m_TopOverCurrent = new List<BucketHit>[kBucketCount];

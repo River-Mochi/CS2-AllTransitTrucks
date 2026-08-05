@@ -117,7 +117,7 @@ namespace PublicWorksPlus
             ComponentLookup<CarTractorData> tractorLookup = SystemAPI.GetComponentLookup<CarTractorData>(isReadOnly: true);
             ComponentLookup<CarTrailerData> trailerLookup = SystemAPI.GetComponentLookup<CarTrailerData>(isReadOnly: true);
 
-            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+            EntityCommandBuffer ecb = new(Allocator.Temp);
             bool anyPrefabTaggedUpdated = false;
 
             // -----------------------------------------------------------------

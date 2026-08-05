@@ -177,6 +177,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Delivery vehicles (cargo capacity)" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Full-load dispatch helper" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "Raises company and storage requests toward one full truck load.\n" +
+                    "May use extra CPU in large cities.\n" +
+                    "<[ ] Default OFF>." },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Semi trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "**Semi trucks** capacity.\n" +

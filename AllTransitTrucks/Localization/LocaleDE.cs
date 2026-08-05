@@ -176,6 +176,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Lieferfahrzeuge (Frachtkapazität)" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Vollladungs-Dispatchhilfe" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "ErhÃ¶ht Firmen- und Lageranfragen auf ungefÃ¤hr eine volle Lkw-Ladung.\n" +
+                    "Kann in groÃŸen StÃ¤dten mehr CPU benÃ¶tigen.\n" +
+                    "<[ ] StandardmÃ¤ÃŸig AUS>." },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Sattelzüge" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "Kapazität der **Sattelzüge**.\n" +

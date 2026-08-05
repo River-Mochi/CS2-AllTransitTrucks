@@ -7,7 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Systems/StorageTransfer/StationTransferCapacitySystem.cs
-// Purpose: Fill one storage-company or OC car request per source.
+// Purpose: Fill one storage-company or outside-connection car request per source.
 
 namespace PublicWorksPlus
 {
@@ -16,7 +16,6 @@ namespace PublicWorksPlus
     using Game.Common;
     using Game.Companies;
     using Game.Economy;
-    using Game.Objects;
     using Game.Prefabs;
     using Game.Tools;
     using Game.Vehicles;
@@ -42,10 +41,9 @@ namespace PublicWorksPlus
         {
             base.OnCreate();
 
-            m_VehicleCapacitySystem =
-                World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
+            m_VehicleCapacitySystem = World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
 
-            // Only sources the helper can change.
+            // Game.Objects.OutsideConnection is the live entity marker.
             m_RequestQuery = SystemAPI.QueryBuilder()
                 .WithAll<StorageTransferRequest, Resources>()
                 .WithAny<Game.Companies.StorageCompany, Game.Objects.OutsideConnection>()
@@ -68,41 +66,26 @@ namespace PublicWorksPlus
             JobHandle promoteHandle = new PromoteRequestsJob
             {
                 m_EntityType = SystemAPI.GetEntityTypeHandle(),
-                m_RequestType =
-                    SystemAPI.GetBufferTypeHandle<StorageTransferRequest>(
-                        isReadOnly: false),
-                m_ResourceType =
-                    SystemAPI.GetBufferTypeHandle<Resources>(
-                        isReadOnly: true),
+                m_RequestType = SystemAPI.GetBufferTypeHandle<StorageTransferRequest>(isReadOnly: false),
+                m_ResourceType = SystemAPI.GetBufferTypeHandle<Resources>(isReadOnly: true),
 
-                m_PropertyLookup =
-                    SystemAPI.GetComponentLookup<PropertyRenter>(
-                        isReadOnly: true),
+                m_PropertyLookup = SystemAPI.GetComponentLookup<PropertyRenter>(isReadOnly: true),
                 m_OutsideConnectionLookup =
-                    SystemAPI.GetComponentLookup<Game.Objects.OutsideConnection>(
-                        isReadOnly: true),
+                    SystemAPI.GetComponentLookup<Game.Objects.OutsideConnection>(isReadOnly: true),
                 m_TruckLookup =
-                    SystemAPI.GetComponentLookup<Game.Vehicles.DeliveryTruck>(
-                        isReadOnly: true),
+                    SystemAPI.GetComponentLookup<Game.Vehicles.DeliveryTruck>(isReadOnly: true),
 
-                m_GuestVehicleLookup =
-                    SystemAPI.GetBufferLookup<GuestVehicle>(
-                        isReadOnly: true),
-                m_LayoutLookup =
-                    SystemAPI.GetBufferLookup<LayoutElement>(
-                        isReadOnly: true),
+                m_GuestVehicleLookup = SystemAPI.GetBufferLookup<GuestVehicle>(isReadOnly: true),
+                m_LayoutLookup = SystemAPI.GetBufferLookup<LayoutElement>(isReadOnly: true),
 
-                m_TruckSelectData =
-                    m_VehicleCapacitySystem.GetDeliveryTruckSelectData(),
+                m_TruckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData(),
                 m_Mirrors = mirrors.AsParallelWriter(),
             }.ScheduleParallel(m_RequestQuery, Dependency);
 
             JobHandle mirrorHandle = new ApplyMirrorsJob
             {
                 m_Mirrors = mirrors,
-                m_RequestLookup =
-                    SystemAPI.GetBufferLookup<StorageTransferRequest>(
-                        isReadOnly: false),
+                m_RequestLookup = SystemAPI.GetBufferLookup<StorageTransferRequest>(isReadOnly: false),
             }.Schedule(promoteHandle);
 
             // Disposal waits for both jobs and keeps vanilla ordered after us.
@@ -145,26 +128,23 @@ namespace PublicWorksPlus
                 _ = useEnabledMask;
                 _ = chunkEnabledMask;
 
-                NativeArray<Entity> entities =
-                    chunk.GetNativeArray(m_EntityType);
+                NativeArray<Entity> entities = chunk.GetNativeArray(m_EntityType);
                 BufferAccessor<StorageTransferRequest> requestBuffers =
                     chunk.GetBufferAccessor(ref m_RequestType);
                 BufferAccessor<Resources> resourceBuffers =
                     chunk.GetBufferAccessor(ref m_ResourceType);
 
-                for (int e = 0; e < chunk.Count; e++)
+                for (int entityIndex = 0; entityIndex < chunk.Count; entityIndex++)
                 {
-                    Entity source = entities[e];
-                    DynamicBuffer<StorageTransferRequest> requests =
-                        requestBuffers[e];
-                    DynamicBuffer<Resources> resources = resourceBuffers[e];
+                    Entity source = entities[entityIndex];
+                    DynamicBuffer<StorageTransferRequest> requests = requestBuffers[entityIndex];
+                    DynamicBuffer<Resources> resources = resourceBuffers[entityIndex];
 
-                    for (int i = 0; i < requests.Length; i++)
+                    for (int requestIndex = 0; requestIndex < requests.Length; requestIndex++)
                     {
-                        StorageTransferRequest request = requests[i];
+                        StorageTransferRequest request = requests[requestIndex];
 
-                        if (!StationTransferAmountUtil
-                                .IsEligibleOutgoingCarRequest(request.m_Flags))
+                        if (!StationTransferAmountUtil.IsEligibleOutgoingCarRequest(request.m_Flags))
                         {
                             continue;
                         }
@@ -176,9 +156,7 @@ namespace PublicWorksPlus
                             break;
                         }
 
-                        int available = EconomyUtils.GetResources(
-                            request.m_Resource,
-                            resources);
+                        int available = EconomyUtils.GetResources(request.m_Resource, resources);
 
                         available -= VehicleUtils.GetAllBuyingResourcesTrucks(
                             source,
@@ -200,7 +178,7 @@ namespace PublicWorksPlus
                             adjustedAmount <= available)
                         {
                             request.m_Amount = adjustedAmount;
-                            requests[i] = request;
+                            requests[requestIndex] = request;
 
                             m_Mirrors.Enqueue(new MirrorChange
                             {
@@ -208,8 +186,7 @@ namespace PublicWorksPlus
                                 Target = request.m_Target,
                                 Resource = request.m_Resource,
                                 ExpectedIncomingFlags =
-                                    request.m_Flags |
-                                    StorageTransferFlags.Incoming,
+                                    request.m_Flags | StorageTransferFlags.Incoming,
                                 Amount = adjustedAmount,
                             });
                         }
@@ -242,9 +219,9 @@ namespace PublicWorksPlus
                     DynamicBuffer<StorageTransferRequest> requests =
                         m_RequestLookup[change.Target];
 
-                    for (int i = 0; i < requests.Length; i++)
+                    for (int requestIndex = 0; requestIndex < requests.Length; requestIndex++)
                     {
-                        StorageTransferRequest incoming = requests[i];
+                        StorageTransferRequest incoming = requests[requestIndex];
 
                         if (incoming.m_Target != change.Source ||
                             incoming.m_Resource != change.Resource ||
@@ -256,7 +233,7 @@ namespace PublicWorksPlus
                         if (incoming.m_Amount < change.Amount)
                         {
                             incoming.m_Amount = change.Amount;
-                            requests[i] = incoming;
+                            requests[requestIndex] = incoming;
                         }
 
                         break;

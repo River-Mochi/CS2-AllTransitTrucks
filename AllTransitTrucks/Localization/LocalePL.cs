@@ -176,6 +176,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Pojazdy dostawcze (pojemność ładunku)" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Pomoc peÅ‚nego zaÅ‚adunku" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "ZwiÄ™ksza Å¼Ä…dania firm i magazynÃ³w do okoÅ‚o jednego peÅ‚nego Å‚adunku.\n" +
+                    "W duÅ¼ych miastach moÅ¼e uÅ¼ywaÄ‡ wiÄ™cej CPU.\n" +
+                    "<[ ] DomyÅ›lnie WYÅ.>." },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Ciągniki siodłowe" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "Pojemność **ciągników siodłowych**.\n" +

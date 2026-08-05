@@ -7,23 +7,22 @@
 // ================= </copyright> ======================
 
 // File: Mod.cs
-// Entrypoint: registers settings, locales, and the ECS systems.
+// Entrypoint: registers settings, locales, and ECS systems.
 
 namespace PublicWorksPlus
 {
     using System;                         // Exception
     using System.Reflection;              // Assembly
-    using Colossal.IO.AssetDatabase;      // AssetDatabase.LoadSettings
+    using Colossal.IO.AssetDatabase;      // LoadSettings
     using Colossal.Localization;          // LocalizationManager
-    using Colossal.Logging;               // ILog, defines shared s_Log
+    using Colossal.Logging;               // ILog
     using CS2Shared.RiverMochi;           // LogUtils, ShellOpen
-    using Game;                           // UpdateSystem, GameManager, SystemUpdatePhase
+    using Game;                           // UpdateSystem, SystemUpdatePhase
     using Game.Modding;                   // IMod
     using Game.Prefabs;                   // VehicleCapacitySystem
     using Game.SceneFlow;                 // GameManager
-    using Game.Simulation;                // game ECS systems for ordering hooks
+    using Game.Simulation;                // vanilla ordering targets
 
-    /// <summary>Mod entry point: registers settings, locales, and ECS systems.</summary>
     public sealed class Mod : IMod
     {
         public const string ModName = "All Transit + Trucks";
@@ -51,20 +50,17 @@ namespace PublicWorksPlus
                 LogUtils.Info(s_Log, () => $"{ModName} v{ModVersion} Loaded.");
             }
 
-            // Settings first so locale labels can resolve.
+            // Locales need the same settings instance used by Options.
             ATTSettings setting = new(this);
             Settings = setting;
 
             try
             {
-                LocalizationManager? localizationManager =
-                    GameManager.instance?.localizationManager;
+                LocalizationManager? localizationManager = GameManager.instance?.localizationManager;
 
                 if (localizationManager == null)
                 {
-                    LogUtils.Warn(
-                        s_Log,
-                        () => $"{ModTag} LocalizationManager is null; locale sources were not registered.");
+                    LogUtils.Warn(s_Log, () => $"{ModTag} LocalizationManager is null; locale sources were not registered.");
                 }
                 else
                 {
@@ -77,76 +73,45 @@ namespace PublicWorksPlus
                     localizationManager.AddSource("ko-KR", new LocaleKO(setting));
                     localizationManager.AddSource("pl-PL", new LocalePL(setting));
                     localizationManager.AddSource("pt-BR", new LocalePT_BR(setting));
+                    // localizationManager.AddSource("pt-PT", new LocalePT_PT(setting)); // for future use
                     localizationManager.AddSource("vi-VN", new LocaleVI(setting));
                     localizationManager.AddSource("zh-HANS", new LocaleZH_CN(setting));
                     localizationManager.AddSource("zh-HANT", new LocaleZH_HANT(setting));
-
-                    // Keep this temporary opt-in option translated everywhere.
-                    DispatchHelperLocales.Register(localizationManager, setting);
                 }
             }
             catch (Exception ex)
             {
-                LogUtils.Warn(
-                    s_Log,
-                    () => $"{ModTag} Localization registration failed: {ex.GetType().Name}: {ex.Message}");
+                LogUtils.Warn(s_Log, () => $"{ModTag} Localization registration failed: {ex.GetType().Name}: {ex.Message}");
             }
 
-            AssetDatabase.global.LoadSettings(
-                ModId,
-                setting,
-                new ATTSettings(this));
-
+            AssetDatabase.global.LoadSettings(ModId, setting, new ATTSettings(this));
             setting.SanitizeAfterLoad();
             setting.RegisterInOptionsUI();
 
             updateSystem.UpdateAfter<TransitSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<MaintenanceSystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateAfter<LaneWearSystem>(
-                SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateAfter<LaneWearSystem>(SystemUpdatePhase.PrefabUpdate);
 
-            // Adjust requests after creation and before vanilla consumes them.
-            updateSystem.UpdateAt<StationTransferCapacitySystem>(
-                SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAfter<
-                StationTransferCapacitySystem,
-                StorageTransferSystem>(
-                SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateBefore<
-                StationTransferCapacitySystem,
-                CarStorageTransferRequestSystem>(
-                SystemUpdatePhase.GameSimulation);
+            // Change requests after vanilla creates them and before vanilla consumes them.
+            updateSystem.UpdateAt<StationTransferCapacitySystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAfter<StationTransferCapacitySystem, StorageTransferSystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateBefore<StationTransferCapacitySystem, CarStorageTransferRequestSystem>(SystemUpdatePhase.GameSimulation);
 
-            updateSystem.UpdateAt<CompanyShoppingCapacitySystem>(
-                SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAfter<
-                CompanyShoppingCapacitySystem,
-                BuyingCompanySystem>(
-                SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateBefore<
-                CompanyShoppingCapacitySystem,
-                ResourceBuyerSystem>(
-                SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAt<CompanyShoppingCapacitySystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAfter<CompanyShoppingCapacitySystem, BuyingCompanySystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateBefore<CompanyShoppingCapacitySystem, ResourceBuyerSystem>(SystemUpdatePhase.GameSimulation);
 
-            // DeliveryTruckSelectData must rebuild after ATT changes capacities.
-            updateSystem.UpdateAfter<IndustrySystem>(
-                SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateBefore<IndustrySystem, VehicleCapacitySystem>(
-                SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateBefore<IndustrySystem>(
-                SystemUpdatePhase.PrefabReferences);
+            // Rebuild DeliveryTruckSelectData from ATT's updated prefab capacities.
+            updateSystem.UpdateAfter<IndustrySystem>(SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateBefore<IndustrySystem, VehicleCapacitySystem>(SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateBefore<IndustrySystem>(SystemUpdatePhase.PrefabReferences);
 
-            updateSystem.UpdateAfter<VehicleCountPolicyTunerSystem>(
-                SystemUpdatePhase.PrefabUpdate);
-
-            updateSystem.UpdateAt<PrefabScanSystem>(
-                SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateAfter<VehicleCountPolicyTunerSystem>(SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateAt<PrefabScanSystem>(SystemUpdatePhase.PrefabUpdate);
 
 #if DEBUG
-            updateSystem.UpdateAt<DeliveryCargoProbeSystem>(
-                SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAt<LaneWearProbeSystem>(
-                SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAt<DeliveryCargoProbeSystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAt<LaneWearProbeSystem>(SystemUpdatePhase.GameSimulation);
 #endif
         }
 
@@ -157,27 +122,6 @@ namespace PublicWorksPlus
                 Settings.UnregisterInOptionsUI();
                 Settings = null;
             }
-        }
-
-        internal static string L(string id, string fallback)
-        {
-            try
-            {
-                LocalizationManager? lm =
-                    GameManager.instance?.localizationManager;
-
-                if (lm != null &&
-                    lm.activeDictionary != null &&
-                    lm.activeDictionary.TryGetValue(id, out string result))
-                {
-                    return result;
-                }
-            }
-            catch
-            {
-            }
-
-            return fallback;
         }
     }
 }

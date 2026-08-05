@@ -176,6 +176,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Veicoli di consegna (capacità carico)" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Aiuto consegne a pieno carico" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "Aumenta le richieste di aziende e depositi verso un carico completo.\n" +
+                    "PuÃ² usare piÃ¹ CPU nelle cittÃ  grandi.\n" +
+                    "<[ ] Disattivato per impostazione predefinita>." },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Autoarticolati" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "Capacità degli **autoarticolati**.\n" +

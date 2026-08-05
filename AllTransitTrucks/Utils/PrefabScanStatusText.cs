@@ -7,94 +7,100 @@
 // ================= </copyright> ======================
 
 // File: Utils/PrefabScanStatusText.cs
-// Purpose: Builds the player-facing prefab scan status string from PrefabScanState data.
-// Notes:
-// - Uses localization keys with English fallbacks.
-// - Does not translate FailDetails (usually exception text).
+// Purpose: Builds the localized prefab scan status text.
 
 namespace PublicWorksPlus
 {
     using System;
+    using Colossal.Localization;
+    using Game.SceneFlow;
 
     public static class PrefabScanStatusText
     {
-        // Locale keys (templates)
         private const string KeyIdle = "PWP_SCAN_IDLE";
-        private const string KeyQueuedFmt = "PWP_SCAN_QUEUED_FMT";     // "{0}" = elapsed
-        private const string KeyRunningFmt = "PWP_SCAN_RUNNING_FMT";   // "{0}" = elapsed
-        private const string KeyDoneFmt = "PWP_SCAN_DONE_FMT";         // "{0}" = duration, "{1}" = timestamp
+        private const string KeyQueuedFmt = "PWP_SCAN_QUEUED_FMT";
+        private const string KeyRunningFmt = "PWP_SCAN_RUNNING_FMT";
+        private const string KeyDoneFmt = "PWP_SCAN_DONE_FMT";
         private const string KeyFailed = "PWP_SCAN_FAILED";
         private const string KeyFailNoCity = "PWP_SCAN_FAIL_NO_CITY";
         private const string KeyUnknownTime = "PWP_SCAN_UNKNOWN_TIME";
 
-        public static string Format(PrefabScanState.Snapshot s)
+        public static string Format(PrefabScanState.Snapshot snapshot)
         {
-            switch (s.Phase)
+            switch (snapshot.Phase)
             {
                 case PrefabScanState.Phase.Idle:
-                    return Mod.L(KeyIdle, "Idle");
+                    return Localize(KeyIdle, "Idle");
 
                 case PrefabScanState.Phase.Requested:
-                    {
-                        TimeSpan elapsed = PrefabScanState.GetElapsedSinceTick(s.RequestTick);
-                        return string.Format(
-                            Mod.L(KeyQueuedFmt, "Queued ({0})"),
-                            FormatDuration(elapsed));
-                    }
+                {
+                    TimeSpan elapsed = PrefabScanState.GetElapsedSinceTick(snapshot.RequestTick);
+                    return string.Format(Localize(KeyQueuedFmt, "Queued ({0})"), FormatDuration(elapsed));
+                }
 
                 case PrefabScanState.Phase.Running:
-                    {
-                        TimeSpan elapsed = PrefabScanState.GetElapsedSinceTick(s.RunStartTick);
-                        return string.Format(
-                            Mod.L(KeyRunningFmt, "Running ({0})"),
-                            FormatDuration(elapsed));
-                    }
+                {
+                    TimeSpan elapsed = PrefabScanState.GetElapsedSinceTick(snapshot.RunStartTick);
+                    return string.Format(Localize(KeyRunningFmt, "Running ({0})"), FormatDuration(elapsed));
+                }
 
                 case PrefabScanState.Phase.Done:
-                    {
-                        string dur = FormatDuration(s.LastDuration);
+                {
+                    string duration = FormatDuration(snapshot.LastDuration);
+                    string finished = snapshot.LastRunFinishedLocal == default
+                        ? Localize(KeyUnknownTime, "unknown time")
+                        : snapshot.LastRunFinishedLocal.ToString("yyyy-MM-dd HH:mm:ss");
 
-                        string ts = s.LastRunFinishedLocal == default
-                            ? Mod.L(KeyUnknownTime, "unknown time")
-                            : s.LastRunFinishedLocal.ToString("yyyy-MM-dd HH:mm:ss");
-
-                        return string.Format(
-                            Mod.L(KeyDoneFmt, "Done ({0} | {1})"),
-                            dur,
-                            ts);
-                    }
+                    return string.Format(Localize(KeyDoneFmt, "Done ({0} | {1})"), duration, finished);
+                }
 
                 case PrefabScanState.Phase.Failed:
                 default:
+                {
+                    string failed = Localize(KeyFailed, "Failed");
+                    string reason = snapshot.FailCode == PrefabScanState.FailCode.NoCityLoaded
+                        ? Localize(KeyFailNoCity, "LOAD CITY FIRST")
+                        : string.Empty;
+
+                    if (!string.IsNullOrEmpty(snapshot.FailDetails))
                     {
-                        string failed = Mod.L(KeyFailed, "Failed");
-
-                        string reason = s.FailCode == PrefabScanState.FailCode.NoCityLoaded
-                            ? Mod.L(KeyFailNoCity, "LOAD CITY FIRST")
-                            : string.Empty;
-
-                        if (!string.IsNullOrEmpty(s.FailDetails))
-                        {
-                            if (!string.IsNullOrEmpty(reason))
-                                return $"{failed} ({reason} {s.FailDetails})";
-
-                            return $"{failed} ({s.FailDetails})";
-                        }
-
-                        if (!string.IsNullOrEmpty(reason))
-                            return $"{failed} - {reason}";
-
-                        return failed;
+                        return string.IsNullOrEmpty(reason)
+                            ? $"{failed} ({snapshot.FailDetails})"
+                            : $"{failed} ({reason} {snapshot.FailDetails})";
                     }
+
+                    return string.IsNullOrEmpty(reason)
+                        ? failed
+                        : $"{failed} - {reason}";
+                }
             }
         }
 
-        private static string FormatDuration(TimeSpan ts)
+        private static string Localize(string id, string fallback)
         {
-            if (ts.TotalHours >= 1)
-                return ts.ToString(@"hh\:mm\:ss");
+            try
+            {
+                LocalizationManager? manager = GameManager.instance?.localizationManager;
 
-            return ts.ToString(@"mm\:ss");
+                if (manager?.activeDictionary != null &&
+                    manager.activeDictionary.TryGetValue(id, out string result))
+                {
+                    return result;
+                }
+            }
+            catch
+            {
+                // Status text still has an English fallback.
+            }
+
+            return fallback;
+        }
+
+        private static string FormatDuration(TimeSpan duration)
+        {
+            return duration.TotalHours >= 1
+                ? duration.ToString(@"hh\:mm\:ss")
+                : duration.ToString(@"mm\:ss");
         }
     }
 }

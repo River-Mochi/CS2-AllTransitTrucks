@@ -177,6 +177,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Xe giao hàng (sức chứa hàng hóa)" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Há»— trá»£ Ä‘iá»u phá»‘i Ä‘áº§y táº£i" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "TÄƒng yÃªu cáº§u cá»§a cÃ´ng ty vÃ  kho lÃªn gáº§n má»™t xe Ä‘áº§y táº£i.\n" +
+                    "CÃ³ thá»ƒ dÃ¹ng thÃªm CPU trong thÃ nh phá»‘ lá»›n.\n" +
+                    "<[ ] Máº·c Ä‘á»‹nh Táº®T>." },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Xe tải semi" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "Sức chứa **xe tải semi**.\n" +

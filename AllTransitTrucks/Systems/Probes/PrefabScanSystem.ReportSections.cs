@@ -16,6 +16,11 @@
 
 namespace PublicWorksPlus
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Text;
     using Colossal.PSI.Environment;
     using CS2Shared.RiverMochi;
     using Game;
@@ -25,11 +30,6 @@ namespace PublicWorksPlus
     using Game.Prefabs;
     using Game.Routes;
     using Game.SceneFlow;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Text;
     using Unity.Collections;
     using Unity.Entities;
 
@@ -61,7 +61,7 @@ namespace PublicWorksPlus
                 wearPrefabs.Add(prefabEntity);
             }
 
-            Dictionary<Entity, int> counts = new Dictionary<Entity, int>(64);
+            Dictionary<Entity, int> counts = new(64);
             long liveLaneTotal = 0;
 
             foreach (RefRO<PrefabRef> prefabRefRO in SystemAPI
@@ -99,7 +99,7 @@ namespace PublicWorksPlus
 
             const int kTop = 30;
 
-            List<KeyValuePair<Entity, int>> top = new List<KeyValuePair<Entity, int>>(counts);
+            List<KeyValuePair<Entity, int>> top = new(counts);
             top.Sort((a, b) => b.Value.CompareTo(a.Value));
 
             int printed = 0;

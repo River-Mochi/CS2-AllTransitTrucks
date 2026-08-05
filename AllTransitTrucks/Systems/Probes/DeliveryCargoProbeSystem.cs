@@ -19,14 +19,14 @@
 
 namespace PublicWorksPlus
 {
+    using System;
+    using System.Collections.Generic;
     using Colossal.Serialization.Entities;
     using CS2Shared.RiverMochi;
     using Game;
     using Game.Economy;
     using Game.Prefabs;
     using Game.Simulation;
-    using System;
-    using System.Collections.Generic;
     using Unity.Entities;
 
     public sealed partial class DeliveryCargoProbeSystem : GameSystemBase
@@ -479,7 +479,7 @@ namespace PublicWorksPlus
             }
 
             ulong raw = Convert.ToUInt64(resource);
-            List<string> names = new List<string>();
+            List<string> names = new();
 
             foreach (Resource value in Enum.GetValues(typeof(Resource)))
             {

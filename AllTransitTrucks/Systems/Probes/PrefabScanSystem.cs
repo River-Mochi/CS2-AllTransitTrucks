@@ -10,8 +10,7 @@
 // Purpose: One-shot prefab scan triggered by Options UI button.
 // Output: Writes report to {EnvPath.kUserDataPath}/ModsData/AllTransitTrucks/ScanReport-Prefabs.txt
 // Notes:
-// - Runs only when requested.
-// - Main scan flow stays here.
+// - Runs only when requested. Main scan flow stays here.
 // - Helper/report methods live in PrefabScanSystem.ReportSections.cs to keep this file shorter.
 
 namespace PublicWorksPlus
@@ -239,7 +238,7 @@ namespace PublicWorksPlus
                 Append("Vehicle targets are based on route time estimate (segment durations + stop count).");
                 Append("");
 
-                Dictionary<TransportType, TransitDefaultsStats> perType = new Dictionary<TransportType, TransitDefaultsStats>();
+                Dictionary<TransportType, TransitDefaultsStats> perType = new();
 
                 foreach ((RefRO<TransportLineData> lineRef, Entity entity) in SystemAPI
                              .Query<RefRO<TransportLineData>>()
@@ -617,7 +616,7 @@ namespace PublicWorksPlus
 
                 Append("Keyword Matches (deduped, capped)");
 
-                HashSet<string> seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                HashSet<string> seen = new(StringComparer.OrdinalIgnoreCase);
 
                 // ...
                 Append($"Keyword match summary: UniqueMatches={keywordMatches} Cap={kMaxKeywordMatches}");

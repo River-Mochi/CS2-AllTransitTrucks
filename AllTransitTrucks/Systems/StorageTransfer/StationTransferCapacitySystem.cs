@@ -26,6 +26,11 @@ namespace PublicWorksPlus
     using Unity.Collections;
     using Unity.Entities;
 
+    Setting? settings = Mod.Settings;
+    if (settings == null || !settings.HasCustomDeliveryCapacity)
+    {
+        return;
+    }
     public sealed partial class StationTransferCapacitySystem : GameSystemBase
     {
         private VehicleCapacitySystem m_VehicleCapacitySystem = null!;

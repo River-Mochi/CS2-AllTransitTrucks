@@ -15,13 +15,13 @@
 
 namespace PublicWorksPlus
 {
+    using System;
+    using System.Collections.Generic;
     using Colossal.Serialization.Entities;
     using CS2Shared.RiverMochi;
     using Game;
     using Game.Prefabs;
     using Game.SceneFlow;
-    using System;
-    using System.Collections.Generic;
     using Unity.Entities;
 
     public sealed partial class LaneWearSystem : GameSystemBase
@@ -33,7 +33,7 @@ namespace PublicWorksPlus
         }
 
         // Base (vanilla/current-session-original) factors per prefab entity (LaneDeteriorationData).
-        private readonly Dictionary<Entity, BaseFactors> m_Base = new Dictionary<Entity, BaseFactors>();
+        private readonly Dictionary<Entity, BaseFactors> m_Base = new();
 
         protected override void OnCreate()
         {

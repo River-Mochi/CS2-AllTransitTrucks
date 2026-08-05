@@ -72,7 +72,7 @@ namespace PublicWorksPlus
             public string? LastReportPath { get; }
         }
 
-        private static readonly object s_Lock = new object();
+        private static readonly object s_Lock = new();
 
         private static Phase s_Phase = Phase.Idle;
 

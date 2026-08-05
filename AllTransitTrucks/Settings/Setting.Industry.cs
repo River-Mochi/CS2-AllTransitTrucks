@@ -21,6 +21,11 @@ namespace PublicWorksPlus
     using Game.UI;           // Unit
     using Unity.Entities;    // World
 
+    internal bool HasCustomDeliveryCapacity =>
+    m_SemiTruckCargoScalar > kVanillaPercent ||
+    m_DeliveryVanCargoScalar > kVanillaPercent ||
+    m_CoalTruckScalar > kVanillaPercent ||
+    m_MotorbikeDeliveryCargoScalar > kVanillaPercent;
     public sealed partial class Setting
     {
         // Delivery vehicles are now stored as percent values.

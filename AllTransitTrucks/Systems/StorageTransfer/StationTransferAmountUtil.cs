@@ -12,12 +12,17 @@
 
 namespace PublicWorksPlus
 {
+    using System;
     using Game.Economy;
     using Game.Prefabs;
-    using System;
     using Unity.Mathematics;
 
-    internal static class StationTransferAmountUtil
+    Setting? settings = Mod.Settings;
+    if (settings == null || !settings.HasCustomDeliveryCapacity)
+    {
+        return;
+    }
+internal static class StationTransferAmountUtil
     {
         private const int SelectionProbeCount = 8;
 

@@ -21,6 +21,8 @@
 
 namespace PublicWorksPlus
 {
+    using System;
+    using System.Collections.Generic;
     using Colossal.Serialization.Entities;
     using CS2Shared.RiverMochi;
     using Game;
@@ -28,8 +30,6 @@ namespace PublicWorksPlus
     using Game.Companies;
     using Game.Prefabs;
     using Game.SceneFlow;
-    using System;
-    using System.Collections.Generic;
     using Unity.Collections;
     using Unity.Entities;
 
@@ -42,7 +42,7 @@ namespace PublicWorksPlus
         private Dictionary<Entity, int> m_DeliveryTruckBaseCargoCapacity = null!;
         private Dictionary<Entity, int> m_ExtractorCompanyBaseMaxTransports = null!;
 
-        private static readonly HashSet<string> s_KnownIndustrialCompanies = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> s_KnownIndustrialCompanies = new(StringComparer.OrdinalIgnoreCase)
         {
             "Industrial_FishExtractor", "Industrial_ForestryExtractor", "Industrial_GrainExtractor", "Industrial_OreExtractor", "Industrial_OilExtractor",
             "Industrial_VegetableExtractor", "Industrial_LivestockExtractor", "Industrial_CottonExtractor", "Industrial_CoalMine",

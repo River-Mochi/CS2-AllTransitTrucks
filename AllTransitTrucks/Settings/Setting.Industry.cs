@@ -21,11 +21,6 @@ namespace PublicWorksPlus
     using Game.UI;           // Unit
     using Unity.Entities;    // World
 
-    internal bool HasCustomDeliveryCapacity =>
-    m_SemiTruckCargoScalar > kVanillaPercent ||
-    m_DeliveryVanCargoScalar > kVanillaPercent ||
-    m_CoalTruckScalar > kVanillaPercent ||
-    m_MotorbikeDeliveryCargoScalar > kVanillaPercent;
     public sealed partial class Setting
     {
         // Delivery vehicles are now stored as percent values.
@@ -37,6 +32,13 @@ namespace PublicWorksPlus
         // These still use simple scalar values (1x..5x).
         private float m_ExtractorMaxTrucksScalar = kVanillaScalar;
         private float m_CargoStationMaxTrucksScalar = kVanillaScalar;
+
+        // Runtime request systems do no work when every delivery slider is vanilla.
+        internal bool HasCustomDeliveryCapacity =>
+            m_SemiTruckCargoScalar != kVanillaPercent ||
+            m_DeliveryVanCargoScalar != kVanillaPercent ||
+            m_CoalTruckScalar != kVanillaPercent ||
+            m_MotorbikeDeliveryCargoScalar != kVanillaPercent;
 
         // Delivery vehicles (stored/displayed as percent, like Transit).
         [SettingsUISlider(min = DeliveryMinPercent, max = DeliveryMaxPercent, step = DeliveryStepPercent, scalarMultiplier = 1, unit = Unit.kPercentage)]

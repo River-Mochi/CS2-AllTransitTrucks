@@ -14,6 +14,7 @@
 // - Targets outbound CAR requests only.
 // - Mirrors the same promoted amount into the matching incoming request
 //   when the counterpart buffer exists.
+// - Does no request scanning when all delivery capacity sliders are vanilla.
 // - Narrow scope by design: no ships, trains, or station preference logic.
 
 namespace PublicWorksPlus
@@ -26,11 +27,6 @@ namespace PublicWorksPlus
     using Unity.Collections;
     using Unity.Entities;
 
-    Setting? settings = Mod.Settings;
-    if (settings == null || !settings.HasCustomDeliveryCapacity)
-    {
-        return;
-    }
     public sealed partial class StationTransferCapacitySystem : GameSystemBase
     {
         private VehicleCapacitySystem m_VehicleCapacitySystem = null!;
@@ -52,8 +48,10 @@ namespace PublicWorksPlus
 
             m_VehicleCapacitySystem = World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
 
+            // Filter to the only request owners this system can change before making an entity array.
             m_RequestQuery = SystemAPI.QueryBuilder()
                 .WithAll<Game.Companies.StorageTransferRequest>()
+                .WithAny<Game.Companies.StorageCompany, Game.Objects.OutsideConnection>()
                 .WithNone<Deleted, Temp>()
                 .Build();
 
@@ -62,24 +60,21 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
-            DeliveryTruckSelectData truckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData();
+            Setting? settings = Mod.Settings;
+            if (settings == null || !settings.HasCustomDeliveryCapacity)
+            {
+                return;
+            }
 
-            ComponentLookup<Game.Companies.StorageCompany> storageCompanyLookup =
-                SystemAPI.GetComponentLookup<Game.Companies.StorageCompany>(isReadOnly: true);
+            DeliveryTruckSelectData truckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData();
 
             ComponentLookup<Game.Objects.OutsideConnection> ocLookup =
                 SystemAPI.GetComponentLookup<Game.Objects.OutsideConnection>(isReadOnly: true);
 
-            ComponentLookup<Deleted> deletedLookup =
-                SystemAPI.GetComponentLookup<Deleted>(isReadOnly: true);
-
-            ComponentLookup<Temp> tempLookup =
-                SystemAPI.GetComponentLookup<Temp>(isReadOnly: true);
-
             BufferLookup<Game.Companies.StorageTransferRequest> requestLookup =
                 SystemAPI.GetBufferLookup<Game.Companies.StorageTransferRequest>(isReadOnly: false);
 
-            bool verbose = Mod.Settings != null && Mod.Settings.EnableDebugLogging;
+            bool verbose = settings.EnableDebugLogging;
 
             using NativeArray<Entity> entities = m_RequestQuery.ToEntityArray(Allocator.Temp);
 
@@ -89,25 +84,7 @@ namespace PublicWorksPlus
             for (int e = 0; e < entities.Length; e++)
             {
                 Entity entity = entities[e];
-
-                if (deletedLookup.HasComponent(entity) || tempLookup.HasComponent(entity))
-                {
-                    continue;
-                }
-
-                bool isStorageCompany = storageCompanyLookup.HasComponent(entity);
                 bool isOC = ocLookup.HasComponent(entity);
-
-                if (!isStorageCompany && !isOC)
-                {
-                    continue;
-                }
-
-                if (!requestLookup.HasBuffer(entity))
-                {
-                    continue;
-                }
-
                 DynamicBuffer<Game.Companies.StorageTransferRequest> requests = requestLookup[entity];
 
                 for (int i = 0; i < requests.Length; i++)
@@ -118,8 +95,6 @@ namespace PublicWorksPlus
                     {
                         continue;
                     }
-
-                    int oldAmount = request.m_Amount;
 
                     if (!StationTransferAmountUtil.TryPromoteToAtLeastOneFullTruck(
                             truckSelectData,

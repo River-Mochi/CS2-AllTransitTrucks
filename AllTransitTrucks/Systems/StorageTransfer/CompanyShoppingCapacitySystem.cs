@@ -13,6 +13,7 @@
 // - Runs before ResourceBuyerSystem turns ResourceBuyer into TripNeeded.
 // - Targets company buyers only (entities with BuyingCompany).
 // - Uses current truck capacities from VehicleCapacitySystem.
+// - Does no request scanning when all delivery capacity sliders are vanilla.
 // - Caps promoted request size to a safe selected truck capacity so live buying trucks
 //   do not exceed the actual prefab cap after loading.
 
@@ -61,6 +62,12 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
+            Setting? settings = Mod.Settings;
+            if (settings == null || !settings.HasCustomDeliveryCapacity)
+            {
+                return;
+            }
+
             DeliveryTruckSelectData truckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData();
 
             ComponentLookup<ResourceBuyer> buyerLookup =
@@ -94,7 +101,7 @@ namespace PublicWorksPlus
                 SystemAPI.GetBufferLookup<LayoutElement>(isReadOnly: true);
 
             ResourcePrefabs resourcePrefabs = m_ResourceSystem.GetPrefabs();
-            bool verbose = Mod.Settings != null && Mod.Settings.EnableDebugLogging;
+            bool verbose = settings.EnableDebugLogging;
 
             bool IsWeightedResource(Resource resource)
             {
@@ -287,7 +294,6 @@ namespace PublicWorksPlus
                     continue;
                 }
 
-                int oldAmount = buyer.m_AmountNeeded;
                 buyer.m_AmountNeeded = desiredRequest;
                 buyerLookup[entity] = buyer;
                 changed++;

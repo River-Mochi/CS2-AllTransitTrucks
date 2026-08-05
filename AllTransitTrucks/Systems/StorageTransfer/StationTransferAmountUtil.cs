@@ -12,19 +12,14 @@
 
 namespace PublicWorksPlus
 {
-    using System;
     using Game.Economy;
     using Game.Prefabs;
     using Unity.Mathematics;
 
-    Setting? settings = Mod.Settings;
-    if (settings == null || !settings.HasCustomDeliveryCapacity)
+    internal static class StationTransferAmountUtil
     {
-        return;
-    }
-internal static class StationTransferAmountUtil
-    {
-        private const int SelectionProbeCount = 8;
+        // One deterministic probe avoids the old 8x hot-loop cost.
+        private const int SelectionProbeCount = 1;
 
         internal static bool IsEligibleOutgoingCarRequest(Game.Companies.StorageTransferFlags flags)
         {
@@ -104,7 +99,8 @@ internal static class StationTransferAmountUtil
 
         private static Unity.Mathematics.Random CreateProbeRandom(Resource resource, int requestedAmount, int salt)
         {
-            ulong raw = Convert.ToUInt64(resource);
+            // Resource already uses ulong as its underlying enum type; avoid boxing it.
+            ulong raw = (ulong)resource;
             uint low = (uint)(raw & 0xFFFFFFFFu);
             uint high = (uint)(raw >> 32);
 

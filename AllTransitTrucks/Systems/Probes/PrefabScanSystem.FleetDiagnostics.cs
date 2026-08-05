@@ -256,7 +256,7 @@ namespace PublicWorksPlus
                 .WithNone<Game.Prefabs.StorageCompanyData>()
                 .WithNone<Game.Prefabs.CargoTransportStationData>()
                 .WithNone<Game.Prefabs.OutsideConnectionData>()
-                .WithNone<Game.Prefabs.ServiceCompanyData>()
+                .WithNone<Game.Companies.ServiceCompanyData>()
                 .Build();
 
             using NativeArray<Entity> entities =

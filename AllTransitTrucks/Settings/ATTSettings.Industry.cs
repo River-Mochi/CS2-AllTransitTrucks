@@ -7,7 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Settings/ATTSettings.Industry.cs
-// Purpose: Industry settings for delivery vehicles and industry fleets.
+// Purpose: Industry settings for delivery vehicles and company fleets.
 
 namespace PublicWorksPlus
 {
@@ -20,6 +20,7 @@ namespace PublicWorksPlus
     public sealed partial class ATTSettings
     {
         private bool m_EnableFullLoadDispatchHelper;
+        private bool m_EnableExtractorTruckControl = true;
 
         // Delivery vehicles are stored as percent values.
         private float m_SemiTruckCargoScalar = kVanillaPercent;
@@ -27,10 +28,9 @@ namespace PublicWorksPlus
         private float m_CoalTruckScalar = kVanillaPercent;
         private float m_MotorbikeDeliveryCargoScalar = kVanillaPercent;
 
-        // Industry fleets use simple scalar values (1x..5x).
+        // Fleet limits use simple scalar values (1x..5x).
         private float m_CargoStationMaxTrucksScalar = kVanillaScalar;
         private float m_ExtractorMaxTrucksScalar = kVanillaScalar;
-        private float m_RawMaterialFacilityMaxTrucksScalar = kVanillaScalar;
 
         internal bool HasCustomDeliveryCapacity =>
             m_SemiTruckCargoScalar != kVanillaPercent ||
@@ -123,6 +123,19 @@ namespace PublicWorksPlus
             }
         }
 
+        [SettingsUISection(IndustryTab, CargoStationsGroup)]
+        public bool EnableExtractorTruckControl
+        {
+            get => m_EnableExtractorTruckControl;
+            set
+            {
+                if (m_EnableExtractorTruckControl == value) return;
+
+                m_EnableExtractorTruckControl = value;
+                OnIndustryChanged();
+            }
+        }
+
         [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
         public float ExtractorMaxTrucksScalar
@@ -134,21 +147,6 @@ namespace PublicWorksPlus
                 if (m_ExtractorMaxTrucksScalar == v) return;
 
                 m_ExtractorMaxTrucksScalar = v;
-                OnIndustryChanged();
-            }
-        }
-
-        [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
-        [SettingsUISection(IndustryTab, CargoStationsGroup)]
-        public float RawMaterialFacilityMaxTrucksScalar
-        {
-            get => m_RawMaterialFacilityMaxTrucksScalar;
-            set
-            {
-                float v = ScalarMath.ClampScalar(value, CargoStationMinScalar, CargoStationMaxScalar);
-                if (m_RawMaterialFacilityMaxTrucksScalar == v) return;
-
-                m_RawMaterialFacilityMaxTrucksScalar = v;
                 OnIndustryChanged();
             }
         }
@@ -183,7 +181,6 @@ namespace PublicWorksPlus
 
                 m_CargoStationMaxTrucksScalar = kVanillaScalar;
                 m_ExtractorMaxTrucksScalar = kVanillaScalar;
-                m_RawMaterialFacilityMaxTrucksScalar = kVanillaScalar;
 
                 ApplyAndSave();
             }
@@ -206,6 +203,7 @@ namespace PublicWorksPlus
         {
             // Keep live request helpers opt-in until large-city testing is solid.
             m_EnableFullLoadDispatchHelper = false;
+            m_EnableExtractorTruckControl = true;
 
             m_SemiTruckCargoScalar = kVanillaPercent;
             m_DeliveryVanCargoScalar = kVanillaPercent;
@@ -214,7 +212,6 @@ namespace PublicWorksPlus
 
             m_CargoStationMaxTrucksScalar = kVanillaScalar;
             m_ExtractorMaxTrucksScalar = kVanillaScalar;
-            m_RawMaterialFacilityMaxTrucksScalar = kVanillaScalar;
         }
 
         partial void RepairAndClamp_Industry()
@@ -225,9 +222,17 @@ namespace PublicWorksPlus
             m_CoalTruckScalar = NormalizeDeliveryPercentOrVanilla(m_CoalTruckScalar);
             m_MotorbikeDeliveryCargoScalar = NormalizeDeliveryPercentOrVanilla(m_MotorbikeDeliveryCargoScalar);
 
-            m_CargoStationMaxTrucksScalar = ClampScalarOrDefault(m_CargoStationMaxTrucksScalar, CargoStationMinScalar, CargoStationMaxScalar, kVanillaScalar);
-            m_ExtractorMaxTrucksScalar = ClampScalarOrDefault(m_ExtractorMaxTrucksScalar, CargoStationMinScalar, CargoStationMaxScalar, kVanillaScalar);
-            m_RawMaterialFacilityMaxTrucksScalar = ClampScalarOrDefault(m_RawMaterialFacilityMaxTrucksScalar, CargoStationMinScalar, CargoStationMaxScalar, kVanillaScalar);
+            m_CargoStationMaxTrucksScalar = ClampScalarOrDefault(
+                m_CargoStationMaxTrucksScalar,
+                CargoStationMinScalar,
+                CargoStationMaxScalar,
+                kVanillaScalar);
+
+            m_ExtractorMaxTrucksScalar = ClampScalarOrDefault(
+                m_ExtractorMaxTrucksScalar,
+                CargoStationMinScalar,
+                CargoStationMaxScalar,
+                kVanillaScalar);
         }
     }
 }

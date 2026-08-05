@@ -48,7 +48,7 @@ namespace PublicWorksPlus
             // Only sources the helper can change.
             m_RequestQuery = SystemAPI.QueryBuilder()
                 .WithAll<StorageTransferRequest, Resources>()
-                .WithAny<StorageCompany, OutsideConnection>()
+                .WithAny<Game.Companies.StorageCompany, Game.Objects.OutsideConnection>()
                 .WithNone<Deleted, Temp>()
                 .Build();
 
@@ -79,7 +79,7 @@ namespace PublicWorksPlus
                     SystemAPI.GetComponentLookup<PropertyRenter>(
                         isReadOnly: true),
                 m_OutsideConnectionLookup =
-                    SystemAPI.GetComponentLookup<OutsideConnection>(
+                    SystemAPI.GetComponentLookup<Game.Objects.OutsideConnection>(
                         isReadOnly: true),
                 m_TruckLookup =
                     SystemAPI.GetComponentLookup<Game.Vehicles.DeliveryTruck>(
@@ -126,7 +126,7 @@ namespace PublicWorksPlus
             [ReadOnly] public BufferTypeHandle<Resources> m_ResourceType;
 
             [ReadOnly] public ComponentLookup<PropertyRenter> m_PropertyLookup;
-            [ReadOnly] public ComponentLookup<OutsideConnection> m_OutsideConnectionLookup;
+            [ReadOnly] public ComponentLookup<Game.Objects.OutsideConnection> m_OutsideConnectionLookup;
             [ReadOnly] public ComponentLookup<Game.Vehicles.DeliveryTruck> m_TruckLookup;
 
             [ReadOnly] public BufferLookup<GuestVehicle> m_GuestVehicleLookup;

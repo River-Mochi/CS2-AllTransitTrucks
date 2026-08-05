@@ -7,17 +7,25 @@
 // ================= </copyright> ======================
 
 // File: Systems/StorageTransfer/StationTransferCapacitySystem.cs
-// Purpose: Fill storage-company and OC car requests to one truck load.
+// Purpose: Fill one storage-company or OC car request per source.
 
 namespace PublicWorksPlus
 {
-    using CS2Shared.RiverMochi;
     using Game;
+    using Game.Buildings;
     using Game.Common;
+    using Game.Companies;
+    using Game.Economy;
+    using Game.Objects;
     using Game.Prefabs;
     using Game.Tools;
+    using Game.Vehicles;
+    using Unity.Burst;
+    using Unity.Burst.Intrinsics;
     using Unity.Collections;
+    using Unity.Collections.LowLevel.Unsafe;
     using Unity.Entities;
+    using Unity.Jobs;
 
     public sealed partial class StationTransferCapacitySystem : GameSystemBase
     {
@@ -26,25 +34,21 @@ namespace PublicWorksPlus
 
         public override int GetUpdateInterval(SystemUpdatePhase phase)
         {
-            if (phase == SystemUpdatePhase.GameSimulation)
-            {
-                // Match the game's car transfer request system.
-                return 16;
-            }
-
-            return 1;
+            // Match CarStorageTransferRequestSystem.
+            return 16;
         }
 
         protected override void OnCreate()
         {
             base.OnCreate();
 
-            m_VehicleCapacitySystem = World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
+            m_VehicleCapacitySystem =
+                World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
 
-            // Only storage companies and OCs. Broader scans hurt large cities.
+            // Only sources the helper can change.
             m_RequestQuery = SystemAPI.QueryBuilder()
-                .WithAll<Game.Companies.StorageTransferRequest>()
-                .WithAny<Game.Companies.StorageCompany, Game.Objects.OutsideConnection>()
+                .WithAll<StorageTransferRequest, Resources>()
+                .WithAny<StorageCompany, OutsideConnection>()
                 .WithNone<Deleted, Temp>()
                 .Build();
 
@@ -53,154 +57,212 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
-            // Vanilla delivery settings should cost almost nothing.
-            if (Mod.Settings is not ATTSettings settings)
+            if (Mod.Settings is not ATTSettings settings ||
+                !settings.ShouldRunFullLoadDispatchHelper)
             {
                 return;
             }
 
-            if (!settings.HasCustomDeliveryCapacity)
+            NativeQueue<MirrorChange> mirrors = new(Allocator.TempJob);
+
+            JobHandle promoteHandle = new PromoteRequestsJob
             {
-                return;
-            }
+                m_EntityType = SystemAPI.GetEntityTypeHandle(),
+                m_RequestType =
+                    SystemAPI.GetBufferTypeHandle<StorageTransferRequest>(
+                        isReadOnly: false),
+                m_ResourceType =
+                    SystemAPI.GetBufferTypeHandle<Resources>(
+                        isReadOnly: true),
 
-            DeliveryTruckSelectData truckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData();
+                m_PropertyLookup =
+                    SystemAPI.GetComponentLookup<PropertyRenter>(
+                        isReadOnly: true),
+                m_OutsideConnectionLookup =
+                    SystemAPI.GetComponentLookup<OutsideConnection>(
+                        isReadOnly: true),
+                m_TruckLookup =
+                    SystemAPI.GetComponentLookup<Game.Vehicles.DeliveryTruck>(
+                        isReadOnly: true),
 
-#if DEBUG
-            ComponentLookup<Game.Objects.OutsideConnection> ocLookup =
-                SystemAPI.GetComponentLookup<Game.Objects.OutsideConnection>(isReadOnly: true);
+                m_GuestVehicleLookup =
+                    SystemAPI.GetBufferLookup<GuestVehicle>(
+                        isReadOnly: true),
+                m_LayoutLookup =
+                    SystemAPI.GetBufferLookup<LayoutElement>(
+                        isReadOnly: true),
 
-            bool verbose = settings.EnableDebugLogging;
-#endif
+                m_TruckSelectData =
+                    m_VehicleCapacitySystem.GetDeliveryTruckSelectData(),
+                m_Mirrors = mirrors.AsParallelWriter(),
+            }.ScheduleParallel(m_RequestQuery, Dependency);
 
-            BufferLookup<Game.Companies.StorageTransferRequest> requestLookup =
-                SystemAPI.GetBufferLookup<Game.Companies.StorageTransferRequest>(isReadOnly: false);
-
-            using NativeArray<Entity> entities = m_RequestQuery.ToEntityArray(Allocator.Temp);
-
-            int changed = 0;
-            int mirrored = 0;
-
-            for (int e = 0; e < entities.Length; e++)
+            JobHandle mirrorHandle = new ApplyMirrorsJob
             {
-                Entity entity = entities[e];
+                m_Mirrors = mirrors,
+                m_RequestLookup =
+                    SystemAPI.GetBufferLookup<StorageTransferRequest>(
+                        isReadOnly: false),
+            }.Schedule(promoteHandle);
 
-#if DEBUG
-                bool isOC = ocLookup.HasComponent(entity);
-#endif
-
-                DynamicBuffer<Game.Companies.StorageTransferRequest> requests = requestLookup[entity];
-
-                for (int i = 0; i < requests.Length; i++)
-                {
-                    Game.Companies.StorageTransferRequest request = requests[i];
-
-                    if (!StationTransferAmountUtil.IsEligibleOutgoingCarRequest(request.m_Flags))
-                    {
-                        continue;
-                    }
-
-                    if (!StationTransferAmountUtil.TryPromoteToAtLeastOneFullTruck(
-                            truckSelectData,
-                            request.m_Resource,
-                            request.m_Amount,
-                            out int adjustedAmount))
-                    {
-                        continue;
-                    }
-
-                    request.m_Amount = adjustedAmount;
-                    requests[i] = request;
-                    changed++;
-
-                    // Keep both sides of the transfer request in sync.
-                    bool mirroredThisOne = TryPromoteMatchingIncomingRequest(
-                        requestLookup,
-                        entity,
-                        request.m_Target,
-                        request.m_Resource,
-                        request.m_Flags,
-                        adjustedAmount);
-
-                    if (mirroredThisOne)
-                    {
-                        mirrored++;
-                    }
-
-#if DEBUG
-                    if (verbose)
-                    {
-                        string kind = isOC ? "OC-Transfer" : "StorageTransfer";
-
-                        LogUtils.Info(
-                            Mod.s_Log,
-                            $"{Mod.ModTag} [DISPATCH][StorageTransfer] SOURCE ENTITY ID {entity.Index}:{entity.Version} " +
-                            $"TARGET ENTITY ID {request.m_Target.Index}:{request.m_Target.Version} " +
-                            $"kind={kind} Resource={request.m_Resource} Request={adjustedAmount} Flags={request.m_Flags} Mirrored={mirroredThisOne}");
-                    }
-#endif
-                }
-            }
-
-#if DEBUG
-            if (changed > 0 && verbose)
-            {
-                LogUtils.Info(
-                    Mod.s_Log,
-                    $"{Mod.ModTag} StationTransferCapacity: promoted {changed} storage-company/OC outbound car request(s) to full truck size; mirrored {mirrored} matching incoming request(s).");
-            }
-#endif
+            // Disposal waits for both jobs and keeps vanilla ordered after us.
+            Dependency = mirrors.Dispose(mirrorHandle);
         }
 
-        private static bool TryPromoteMatchingIncomingRequest(
-            BufferLookup<Game.Companies.StorageTransferRequest> requestLookup,
-            Entity sourceEntity,
-            Entity targetEntity,
-            Game.Economy.Resource resource,
-            Game.Companies.StorageTransferFlags outgoingFlags,
-            int adjustedAmount)
+        private struct MirrorChange
         {
-            if (!requestLookup.HasBuffer(targetEntity))
+            public Entity Source;
+            public Entity Target;
+            public Resource Resource;
+            public StorageTransferFlags ExpectedIncomingFlags;
+            public int Amount;
+        }
+
+        [BurstCompile]
+        private struct PromoteRequestsJob : IJobChunk
+        {
+            [ReadOnly] public EntityTypeHandle m_EntityType;
+            public BufferTypeHandle<StorageTransferRequest> m_RequestType;
+            [ReadOnly] public BufferTypeHandle<Resources> m_ResourceType;
+
+            [ReadOnly] public ComponentLookup<PropertyRenter> m_PropertyLookup;
+            [ReadOnly] public ComponentLookup<OutsideConnection> m_OutsideConnectionLookup;
+            [ReadOnly] public ComponentLookup<Game.Vehicles.DeliveryTruck> m_TruckLookup;
+
+            [ReadOnly] public BufferLookup<GuestVehicle> m_GuestVehicleLookup;
+            [ReadOnly] public BufferLookup<LayoutElement> m_LayoutLookup;
+
+            [ReadOnly] public DeliveryTruckSelectData m_TruckSelectData;
+            public NativeQueue<MirrorChange>.ParallelWriter m_Mirrors;
+
+            public void Execute(
+                in ArchetypeChunk chunk,
+                int unfilteredChunkIndex,
+                bool useEnabledMask,
+                in v128 chunkEnabledMask)
             {
-                return false;
+                _ = unfilteredChunkIndex;
+                _ = useEnabledMask;
+                _ = chunkEnabledMask;
+
+                NativeArray<Entity> entities =
+                    chunk.GetNativeArray(m_EntityType);
+                BufferAccessor<StorageTransferRequest> requestBuffers =
+                    chunk.GetBufferAccessor(ref m_RequestType);
+                BufferAccessor<Resources> resourceBuffers =
+                    chunk.GetBufferAccessor(ref m_ResourceType);
+
+                for (int e = 0; e < chunk.Count; e++)
+                {
+                    Entity source = entities[e];
+                    DynamicBuffer<StorageTransferRequest> requests =
+                        requestBuffers[e];
+                    DynamicBuffer<Resources> resources = resourceBuffers[e];
+
+                    for (int i = 0; i < requests.Length; i++)
+                    {
+                        StorageTransferRequest request = requests[i];
+
+                        if (!StationTransferAmountUtil
+                                .IsEligibleOutgoingCarRequest(request.m_Flags))
+                        {
+                            continue;
+                        }
+
+                        // Match the targets vanilla accepts for car transfers.
+                        if (!m_PropertyLookup.HasComponent(request.m_Target) &&
+                            !m_OutsideConnectionLookup.HasComponent(request.m_Target))
+                        {
+                            break;
+                        }
+
+                        int available = EconomyUtils.GetResources(
+                            request.m_Resource,
+                            resources);
+
+                        available -= VehicleUtils.GetAllBuyingResourcesTrucks(
+                            source,
+                            request.m_Resource,
+                            ref m_TruckLookup,
+                            ref m_GuestVehicleLookup,
+                            ref m_LayoutLookup);
+
+                        if (available < request.m_Amount)
+                        {
+                            continue;
+                        }
+
+                        if (StationTransferAmountUtil.TryPromoteToAtLeastOneFullTruck(
+                                m_TruckSelectData,
+                                request.m_Resource,
+                                request.m_Amount,
+                                out int adjustedAmount) &&
+                            adjustedAmount <= available)
+                        {
+                            request.m_Amount = adjustedAmount;
+                            requests[i] = request;
+
+                            m_Mirrors.Enqueue(new MirrorChange
+                            {
+                                Source = source,
+                                Target = request.m_Target,
+                                Resource = request.m_Resource,
+                                ExpectedIncomingFlags =
+                                    request.m_Flags |
+                                    StorageTransferFlags.Incoming,
+                                Amount = adjustedAmount,
+                            });
+                        }
+
+                        // Vanilla handles one actionable request per source per pass.
+                        break;
+                    }
+                }
             }
+        }
 
-            DynamicBuffer<Game.Companies.StorageTransferRequest> targetRequests = requestLookup[targetEntity];
+        [BurstCompile]
+        private struct ApplyMirrorsJob : IJob
+        {
+            public NativeQueue<MirrorChange> m_Mirrors;
 
-            // The target copy keeps the same flags plus Incoming.
-            Game.Companies.StorageTransferFlags expectedIncomingFlags =
-                outgoingFlags | Game.Companies.StorageTransferFlags.Incoming;
+            // Targets are arbitrary entities, so mirror in one serial job.
+            [NativeDisableParallelForRestriction]
+            public BufferLookup<StorageTransferRequest> m_RequestLookup;
 
-            for (int i = 0; i < targetRequests.Length; i++)
+            public void Execute()
             {
-                Game.Companies.StorageTransferRequest incoming = targetRequests[i];
-
-                if (incoming.m_Target != sourceEntity)
+                while (m_Mirrors.TryDequeue(out MirrorChange change))
                 {
-                    continue;
-                }
+                    if (!m_RequestLookup.HasBuffer(change.Target))
+                    {
+                        continue;
+                    }
 
-                if (incoming.m_Resource != resource)
-                {
-                    continue;
-                }
+                    DynamicBuffer<StorageTransferRequest> requests =
+                        m_RequestLookup[change.Target];
 
-                if (incoming.m_Flags != expectedIncomingFlags)
-                {
-                    continue;
-                }
+                    for (int i = 0; i < requests.Length; i++)
+                    {
+                        StorageTransferRequest incoming = requests[i];
 
-                if (incoming.m_Amount >= adjustedAmount)
-                {
-                    return false;
-                }
+                        if (incoming.m_Target != change.Source ||
+                            incoming.m_Resource != change.Resource ||
+                            incoming.m_Flags != change.ExpectedIncomingFlags)
+                        {
+                            continue;
+                        }
 
-                incoming.m_Amount = adjustedAmount;
-                targetRequests[i] = incoming;
-                return true;
+                        if (incoming.m_Amount < change.Amount)
+                        {
+                            incoming.m_Amount = change.Amount;
+                            requests[i] = incoming;
+                        }
+
+                        break;
+                    }
+                }
             }
-
-            return false;
         }
     }
 }

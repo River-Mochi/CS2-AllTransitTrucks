@@ -7,20 +7,15 @@
 // ================= </copyright> ======================
 
 // File: Systems/StorageTransfer/StationTransferAmountUtil.cs
-// Purpose: Helpers for promoting storage-transfer and company-shopping requests
-//          up to a safe currently selectable truck capacity.
+// Purpose: Find a safe selectable truck capacity for live requests.
 
 namespace PublicWorksPlus
 {
     using Game.Economy;
     using Game.Prefabs;
-    using Unity.Mathematics;
 
     internal static class StationTransferAmountUtil
     {
-        // One deterministic probe avoids the old 8x hot-loop cost.
-        private const int SelectionProbeCount = 1;
-
         internal static bool IsEligibleOutgoingCarRequest(Game.Companies.StorageTransferFlags flags)
         {
             return (flags & Game.Companies.StorageTransferFlags.Incoming) == 0 &&
@@ -46,28 +41,22 @@ namespace PublicWorksPlus
                 return false;
             }
 
-            int safeCapacity = int.MaxValue;
+            Unity.Mathematics.Random random = CreateProbeRandom(resource, requestedAmount);
 
-            for (int i = 0; i < SelectionProbeCount; i++)
+            if (truckSelectData.TrySelectItem(
+                    ref random,
+                    resource,
+                    requestedAmount,
+                    out DeliveryTruckSelectItem item) &&
+                item.m_Capacity > 0)
             {
-                Unity.Mathematics.Random random = CreateProbeRandom(resource, requestedAmount, i);
-
-                if (truckSelectData.TrySelectItem(ref random, resource, requestedAmount, out DeliveryTruckSelectItem item) &&
-                    item.m_Capacity > 0)
-                {
-                    safeCapacity = math.min(safeCapacity, item.m_Capacity);
-                }
+                selectedCapacity = item.m_Capacity;
+                return true;
             }
 
-            if (safeCapacity == int.MaxValue)
-            {
-                // Conservative fallback. Better to under-promote than overfill a live truck.
-                selectedCapacity = minCapacity;
-                return selectedCapacity > 0;
-            }
-
-            selectedCapacity = safeCapacity;
-            return true;
+            // Better to under-promote than exceed a selectable truck.
+            selectedCapacity = minCapacity;
+            return selectedCapacity > 0;
         }
 
         internal static bool TryPromoteToAtLeastOneFullTruck(
@@ -83,7 +72,11 @@ namespace PublicWorksPlus
                 return false;
             }
 
-            if (!TryGetSafeSelectedTruckCapacity(truckSelectData, resource, originalAmount, out int safeCapacity))
+            if (!TryGetSafeSelectedTruckCapacity(
+                    truckSelectData,
+                    resource,
+                    originalAmount,
+                    out int safeCapacity))
             {
                 return false;
             }
@@ -94,27 +87,26 @@ namespace PublicWorksPlus
             }
 
             adjustedAmount = safeCapacity;
-            return adjustedAmount != originalAmount;
+            return true;
         }
 
-        private static Unity.Mathematics.Random CreateProbeRandom(Resource resource, int requestedAmount, int salt)
+        private static Unity.Mathematics.Random CreateProbeRandom(
+            Resource resource,
+            int requestedAmount)
         {
-            // Resource already uses ulong as its underlying enum type; avoid boxing it.
+            // Resource uses ulong underneath; direct cast avoids boxing.
             ulong raw = (ulong)resource;
-            uint low = (uint)(raw & 0xFFFFFFFFu);
-            uint high = (uint)(raw >> 32);
+            uint seed =
+                (uint)raw ^
+                (uint)(raw >> 32) ^
+                (uint)requestedAmount ^
+                0x9E3779B9u;
 
-            uint seed = low ^ high ^ (uint)requestedAmount ^ (uint)(0x9E3779B9u * (uint)(salt + 1));
             seed ^= seed << 13;
             seed ^= seed >> 17;
             seed ^= seed << 5;
 
-            if (seed == 0)
-            {
-                seed = 1;
-            }
-
-            return new Unity.Mathematics.Random(seed);
+            return new Unity.Mathematics.Random(seed == 0 ? 1u : seed);
         }
     }
 }

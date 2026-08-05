@@ -11,7 +11,6 @@
 
 namespace PublicWorksPlus
 {
-    using CS2Shared.RiverMochi;
     using Game;
     using Game.Citizens;
     using Game.Common;
@@ -20,22 +19,22 @@ namespace PublicWorksPlus
     using Game.Prefabs;
     using Game.Tools;
     using Game.Vehicles;
+    using Unity.Burst;
+    using Unity.Burst.Intrinsics;
     using Unity.Collections;
     using Unity.Entities;
+    using Unity.Jobs;
     using Unity.Mathematics;
 
     public sealed partial class CompanyShoppingCapacitySystem : GameSystemBase
     {
-#if DEBUG
-        private PrefabSystem m_PrefabSystem = null!;
-#endif
         private ResourceSystem m_ResourceSystem = null!;
         private VehicleCapacitySystem m_VehicleCapacitySystem = null!;
         private EntityQuery m_BuyerQuery;
 
         public override int GetUpdateInterval(SystemUpdatePhase phase)
         {
-            // Match ResourceBuyerSystem. No need to run every tick.
+            // ResourceBuyer is short-lived, so catch it before the vanilla buyer system.
             return 16;
         }
 
@@ -43,13 +42,9 @@ namespace PublicWorksPlus
         {
             base.OnCreate();
 
-#if DEBUG
-            m_PrefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
-#endif
             m_ResourceSystem = World.GetOrCreateSystemManaged<ResourceSystem>();
             m_VehicleCapacitySystem = World.GetOrCreateSystemManaged<VehicleCapacitySystem>();
 
-            // Only companies actively waiting to buy an input.
             m_BuyerQuery = SystemAPI.QueryBuilder()
                 .WithAll<ResourceBuyer, BuyingCompany, PrefabRef>()
                 .WithNone<Deleted, Temp>()
@@ -60,110 +55,207 @@ namespace PublicWorksPlus
 
         protected override void OnUpdate()
         {
-            // Vanilla delivery settings should cost almost nothing.
-            if (Mod.Settings is not ATTSettings settings)
+            if (Mod.Settings is not ATTSettings settings ||
+                !settings.ShouldRunFullLoadDispatchHelper)
             {
                 return;
             }
 
-            if (!settings.HasCustomDeliveryCapacity)
+            JobHandle handle = new CompanyShoppingJob
             {
-                return;
+                m_EntityType = SystemAPI.GetEntityTypeHandle(),
+                m_BuyerType = SystemAPI.GetComponentTypeHandle<ResourceBuyer>(isReadOnly: false),
+                m_PrefabType = SystemAPI.GetComponentTypeHandle<PrefabRef>(isReadOnly: true),
+
+                m_ProcessLookup =
+                    SystemAPI.GetComponentLookup<IndustrialProcessData>(isReadOnly: true),
+                m_LimitLookup =
+                    SystemAPI.GetComponentLookup<StorageLimitData>(isReadOnly: true),
+                m_ResourceDataLookup =
+                    SystemAPI.GetComponentLookup<ResourceData>(isReadOnly: true),
+                m_TruckLookup =
+                    SystemAPI.GetComponentLookup<Game.Vehicles.DeliveryTruck>(isReadOnly: true),
+
+                m_ResourcesLookup =
+                    SystemAPI.GetBufferLookup<Resources>(isReadOnly: true),
+                m_OwnedVehicleLookup =
+                    SystemAPI.GetBufferLookup<OwnedVehicle>(isReadOnly: true),
+                m_TripLookup =
+                    SystemAPI.GetBufferLookup<TripNeeded>(isReadOnly: true),
+                m_LayoutLookup =
+                    SystemAPI.GetBufferLookup<LayoutElement>(isReadOnly: true),
+
+                m_ResourcePrefabs = m_ResourceSystem.GetPrefabs(),
+                m_TruckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData(),
+            }.ScheduleParallel(m_BuyerQuery, Dependency);
+
+            // ResourcePrefabs stays valid until this reader finishes.
+            m_ResourceSystem.AddPrefabsReader(handle);
+            Dependency = handle;
+        }
+
+        [BurstCompile]
+        private struct CompanyShoppingJob : IJobChunk
+        {
+            [ReadOnly] public EntityTypeHandle m_EntityType;
+            public ComponentTypeHandle<ResourceBuyer> m_BuyerType;
+            [ReadOnly] public ComponentTypeHandle<PrefabRef> m_PrefabType;
+
+            [ReadOnly] public ComponentLookup<IndustrialProcessData> m_ProcessLookup;
+            [ReadOnly] public ComponentLookup<StorageLimitData> m_LimitLookup;
+            [ReadOnly] public ComponentLookup<ResourceData> m_ResourceDataLookup;
+            [ReadOnly] public ComponentLookup<Game.Vehicles.DeliveryTruck> m_TruckLookup;
+
+            [ReadOnly] public BufferLookup<Resources> m_ResourcesLookup;
+            [ReadOnly] public BufferLookup<OwnedVehicle> m_OwnedVehicleLookup;
+            [ReadOnly] public BufferLookup<TripNeeded> m_TripLookup;
+            [ReadOnly] public BufferLookup<LayoutElement> m_LayoutLookup;
+
+            [ReadOnly] public ResourcePrefabs m_ResourcePrefabs;
+            [ReadOnly] public DeliveryTruckSelectData m_TruckSelectData;
+
+            public void Execute(
+                in ArchetypeChunk chunk,
+                int unfilteredChunkIndex,
+                bool useEnabledMask,
+                in v128 chunkEnabledMask)
+            {
+                _ = unfilteredChunkIndex;
+                _ = useEnabledMask;
+                _ = chunkEnabledMask;
+
+                NativeArray<Entity> entities = chunk.GetNativeArray(m_EntityType);
+                NativeArray<ResourceBuyer> buyers =
+                    chunk.GetNativeArray(ref m_BuyerType);
+                NativeArray<PrefabRef> prefabs =
+                    chunk.GetNativeArray(ref m_PrefabType);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    ResourceBuyer buyer = buyers[i];
+                    if (buyer.m_AmountNeeded <= 0)
+                    {
+                        continue;
+                    }
+
+                    Resource resource = buyer.m_ResourceNeeded;
+                    if (!IsWeightedResource(resource))
+                    {
+                        continue;
+                    }
+
+                    Entity prefab = prefabs[i].m_Prefab;
+                    if (!m_ProcessLookup.HasComponent(prefab))
+                    {
+                        continue;
+                    }
+
+                    IndustrialProcessData process = m_ProcessLookup[prefab];
+                    if (resource != process.m_Input1.m_Resource &&
+                        resource != process.m_Input2.m_Resource)
+                    {
+                        continue;
+                    }
+
+                    m_TruckSelectData.GetCapacityRange(
+                        resource,
+                        out _,
+                        out int maxTruckCapacity);
+
+                    if (maxTruckCapacity <= buyer.m_AmountNeeded)
+                    {
+                        continue;
+                    }
+
+                    int storageLimit = m_LimitLookup.HasComponent(prefab)
+                        ? m_LimitLookup[prefab].m_Limit
+                        : int.MaxValue;
+
+                    int storageUsed =
+                        GetTotalKnownWeightedStorageUsed(entities[i], process);
+
+                    int storageLeft = storageLimit == int.MaxValue
+                        ? int.MaxValue
+                        : math.max(0, storageLimit - storageUsed);
+
+                    int desiredRequest = storageLeft == int.MaxValue
+                        ? maxTruckCapacity
+                        : math.min(maxTruckCapacity, storageLeft);
+
+                    if (desiredRequest <= buyer.m_AmountNeeded)
+                    {
+                        continue;
+                    }
+
+                    if (!StationTransferAmountUtil.TryGetSafeSelectedTruckCapacity(
+                            m_TruckSelectData,
+                            resource,
+                            desiredRequest,
+                            out int safeTruckCapacity))
+                    {
+                        continue;
+                    }
+
+                    desiredRequest = math.min(desiredRequest, safeTruckCapacity);
+                    if (desiredRequest <= buyer.m_AmountNeeded)
+                    {
+                        continue;
+                    }
+
+                    buyer.m_AmountNeeded = desiredRequest;
+                    buyers[i] = buyer;
+                }
             }
 
-            DeliveryTruckSelectData truckSelectData = m_VehicleCapacitySystem.GetDeliveryTruckSelectData();
-
-            ComponentLookup<ResourceBuyer> buyerLookup =
-                SystemAPI.GetComponentLookup<ResourceBuyer>(isReadOnly: false);
-
-            ComponentLookup<PrefabRef> prefabLookup =
-                SystemAPI.GetComponentLookup<PrefabRef>(isReadOnly: true);
-
-            ComponentLookup<IndustrialProcessData> processLookup =
-                SystemAPI.GetComponentLookup<IndustrialProcessData>(isReadOnly: true);
-
-            ComponentLookup<StorageLimitData> limitLookup =
-                SystemAPI.GetComponentLookup<StorageLimitData>(isReadOnly: true);
-
-            ComponentLookup<ResourceData> resourceDataLookup =
-                SystemAPI.GetComponentLookup<ResourceData>(isReadOnly: true);
-
-            ComponentLookup<Game.Vehicles.DeliveryTruck> truckLookup =
-                SystemAPI.GetComponentLookup<Game.Vehicles.DeliveryTruck>(isReadOnly: true);
-
-            BufferLookup<Resources> resourcesLookup =
-                SystemAPI.GetBufferLookup<Resources>(isReadOnly: true);
-
-            BufferLookup<OwnedVehicle> ownedVehicleLookup =
-                SystemAPI.GetBufferLookup<OwnedVehicle>(isReadOnly: true);
-
-            BufferLookup<TripNeeded> tripLookup =
-                SystemAPI.GetBufferLookup<TripNeeded>(isReadOnly: true);
-
-            BufferLookup<LayoutElement> layoutLookup =
-                SystemAPI.GetBufferLookup<LayoutElement>(isReadOnly: true);
-
-            ResourcePrefabs resourcePrefabs = m_ResourceSystem.GetPrefabs();
-
-#if DEBUG
-            bool verbose = settings.EnableDebugLogging;
-#endif
-
-            bool IsWeightedResource(Resource resource)
+            private bool IsWeightedResource(Resource resource)
             {
                 if (resource == Resource.NoResource)
                 {
                     return false;
                 }
 
-                Entity resourcePrefab = resourcePrefabs[resource];
-                if (resourcePrefab == Entity.Null)
-                {
-                    return false;
-                }
-
-                if (!resourceDataLookup.TryGetComponent(resourcePrefab, out ResourceData data))
-                {
-                    return false;
-                }
-
-                return data.m_Weight > 0f;
+                Entity resourcePrefab = m_ResourcePrefabs[resource];
+                return resourcePrefab != Entity.Null &&
+                       m_ResourceDataLookup.HasComponent(resourcePrefab) &&
+                       m_ResourceDataLookup[resourcePrefab].m_Weight > 0f;
             }
 
-            int GetKnownInputAmount(Entity companyEntity, Resource resource)
+            private int GetKnownInputAmount(Entity company, Resource resource)
             {
                 int amount = 0;
 
-                if (resourcesLookup.HasBuffer(companyEntity))
+                if (m_ResourcesLookup.HasBuffer(company))
                 {
-                    amount += EconomyUtils.GetResources(resource, resourcesLookup[companyEntity]);
+                    amount += EconomyUtils.GetResources(
+                        resource,
+                        m_ResourcesLookup[company]);
                 }
 
-                if (ownedVehicleLookup.HasBuffer(companyEntity))
+                if (m_OwnedVehicleLookup.HasBuffer(company))
                 {
-                    DynamicBuffer<OwnedVehicle> vehicles = ownedVehicleLookup[companyEntity];
+                    DynamicBuffer<OwnedVehicle> vehicles =
+                        m_OwnedVehicleLookup[company];
+
                     for (int i = 0; i < vehicles.Length; i++)
                     {
                         amount += VehicleUtils.GetBuyingTrucksLoad(
                             vehicles[i].m_Vehicle,
                             resource,
-                            ref truckLookup,
-                            ref layoutLookup);
+                            ref m_TruckLookup,
+                            ref m_LayoutLookup);
                     }
                 }
 
-                if (tripLookup.HasBuffer(companyEntity))
+                if (m_TripLookup.HasBuffer(company))
                 {
-                    DynamicBuffer<TripNeeded> trips = tripLookup[companyEntity];
+                    DynamicBuffer<TripNeeded> trips = m_TripLookup[company];
+
                     for (int i = 0; i < trips.Length; i++)
                     {
                         TripNeeded trip = trips[i];
-                        if (trip.m_Resource != resource)
-                        {
-                            continue;
-                        }
-
-                        if (trip.m_Purpose == Purpose.Shopping || trip.m_Purpose == Purpose.CompanyShopping)
+                        if (trip.m_Resource == resource &&
+                            (trip.m_Purpose == Purpose.Shopping ||
+                             trip.m_Purpose == Purpose.CompanyShopping))
                         {
                             amount += trip.m_Data;
                         }
@@ -173,17 +265,21 @@ namespace PublicWorksPlus
                 return amount;
             }
 
-            int GetKnownOutputAmount(Entity companyEntity, Resource resource)
+            private int GetKnownOutputAmount(Entity company, Resource resource)
             {
-                if (!resourcesLookup.HasBuffer(companyEntity))
+                if (!m_ResourcesLookup.HasBuffer(company))
                 {
                     return 0;
                 }
 
-                return EconomyUtils.GetResources(resource, resourcesLookup[companyEntity]);
+                return EconomyUtils.GetResources(
+                    resource,
+                    m_ResourcesLookup[company]);
             }
 
-            int GetTotalKnownWeightedStorageUsed(Entity companyEntity, IndustrialProcessData process)
+            private int GetTotalKnownWeightedStorageUsed(
+                Entity company,
+                IndustrialProcessData process)
             {
                 int used = 0;
 
@@ -193,14 +289,14 @@ namespace PublicWorksPlus
 
                 if (IsWeightedResource(input1))
                 {
-                    used += GetKnownInputAmount(companyEntity, input1);
+                    used += GetKnownInputAmount(company, input1);
                 }
 
                 if (input2 != Resource.NoResource &&
                     input2 != input1 &&
                     IsWeightedResource(input2))
                 {
-                    used += GetKnownInputAmount(companyEntity, input2);
+                    used += GetKnownInputAmount(company, input2);
                 }
 
                 if (output != Resource.NoResource &&
@@ -208,125 +304,11 @@ namespace PublicWorksPlus
                     output != input2 &&
                     IsWeightedResource(output))
                 {
-                    used += GetKnownOutputAmount(companyEntity, output);
+                    used += GetKnownOutputAmount(company, output);
                 }
 
                 return used;
             }
-
-            using NativeArray<Entity> entities = m_BuyerQuery.ToEntityArray(Allocator.Temp);
-
-            int changed = 0;
-
-            for (int i = 0; i < entities.Length; i++)
-            {
-                Entity entity = entities[i];
-
-                ResourceBuyer buyer = buyerLookup[entity];
-                if (buyer.m_AmountNeeded <= 0)
-                {
-                    continue;
-                }
-
-                Resource resource = buyer.m_ResourceNeeded;
-                if (resource == Resource.NoResource || !IsWeightedResource(resource))
-                {
-                    continue;
-                }
-
-                if (!prefabLookup.TryGetComponent(entity, out PrefabRef prefabRef))
-                {
-                    continue;
-                }
-
-                Entity prefab = prefabRef.m_Prefab;
-                if (!processLookup.TryGetComponent(prefab, out IndustrialProcessData process))
-                {
-                    continue;
-                }
-
-                if (resource != process.m_Input1.m_Resource && resource != process.m_Input2.m_Resource)
-                {
-                    continue;
-                }
-
-                truckSelectData.GetCapacityRange(resource, out _, out int rangeMaxCapacity);
-                if (rangeMaxCapacity <= 0 || rangeMaxCapacity <= buyer.m_AmountNeeded)
-                {
-                    continue;
-                }
-
-                int storageLimit = int.MaxValue;
-                if (limitLookup.TryGetComponent(prefab, out StorageLimitData limitData))
-                {
-                    storageLimit = limitData.m_Limit;
-                }
-
-                // Respect storage already used or already on the way.
-                int totalKnownWeightedUsed = GetTotalKnownWeightedStorageUsed(entity, process);
-                int storageLeft = storageLimit == int.MaxValue
-                    ? int.MaxValue
-                    : math.max(0, storageLimit - totalKnownWeightedUsed);
-
-                if (storageLeft <= buyer.m_AmountNeeded)
-                {
-                    continue;
-                }
-
-                int knownForTargetResource = GetKnownInputAmount(entity, resource);
-
-                int rawDesiredLevel = storageLeft == int.MaxValue
-                    ? rangeMaxCapacity
-                    : math.min(rangeMaxCapacity, knownForTargetResource + storageLeft);
-
-                int rawDesiredRequest = rawDesiredLevel - knownForTargetResource;
-
-                if (rawDesiredRequest <= buyer.m_AmountNeeded)
-                {
-                    continue;
-                }
-
-                // Never request more than a truck the game can select.
-                if (!StationTransferAmountUtil.TryGetSafeSelectedTruckCapacity(
-                        truckSelectData,
-                        resource,
-                        rawDesiredRequest,
-                        out int safeSelectedCapacity))
-                {
-                    continue;
-                }
-
-                int desiredRequest = math.min(rawDesiredRequest, safeSelectedCapacity);
-                if (desiredRequest <= buyer.m_AmountNeeded)
-                {
-                    continue;
-                }
-
-                buyer.m_AmountNeeded = desiredRequest;
-                buyerLookup[entity] = buyer;
-                changed++;
-
-#if DEBUG
-                if (verbose)
-                {
-                    string prefabName = PrefabNameUtil.GetNameSafe(m_PrefabSystem, prefab);
-
-                    LogUtils.Info(
-                        Mod.s_Log,
-                        $"{Mod.ModTag} [DISPATCH][CompanyShopping] ENTITY ID {entity.Index}:{entity.Version} " +
-                        $"prefab='{prefabName}' Resource={resource} Request={desiredRequest} SafeTruckCap={safeSelectedCapacity}");
-                }
-#endif
-            }
-
-#if DEBUG
-            if (changed > 0 && verbose)
-            {
-                LogUtils.Info(
-                    Mod.s_Log,
-                    $"{Mod.ModTag} CompanyShoppingCapacity: promoted {changed} company buyer request(s) toward full truck size.");
-            }
-#endif
         }
     }
 }

@@ -19,7 +19,7 @@ namespace PublicWorksPlus
     using CS2Shared.RiverMochi;           // LogUtils, ShellOpen
     using Game;                           // UpdateSystem, GameManager, SystemUpdatePhase
     using Game.Modding;                   // IMod
-    using Game.Prefabs;                   // VehicleCapacitySystem, DeliveryTruckSelectData
+    using Game.Prefabs;                   // VehicleCapacitySystem
     using Game.SceneFlow;                 // GameManager
     using Game.Simulation;                // game ECS systems for ordering hooks
 
@@ -57,14 +57,17 @@ namespace PublicWorksPlus
 
             try
             {
-                LocalizationManager? localizationManager = GameManager.instance?.localizationManager;
+                LocalizationManager? localizationManager =
+                    GameManager.instance?.localizationManager;
+
                 if (localizationManager == null)
                 {
-                    LogUtils.Warn(s_Log, () => $"{ModTag} LocalizationManager is null; locale sources were not registered.");
+                    LogUtils.Warn(
+                        s_Log,
+                        () => $"{ModTag} LocalizationManager is null; locale sources were not registered.");
                 }
                 else
                 {
-                    // Register localization before settings/options UI reads the dictionary.
                     localizationManager.AddSource("en-US", new LocaleEN(setting));
                     localizationManager.AddSource("fr-FR", new LocaleFR(setting));
                     localizationManager.AddSource("es-ES", new LocaleES(setting));
@@ -75,62 +78,75 @@ namespace PublicWorksPlus
                     localizationManager.AddSource("pl-PL", new LocalePL(setting));
                     localizationManager.AddSource("pt-BR", new LocalePT_BR(setting));
                     localizationManager.AddSource("vi-VN", new LocaleVI(setting));
-                    localizationManager.AddSource("zh-HANS", new LocaleZH_CN(setting));    // Simplified Chinese
-                    localizationManager.AddSource("zh-HANT", new LocaleZH_HANT(setting));  // Traditional Chinese
+                    localizationManager.AddSource("zh-HANS", new LocaleZH_CN(setting));
+                    localizationManager.AddSource("zh-HANT", new LocaleZH_HANT(setting));
+
+                    // Keep this temporary opt-in option translated everywhere.
+                    DispatchHelperLocales.Register(localizationManager, setting);
                 }
             }
             catch (Exception ex)
             {
-                LogUtils.Warn(s_Log, () => $"{ModTag} Localization registration failed: {ex.GetType().Name}: {ex.Message}");
+                LogUtils.Warn(
+                    s_Log,
+                    () => $"{ModTag} Localization registration failed: {ex.GetType().Name}: {ex.Message}");
             }
 
-            // Load settings (.coc) into the instance.
-            // The default instance passed here provides defaults for missing fields.
-            AssetDatabase.global.LoadSettings(ModId, setting, new ATTSettings(this));
+            AssetDatabase.global.LoadSettings(
+                ModId,
+                setting,
+                new ATTSettings(this));
 
-            // Repair missing/out-of-range/invalid values in-memory (no auto-save).
             setting.SanitizeAfterLoad();
-
             setting.RegisterInOptionsUI();
 
-            // Systems.
             updateSystem.UpdateAfter<TransitSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<MaintenanceSystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateAfter<LaneWearSystem>(SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateAfter<LaneWearSystem>(
+                SystemUpdatePhase.PrefabUpdate);
 
-            // Storage transfer car-request promotion:
-            // run after station/storage transfer requests are created,
-            // before the car-request system turns them into TripNeeded.
-            updateSystem.UpdateAt<StationTransferCapacitySystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAfter<StationTransferCapacitySystem, StorageTransferSystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateBefore<StationTransferCapacitySystem, CarStorageTransferRequestSystem>(SystemUpdatePhase.GameSimulation);
+            // Adjust requests after creation and before vanilla consumes them.
+            updateSystem.UpdateAt<StationTransferCapacitySystem>(
+                SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAfter<
+                StationTransferCapacitySystem,
+                StorageTransferSystem>(
+                SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateBefore<
+                StationTransferCapacitySystem,
+                CarStorageTransferRequestSystem>(
+                SystemUpdatePhase.GameSimulation);
 
-            // Company shopping promotion:
-            // run after BuyingCompanySystem creates ResourceBuyer,
-            // before ResourceBuyerSystem turns it into TripNeeded.
-            updateSystem.UpdateAt<CompanyShoppingCapacitySystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAfter<CompanyShoppingCapacitySystem, BuyingCompanySystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateBefore<CompanyShoppingCapacitySystem, ResourceBuyerSystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAt<CompanyShoppingCapacitySystem>(
+                SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAfter<
+                CompanyShoppingCapacitySystem,
+                BuyingCompanySystem>(
+                SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateBefore<
+                CompanyShoppingCapacitySystem,
+                ResourceBuyerSystem>(
+                SystemUpdatePhase.GameSimulation);
 
-            // Industry (prefab editing window).
-            // Critical: run IndustrySystem BEFORE VehicleCapacitySystem so the game's
-            // DeliveryTruckSelectData table is rebuilt from the updated truck capacities.
-            updateSystem.UpdateAfter<IndustrySystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateBefore<IndustrySystem, VehicleCapacitySystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateBefore<IndustrySystem>(SystemUpdatePhase.PrefabReferences);
+            // DeliveryTruckSelectData must rebuild after ATT changes capacities.
+            updateSystem.UpdateAfter<IndustrySystem>(
+                SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateBefore<IndustrySystem, VehicleCapacitySystem>(
+                SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateBefore<IndustrySystem>(
+                SystemUpdatePhase.PrefabReferences);
 
-            // Allow transit lines range to be 1-and higher than vanilla.
-            updateSystem.UpdateAfter<VehicleCountPolicyTunerSystem>(SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateAfter<VehicleCountPolicyTunerSystem>(
+                SystemUpdatePhase.PrefabUpdate);
 
-            // Prefab scan: must work even while Options UI is open.
-            updateSystem.UpdateAt<PrefabScanSystem>(SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateAt<PrefabScanSystem>(
+                SystemUpdatePhase.PrefabUpdate);
 
 #if DEBUG
-            // Live delivery cargo proof logger.
-            updateSystem.UpdateAt<DeliveryCargoProbeSystem>(SystemUpdatePhase.GameSimulation);
-
-            // Debug probe: logs LaneCondition.m_Wear deltas (runtime).
-            updateSystem.UpdateAt<LaneWearProbeSystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAt<DeliveryCargoProbeSystem>(
+                SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateAt<LaneWearProbeSystem>(
+                SystemUpdatePhase.GameSimulation);
 #endif
         }
 
@@ -147,7 +163,9 @@ namespace PublicWorksPlus
         {
             try
             {
-                LocalizationManager? lm = GameManager.instance?.localizationManager;
+                LocalizationManager? lm =
+                    GameManager.instance?.localizationManager;
+
                 if (lm != null &&
                     lm.activeDictionary != null &&
                     lm.activeDictionary.TryGetValue(id, out string result))

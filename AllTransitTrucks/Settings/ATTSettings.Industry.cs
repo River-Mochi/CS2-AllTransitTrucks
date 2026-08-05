@@ -7,11 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Settings/ATTSettings.Industry.cs
-// Purpose: Industry settings (delivery vehicles, cargo stations, extractors).
-// Notes:
-// - Delivery vehicle sliders are stored as percent values, same style as Transit.
-// - 100% = vanilla, 500% = 5x.
-// - Cargo station / extractor fleet sliders remain scalar 1x..5x.
+// Purpose: Industry settings for delivery vehicles and industry fleets.
 
 namespace PublicWorksPlus
 {
@@ -23,24 +19,34 @@ namespace PublicWorksPlus
 
     public sealed partial class ATTSettings
     {
-        // Delivery vehicles are now stored as percent values.
+        private bool m_EnableFullLoadDispatchHelper;
+
+        // Delivery vehicles are stored as percent values.
         private float m_SemiTruckCargoScalar = kVanillaPercent;
         private float m_DeliveryVanCargoScalar = kVanillaPercent;
         private float m_CoalTruckScalar = kVanillaPercent;
         private float m_MotorbikeDeliveryCargoScalar = kVanillaPercent;
 
-        // These still use simple scalar values (1x..5x).
+        // Industry fleets use simple scalar values (1x..5x).
         private float m_ExtractorMaxTrucksScalar = kVanillaScalar;
         private float m_CargoStationMaxTrucksScalar = kVanillaScalar;
 
-        // Runtime request systems do no work when every delivery slider is vanilla.
         internal bool HasCustomDeliveryCapacity =>
             m_SemiTruckCargoScalar != kVanillaPercent ||
             m_DeliveryVanCargoScalar != kVanillaPercent ||
             m_CoalTruckScalar != kVanillaPercent ||
             m_MotorbikeDeliveryCargoScalar != kVanillaPercent;
 
-        // Delivery vehicles (stored/displayed as percent, like Transit).
+        internal bool ShouldRunFullLoadDispatchHelper =>
+            m_EnableFullLoadDispatchHelper && HasCustomDeliveryCapacity;
+
+        [SettingsUISection(IndustryTab, DeliveryGroup)]
+        public bool EnableFullLoadDispatchHelper
+        {
+            get => m_EnableFullLoadDispatchHelper;
+            set => m_EnableFullLoadDispatchHelper = value;
+        }
+
         [SettingsUISlider(min = DeliveryMinPercent, max = DeliveryMaxPercent, step = DeliveryStepPercent, scalarMultiplier = 1, unit = Unit.kPercentage)]
         [SettingsUISection(IndustryTab, DeliveryGroup)]
         public float SemiTruckCargoScalar
@@ -101,7 +107,6 @@ namespace PublicWorksPlus
             }
         }
 
-        // Extractor + Cargo Stations remain scalar 1x..5x.
         [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
         public float ExtractorMaxTrucksScalar
@@ -141,6 +146,7 @@ namespace PublicWorksPlus
             {
                 if (!value) return;
 
+                m_EnableFullLoadDispatchHelper = false;
                 m_SemiTruckCargoScalar = kVanillaPercent;
                 m_DeliveryVanCargoScalar = kVanillaPercent;
                 m_CoalTruckScalar = kVanillaPercent;
@@ -181,6 +187,9 @@ namespace PublicWorksPlus
 
         partial void SetDefaults_Industry()
         {
+            // Keep live request helpers opt-in until large-city testing is solid.
+            m_EnableFullLoadDispatchHelper = false;
+
             m_SemiTruckCargoScalar = kVanillaPercent;
             m_DeliveryVanCargoScalar = kVanillaPercent;
             m_CoalTruckScalar = kVanillaPercent;
@@ -198,7 +207,6 @@ namespace PublicWorksPlus
             m_CoalTruckScalar = NormalizeDeliveryPercentOrVanilla(m_CoalTruckScalar);
             m_MotorbikeDeliveryCargoScalar = NormalizeDeliveryPercentOrVanilla(m_MotorbikeDeliveryCargoScalar);
 
-            // Fleet sliders stay scalar.
             m_CargoStationMaxTrucksScalar = ClampScalarOrDefault(m_CargoStationMaxTrucksScalar, CargoStationMinScalar, CargoStationMaxScalar, kVanillaScalar);
             m_ExtractorMaxTrucksScalar = ClampScalarOrDefault(m_ExtractorMaxTrucksScalar, CargoStationMinScalar, CargoStationMaxScalar, kVanillaScalar);
         }

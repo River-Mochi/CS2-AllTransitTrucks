@@ -7,7 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Systems/IndustrySystem.cs
-// Purpose: Apply cargo capacity, cargo station, and extractor settings.
+// Purpose: Apply cargo capacity and industry fleet settings.
 
 namespace PublicWorksPlus
 {
@@ -16,6 +16,7 @@ namespace PublicWorksPlus
     using CS2Shared.RiverMochi;
     using Game;
     using Game.Common;
+    using Game.Economy;
     using Game.Prefabs;
     using Game.SceneFlow;
     using Unity.Collections;
@@ -29,6 +30,8 @@ namespace PublicWorksPlus
         private Dictionary<Entity, int> m_CargoStationBaseMaxTransports = null!;
         private Dictionary<Entity, int> m_DeliveryTruckBaseCargoCapacity = null!;
         private Dictionary<Entity, int> m_ExtractorCompanyBaseMaxTransports = null!;
+        private Dictionary<Entity, int> m_WarehouseCompanyBaseMaxTransports = null!;
+        private Dictionary<Entity, int> m_IndustryCompanyBaseMaxTransports = null!;
 
         protected override void OnCreate()
         {
@@ -39,6 +42,8 @@ namespace PublicWorksPlus
             m_CargoStationBaseMaxTransports = new Dictionary<Entity, int>();
             m_DeliveryTruckBaseCargoCapacity = new Dictionary<Entity, int>();
             m_ExtractorCompanyBaseMaxTransports = new Dictionary<Entity, int>();
+            m_WarehouseCompanyBaseMaxTransports = new Dictionary<Entity, int>();
+            m_IndustryCompanyBaseMaxTransports = new Dictionary<Entity, int>();
 
             EntityQuery anyRelevantPrefabQuery = SystemAPI.QueryBuilder()
                 .WithAll<Game.Prefabs.PrefabData>()
@@ -68,6 +73,8 @@ namespace PublicWorksPlus
             m_CargoStationBaseMaxTransports.Clear();
             m_DeliveryTruckBaseCargoCapacity.Clear();
             m_ExtractorCompanyBaseMaxTransports.Clear();
+            m_WarehouseCompanyBaseMaxTransports.Clear();
+            m_IndustryCompanyBaseMaxTransports.Clear();
 
 #if DEBUG
             LogUtils.Info(Mod.s_Log, () => $"{Mod.ModTag} City Loading Complete -> applying Industry settings");
@@ -121,6 +128,16 @@ namespace PublicWorksPlus
                     ref ecb,
                     ref anyPrefabTaggedUpdated);
             }
+
+            ApplyWarehouseFleet(
+                settings.WarehouseMaxTrucksScalar,
+                ref ecb,
+                ref anyPrefabTaggedUpdated);
+
+            ApplyIndustryFleet(
+                settings.IndustryMaxTrucksScalar,
+                ref ecb,
+                ref anyPrefabTaggedUpdated);
 
             if (anyPrefabTaggedUpdated)
             {
@@ -367,6 +384,187 @@ namespace PublicWorksPlus
 #endif
         }
 
+
+        private void ApplyWarehouseFleet(
+            float requestedScalar,
+            ref EntityCommandBuffer ecb,
+            ref bool anyPrefabTaggedUpdated)
+        {
+            float scalar = ScalarMath.ClampScalar(
+                requestedScalar,
+                ATTSettings.CargoStationMinScalar,
+                ATTSettings.CargoStationMaxScalar);
+
+#if DEBUG
+            int matched = 0;
+            int changed = 0;
+#endif
+
+            foreach ((RefRW<Game.Companies.TransportCompanyData> companyRef,
+                      RefRO<Game.Prefabs.StorageCompanyData> storageRef,
+                      Entity prefabEntity) in SystemAPI
+                         .Query<
+                             RefRW<Game.Companies.TransportCompanyData>,
+                             RefRO<Game.Prefabs.StorageCompanyData>>()
+                         .WithAll<Game.Prefabs.PrefabData>()
+                         .WithNone<Game.Prefabs.CargoTransportStationData>()
+                         .WithNone<Game.Prefabs.OutsideConnectionData>()
+                         .WithEntityAccess())
+            {
+                ref Game.Companies.TransportCompanyData company =
+                    ref companyRef.ValueRW;
+
+                int baseMax = GetOrCacheWarehouseCompanyBase(
+                    prefabEntity,
+                    company.m_MaxTransports);
+
+                if (baseMax <= 0 && company.m_MaxTransports <= 0)
+                {
+                    continue;
+                }
+
+#if DEBUG
+                matched++;
+#endif
+
+                int desired =
+                    ScalarMath.ScaleIntRoundedAllowZeroMin1(baseMax, scalar);
+
+                if (company.m_MaxTransports == desired)
+                {
+                    continue;
+                }
+
+                company.m_MaxTransports = desired;
+
+#if DEBUG
+                changed++;
+
+                if (Mod.Settings?.EnableDebugLogging == true)
+                {
+                    string prefabName =
+                        PrefabNameUtil.GetNameSafe(m_PrefabSystem, prefabEntity);
+                    Resource stored = storageRef.ValueRO.m_StoredResources;
+
+                    LogUtils.Info(
+                        Mod.s_Log,
+                        () => $"{Mod.ModTag} Warehouse trucks: '{prefabName}' Stored={stored} Base={baseMax} x{scalar:0.##} -> {desired}");
+                }
+#endif
+
+                TagPrefabUpdatedIfMissing(
+                    prefabEntity,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
+            }
+
+#if DEBUG
+            if (Mod.Settings?.EnableDebugLogging == true)
+            {
+                LogUtils.Info(
+                    Mod.s_Log,
+                    () => $"{Mod.ModTag} Warehouse trucks: scalar={scalar:0.##} matched={matched} changed={changed}");
+            }
+#endif
+        }
+
+        private void ApplyIndustryFleet(
+            float requestedScalar,
+            ref EntityCommandBuffer ecb,
+            ref bool anyPrefabTaggedUpdated)
+        {
+            float scalar = ScalarMath.ClampScalar(
+                requestedScalar,
+                ATTSettings.CargoStationMinScalar,
+                ATTSettings.CargoStationMaxScalar);
+
+#if DEBUG
+            int matched = 0;
+            int changed = 0;
+            int skippedOffice = 0;
+#endif
+
+            foreach ((RefRW<Game.Companies.TransportCompanyData> companyRef,
+                      RefRO<Game.Prefabs.IndustrialProcessData> processRef,
+                      Entity prefabEntity) in SystemAPI
+                         .Query<
+                             RefRW<Game.Companies.TransportCompanyData>,
+                             RefRO<Game.Prefabs.IndustrialProcessData>>()
+                         .WithAll<Game.Prefabs.PrefabData>()
+                         .WithNone<Game.Prefabs.ExtractorCompanyData>()
+                         .WithNone<Game.Prefabs.StorageCompanyData>()
+                         .WithNone<Game.Prefabs.CargoTransportStationData>()
+                         .WithNone<Game.Prefabs.OutsideConnectionData>()
+                         .WithNone<Game.Companies.ServiceCompanyData>()
+                         .WithEntityAccess())
+            {
+                Game.Prefabs.IndustrialProcessData process = processRef.ValueRO;
+
+                if (EconomyUtils.IsOfficeResource(process.m_Output.m_Resource))
+                {
+#if DEBUG
+                    skippedOffice++;
+#endif
+                    continue;
+                }
+
+                ref Game.Companies.TransportCompanyData company =
+                    ref companyRef.ValueRW;
+
+                int baseMax = GetOrCacheIndustryCompanyBase(
+                    prefabEntity,
+                    company.m_MaxTransports);
+
+                if (baseMax <= 0 && company.m_MaxTransports <= 0)
+                {
+                    continue;
+                }
+
+#if DEBUG
+                matched++;
+#endif
+
+                int desired =
+                    ScalarMath.ScaleIntRoundedAllowZeroMin1(baseMax, scalar);
+
+                if (company.m_MaxTransports == desired)
+                {
+                    continue;
+                }
+
+                company.m_MaxTransports = desired;
+
+#if DEBUG
+                changed++;
+
+                if (Mod.Settings?.EnableDebugLogging == true)
+                {
+                    string prefabName =
+                        PrefabNameUtil.GetNameSafe(m_PrefabSystem, prefabEntity);
+                    Resource output = process.m_Output.m_Resource;
+
+                    LogUtils.Info(
+                        Mod.s_Log,
+                        () => $"{Mod.ModTag} Industry trucks: '{prefabName}' Output={output} Base={baseMax} x{scalar:0.##} -> {desired}");
+                }
+#endif
+
+                TagPrefabUpdatedIfMissing(
+                    prefabEntity,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
+            }
+
+#if DEBUG
+            if (Mod.Settings?.EnableDebugLogging == true)
+            {
+                LogUtils.Info(
+                    Mod.s_Log,
+                    () => $"{Mod.ModTag} Industry trucks: scalar={scalar:0.##} matched={matched} changed={changed} skippedOffice={skippedOffice}");
+            }
+#endif
+        }
+
         private void TagPrefabUpdatedIfMissing(
             Entity prefabEntity,
             ref EntityCommandBuffer ecb,
@@ -492,6 +690,62 @@ namespace PublicWorksPlus
             }
 
             m_ExtractorCompanyBaseMaxTransports[prefabEntity] = baseMax;
+            return baseMax;
+        }
+
+        private int GetOrCacheWarehouseCompanyBase(
+            Entity prefabEntity,
+            int currentValue)
+        {
+            if (m_WarehouseCompanyBaseMaxTransports.TryGetValue(
+                    prefabEntity,
+                    out int baseMax))
+            {
+                return baseMax;
+            }
+
+            if (PrefabComponentUtil.TryGetComponent(
+                    m_PrefabSystem,
+                    prefabEntity,
+                    out Game.Prefabs.StorageCompany storageCompany) &&
+                storageCompany.transports >= 0)
+            {
+                baseMax = storageCompany.transports;
+            }
+            else
+            {
+                baseMax = currentValue;
+            }
+
+            m_WarehouseCompanyBaseMaxTransports[prefabEntity] = baseMax;
+            return baseMax;
+        }
+
+        private int GetOrCacheIndustryCompanyBase(
+            Entity prefabEntity,
+            int currentValue)
+        {
+            if (m_IndustryCompanyBaseMaxTransports.TryGetValue(
+                    prefabEntity,
+                    out int baseMax))
+            {
+                return baseMax;
+            }
+
+            if (PrefabComponentUtil.TryGetComponent(
+                    m_PrefabSystem,
+                    prefabEntity,
+                    out Game.Prefabs.ProcessingCompany processingCompany) &&
+                processingCompany.transports >= 0)
+            {
+                baseMax = processingCompany.transports;
+            }
+            else
+            {
+                baseMax = currentValue;
+            }
+
+            m_IndustryCompanyBaseMaxTransports[prefabEntity] = baseMax;
             return baseMax;
         }
     }

@@ -13,6 +13,7 @@ namespace PublicWorksPlus
 {
     using System.Text;
     using Game.Companies;
+    using Game.Economy;
     using Game.Prefabs;
     using Unity.Collections;
     using Unity.Entities;
@@ -67,8 +68,16 @@ namespace PublicWorksPlus
                 sb,
                 ref lines,
                 ref truncated,
-                $"Extractor control: {extractorControl} | " +
-                $"Extractor trucks={settings.ExtractorMaxTrucksScalar:0.##}x");
+                $"Fleet sliders: CargoStations={settings.CargoStationMaxTrucksScalar:0.##}x " +
+                $"Extractors={settings.ExtractorMaxTrucksScalar:0.##}x " +
+                $"Warehouses={settings.WarehouseMaxTrucksScalar:0.##}x " +
+                $"Industry={settings.IndustryMaxTrucksScalar:0.##}x");
+
+            AppendCapped(
+                sb,
+                ref lines,
+                ref truncated,
+                $"Extractor control: {extractorControl}");
 
             AppendCapped(sb, ref lines, ref truncated, string.Empty);
         }
@@ -171,7 +180,7 @@ namespace PublicWorksPlus
                 sb,
                 ref lines,
                 ref truncated,
-                "Warehouse fleet candidates");
+                "Warehouse companies matched by ATT");
 
             AppendCapped(
                 sb,
@@ -225,7 +234,7 @@ namespace PublicWorksPlus
                 sb,
                 ref lines,
                 ref truncated,
-                $"Warehouse candidate summary: Total={entities.Length}");
+                $"Warehouse summary: Total={entities.Length}");
 
             AppendCapped(sb, ref lines, ref truncated, string.Empty);
         }
@@ -239,13 +248,13 @@ namespace PublicWorksPlus
                 sb,
                 ref lines,
                 ref truncated,
-                "Industrial processing fleet candidates");
+                "Industrial companies matched by ATT");
 
             AppendCapped(
                 sb,
                 ref lines,
                 ref truncated,
-                "Filter: vehicle-owning IndustrialProcessData prefabs; extractors, warehouses, cargo stations, outside connections, and service companies excluded.");
+                "Filter: vehicle-owning IndustrialProcessData prefabs; extractors, warehouses, cargo stations, outside connections, services, and office outputs excluded.");
 
             EntityQuery query = SystemAPI.QueryBuilder()
                 .WithAll<
@@ -262,6 +271,9 @@ namespace PublicWorksPlus
             using NativeArray<Entity> entities =
                 query.ToEntityArray(Allocator.Temp);
 
+            int included = 0;
+            int skippedOffice = 0;
+
             for (int i = 0; i < entities.Length; i++)
             {
                 if (truncated)
@@ -273,6 +285,12 @@ namespace PublicWorksPlus
                 IndustrialProcessData process =
                     EntityManager.GetComponentData<IndustrialProcessData>(entity);
 
+                if (EconomyUtils.IsOfficeResource(process.m_Output.m_Resource))
+                {
+                    skippedOffice++;
+                    continue;
+                }
+
                 int vanillaMax = company.m_MaxTransports;
                 if (PrefabComponentUtil.TryGetComponent(
                         m_PrefabSystem,
@@ -281,6 +299,8 @@ namespace PublicWorksPlus
                 {
                     vanillaMax = processingCompany.transports;
                 }
+
+                included++;
 
                 AppendCapped(
                     sb,
@@ -298,7 +318,7 @@ namespace PublicWorksPlus
                 sb,
                 ref lines,
                 ref truncated,
-                $"Industry candidate summary: Total={entities.Length}");
+                $"Industry summary: Total={included} OfficeSkipped={skippedOffice}");
 
             AppendCapped(sb, ref lines, ref truncated, string.Empty);
         }

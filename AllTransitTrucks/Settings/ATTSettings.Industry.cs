@@ -32,6 +32,8 @@ namespace PublicWorksPlus
         // Fleet limits use simple scalar values (1x..5x).
         private float m_CargoStationMaxTrucksScalar = kVanillaScalar;
         private float m_ExtractorMaxTrucksScalar = kVanillaScalar;
+        private float m_WarehouseMaxTrucksScalar = kVanillaScalar;
+        private float m_IndustryMaxTrucksScalar = kVanillaScalar;
 
         internal bool HasCustomDeliveryCapacity =>
             m_SemiTruckCargoScalar != kVanillaPercent ||
@@ -169,6 +171,37 @@ namespace PublicWorksPlus
             }
         }
 
+
+        [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
+        [SettingsUISection(IndustryTab, CargoStationsGroup)]
+        public float WarehouseMaxTrucksScalar
+        {
+            get => m_WarehouseMaxTrucksScalar;
+            set
+            {
+                float v = ScalarMath.ClampScalar(value, CargoStationMinScalar, CargoStationMaxScalar);
+                if (m_WarehouseMaxTrucksScalar == v) return;
+
+                m_WarehouseMaxTrucksScalar = v;
+                OnIndustryChanged();
+            }
+        }
+
+        [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
+        [SettingsUISection(IndustryTab, CargoStationsGroup)]
+        public float IndustryMaxTrucksScalar
+        {
+            get => m_IndustryMaxTrucksScalar;
+            set
+            {
+                float v = ScalarMath.ClampScalar(value, CargoStationMinScalar, CargoStationMaxScalar);
+                if (m_IndustryMaxTrucksScalar == v) return;
+
+                m_IndustryMaxTrucksScalar = v;
+                OnIndustryChanged();
+            }
+        }
+
         [SettingsUIButtonGroup(DeliveryGroup)]
         [SettingsUIButton]
         [SettingsUISection(IndustryTab, DeliveryGroup)]
@@ -199,6 +232,8 @@ namespace PublicWorksPlus
 
                 m_CargoStationMaxTrucksScalar = kVanillaScalar;
                 m_ExtractorMaxTrucksScalar = kVanillaScalar;
+                m_WarehouseMaxTrucksScalar = kVanillaScalar;
+                m_IndustryMaxTrucksScalar = kVanillaScalar;
 
                 ApplyAndSave();
             }
@@ -231,6 +266,8 @@ namespace PublicWorksPlus
 
             m_CargoStationMaxTrucksScalar = kVanillaScalar;
             m_ExtractorMaxTrucksScalar = kVanillaScalar;
+            m_WarehouseMaxTrucksScalar = kVanillaScalar;
+            m_IndustryMaxTrucksScalar = kVanillaScalar;
         }
 
         partial void RepairAndClamp_Industry()
@@ -249,6 +286,18 @@ namespace PublicWorksPlus
 
             m_ExtractorMaxTrucksScalar = ClampScalarOrDefault(
                 m_ExtractorMaxTrucksScalar,
+                CargoStationMinScalar,
+                CargoStationMaxScalar,
+                kVanillaScalar);
+
+            m_WarehouseMaxTrucksScalar = ClampScalarOrDefault(
+                m_WarehouseMaxTrucksScalar,
+                CargoStationMinScalar,
+                CargoStationMaxScalar,
+                kVanillaScalar);
+
+            m_IndustryMaxTrucksScalar = ClampScalarOrDefault(
+                m_IndustryMaxTrucksScalar,
                 CargoStationMinScalar,
                 CargoStationMaxScalar,
                 kVanillaScalar);

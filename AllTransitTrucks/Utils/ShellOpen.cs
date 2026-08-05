@@ -7,7 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Utils/ShellOpen.cs
-// Version: 0.3.1
+// Version: 0.3.2
 // Purpose: File/folder opening helpers for CS2 Options UI buttons.
 // Based on River-Mochi shared CS2 utilities.
 
@@ -67,7 +67,12 @@ namespace CS2Shared.RiverMochi
         {
             try
             {
-                // CS2 puts Player.log beside the Logs folder.
+                if (!string.IsNullOrWhiteSpace(LogManager.kDefaultLogPath))
+                {
+                    return LogManager.kDefaultLogPath;
+                }
+
+                // Fallback for unusual environments where Colossal has not initialized the log path yet.
                 string consoleLogPath = Application.consoleLogPath;
                 if (string.IsNullOrEmpty(consoleLogPath))
                 {

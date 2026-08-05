@@ -216,25 +216,31 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Set delivery sliders back to **100%** (game default / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Cargo fleet (harbor, train, airport)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Industry fleets (maximum vehicles per facility)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Cargo station max fleet" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Cargo station fleet" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "Change **cargo transport stations** maximum active transporters.\n" +
-                    "**1×** = vanilla, **5×** = 5× more." },
+                    "Maximum cargo vehicles per **cargo harbor, cargo train terminal, and cargo airport**.\n" +
+                    "Does not change extractor or raw-material facility fleets.\n" +
+                    "**1×** = vanilla, **5×** = 5 times more." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Extractor fleet" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Extractor facility fleet" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "Change **max trucks** for Extractor facilities.\n" +
-                    "(farms, fishing, forestry, ore, oil, coal, stone).\n" +
-                    "**1×** = vanilla\n" +
-                    "**5×** = 5 times more.\n" +
-                    "Vanilla usually allows 5 trucks per extractor facility."
-                },
+                    "Maximum vehicles per **true extractor facility**.\n" +
+                    "Includes farms, forestry, fishing, oil, ore, coal, stone, cotton, livestock, and vegetable extractors.\n" +
+                    "Does not include mineral plants or raw-material warehouses.\n" +
+                    "**1×** = vanilla, **5×** = 5 times more." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Reset cargo + extractors fleet" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RawMaterialFacilityMaxTrucksScalar)), "Raw-material facility fleet" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RawMaterialFacilityMaxTrucksScalar)),
+                    "Maximum trucks for **non-extractor raw-material facilities**.\n" +
+                    "Includes the mineral plant and compatible ore, coal, stone, and mineral warehouses.\n" +
+                    "Does not change extractor facilities or cargo stations.\n" +
+                    "**1×** = vanilla, **5×** = 5 times more." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Reset industry fleets" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "Set cargo station + extractor multipliers back to **1×** (game default / vanilla)." },
+                    "Reset cargo station, extractor, and raw-material facility fleets to **1×** (game default / vanilla)." },
 
                 // -------------------
                 // Parks-Roads

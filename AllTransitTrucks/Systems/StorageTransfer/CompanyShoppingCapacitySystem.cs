@@ -41,7 +41,7 @@ namespace PublicWorksPlus
 
         public override int GetUpdateInterval(SystemUpdatePhase phase)
         {
-            return 1;
+            return 16;
         }
 
         protected override void OnCreate()

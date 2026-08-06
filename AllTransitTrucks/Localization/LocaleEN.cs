@@ -177,13 +177,6 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Delivery vehicles (cargo capacity)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Full-load dispatch helper" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "Helps the game use your increased truck capacities more often.\n" +
-                    "Without it, larger trucks can still work, but vanilla often sends smaller loads.\n" +
-                    "ON raises eligible company and storage transfer requests toward one fuller truck, which can reduce partly filled trips.\n" +
-                    "Uses some extra simulation work; leave OFF on lower-end PCs.\n" +
-                    "<[ ] Default OFF>." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Semi trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),

@@ -21,7 +21,6 @@ namespace PublicWorksPlus
     using Game.Modding;                   // IMod
     using Game.Prefabs;                   // VehicleCapacitySystem
     using Game.SceneFlow;                 // GameManager
-    using Game.Simulation;                // vanilla ordering targets
 
     public sealed class Mod : IMod
     {
@@ -92,14 +91,6 @@ namespace PublicWorksPlus
             updateSystem.UpdateAfter<MaintenanceSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<LaneWearSystem>(SystemUpdatePhase.PrefabUpdate);
 
-            // Change requests after vanilla creates them and before vanilla consumes them.
-            updateSystem.UpdateAt<StationTransferCapacitySystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAfter<StationTransferCapacitySystem, StorageTransferSystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateBefore<StationTransferCapacitySystem, CarStorageTransferRequestSystem>(SystemUpdatePhase.GameSimulation);
-
-            updateSystem.UpdateAt<CompanyShoppingCapacitySystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAfter<CompanyShoppingCapacitySystem, BuyingCompanySystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateBefore<CompanyShoppingCapacitySystem, ResourceBuyerSystem>(SystemUpdatePhase.GameSimulation);
 
             // Rebuild DeliveryTruckSelectData from ATT's updated prefab capacities.
             updateSystem.UpdateAfter<IndustrySystem>(SystemUpdatePhase.PrefabUpdate);

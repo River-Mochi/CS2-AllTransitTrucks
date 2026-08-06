@@ -19,7 +19,6 @@ namespace PublicWorksPlus
 
     public sealed partial class ATTSettings
     {
-        private bool m_EnableFullLoadDispatchHelper;
         private bool m_EnableCompanyTruckControl = true;
         private bool m_ResetCompanyTrucksToVanillaRequested;
 
@@ -35,14 +34,14 @@ namespace PublicWorksPlus
         private float m_WarehouseMaxTrucksScalar = kVanillaScalar;
         private float m_IndustryMaxTrucksScalar = kVanillaScalar;
 
-        internal bool HasCustomDeliveryCapacity =>
-            m_SemiTruckCargoScalar != kVanillaPercent ||
-            m_DeliveryVanCargoScalar != kVanillaPercent ||
-            m_CoalTruckScalar != kVanillaPercent ||
-            m_MotorbikeDeliveryCargoScalar != kVanillaPercent;
-
-        internal bool ShouldRunFullLoadDispatchHelper =>
-            m_EnableFullLoadDispatchHelper && HasCustomDeliveryCapacity;
+        // Hidden compatibility key for old .coc files and untranslated locale sources.
+        // The full-load helper no longer exists and this value has no runtime effect.
+        [SettingsUIHidden]
+        public bool EnableFullLoadDispatchHelper
+        {
+            get => false;
+            set { }
+        }
 
         internal bool ConsumeCompanyTruckResetRequest()
         {
@@ -53,12 +52,6 @@ namespace PublicWorksPlus
             return true;
         }
 
-        [SettingsUISection(IndustryTab, DeliveryGroup)]
-        public bool EnableFullLoadDispatchHelper
-        {
-            get => m_EnableFullLoadDispatchHelper;
-            set => m_EnableFullLoadDispatchHelper = value;
-        }
 
         [SettingsUISlider(min = DeliveryMinPercent, max = DeliveryMaxPercent, step = DeliveryStepPercent, scalarMultiplier = 1, unit = Unit.kPercentage)]
         [SettingsUISection(IndustryTab, DeliveryGroup)]
@@ -213,7 +206,6 @@ namespace PublicWorksPlus
             {
                 if (!value) return;
 
-                m_EnableFullLoadDispatchHelper = false;
                 m_SemiTruckCargoScalar = kVanillaPercent;
                 m_DeliveryVanCargoScalar = kVanillaPercent;
                 m_CoalTruckScalar = kVanillaPercent;
@@ -256,8 +248,6 @@ namespace PublicWorksPlus
 
         partial void SetDefaults_Industry()
         {
-            // Keep live request helpers opt-in until large-city testing is solid.
-            m_EnableFullLoadDispatchHelper = false;
             m_EnableCompanyTruckControl = true;
             m_ResetCompanyTrucksToVanillaRequested = false;
 

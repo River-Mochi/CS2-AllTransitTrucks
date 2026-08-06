@@ -41,18 +41,10 @@ namespace PublicWorksPlus
                 return;
             }
 
-            string helperToggle =
-                settings.EnableFullLoadDispatchHelper ? "ON" : "OFF";
-            string helperEffective =
-                settings.ShouldRunFullLoadDispatchHelper ? "ACTIVE" : "INACTIVE";
+
             string companyTruckControl =
                 settings.EnableCompanyTruckControl ? "ON" : "OFF";
 
-            AppendCapped(
-                sb,
-                ref lines,
-                ref truncated,
-                $"Full-load dispatch helper: Toggle={helperToggle} Effective={helperEffective}");
 
             AppendCapped(
                 sb,

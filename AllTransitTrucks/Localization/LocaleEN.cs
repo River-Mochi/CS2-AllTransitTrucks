@@ -225,11 +225,13 @@ namespace PublicWorksPlus
                     "Maximum active cargo vehicles for each **cargo harbor, train terminal, and airport**.\n" +
                     "**1×** = vanilla, **5×** = 5 times more." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableExtractorTruckControl)), "Adjust extractor trucks" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableExtractorTruckControl)),
-                    "Leave ON to use ATT's extractor truck slider.\n" +
-                    "Turn OFF to restore vanilla extractor truck counts and hide the slider.\n" +
-                    "Use OFF when another mod controls extractor company trucks.\n" +
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Adjust company trucks" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "Controls ATT's extractor, warehouse, and industrial processing truck limits.\n" +
+                    "Leave ON to use the three company-truck sliders below.\n" +
+                    "Turn OFF to restore those three categories to vanilla once, hide their sliders, and stop ATT from writing their truck counts.\n" +
+                    "Use OFF when another mod controls the same company fleets.\n" +
+                    "Cargo station vehicles and delivery cargo capacities are not affected.\n" +
                     "<[x] Default ON>." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Total trucks: extractors" },
@@ -252,8 +254,8 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Reset all industry vehicles" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "Reset cargo stations, extractors, warehouses, and industry to **1×** (vanilla values).\n" +
-                    "The extractor control toggle stays ON or OFF as selected." },
+                    "Reset cargo stations, extractors, warehouses, and industry sliders to **1×** (vanilla values).\n" +
+                    "The company truck control toggle stays ON or OFF as selected." },
 
                 // -------------------
                 // Parks-Roads

@@ -20,8 +20,8 @@ namespace PublicWorksPlus
     public sealed partial class ATTSettings
     {
         private bool m_EnableFullLoadDispatchHelper;
-        private bool m_EnableExtractorTruckControl = true;
-        private bool m_ResetExtractorsToVanillaRequested;
+        private bool m_EnableCompanyTruckControl = true;
+        private bool m_ResetCompanyTrucksToVanillaRequested;
 
         // Delivery vehicles are stored as percent values.
         private float m_SemiTruckCargoScalar = kVanillaPercent;
@@ -44,12 +44,12 @@ namespace PublicWorksPlus
         internal bool ShouldRunFullLoadDispatchHelper =>
             m_EnableFullLoadDispatchHelper && HasCustomDeliveryCapacity;
 
-        internal bool ConsumeExtractorResetRequest()
+        internal bool ConsumeCompanyTruckResetRequest()
         {
-            if (!m_ResetExtractorsToVanillaRequested)
+            if (!m_ResetCompanyTrucksToVanillaRequested)
                 return false;
 
-            m_ResetExtractorsToVanillaRequested = false;
+            m_ResetCompanyTrucksToVanillaRequested = false;
             return true;
         }
 
@@ -136,19 +136,19 @@ namespace PublicWorksPlus
         }
 
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
-        public bool EnableExtractorTruckControl
+        public bool EnableCompanyTruckControl
         {
-            get => m_EnableExtractorTruckControl;
+            get => m_EnableCompanyTruckControl;
             set
             {
-                if (m_EnableExtractorTruckControl == value) return;
+                if (m_EnableCompanyTruckControl == value) return;
 
-                m_EnableExtractorTruckControl = value;
+                m_EnableCompanyTruckControl = value;
 
-                // Turning control off removes ATT's last live override once.
+                // Turning control off restores all ATT-managed company fleets once.
                 if (!value)
                 {
-                    m_ResetExtractorsToVanillaRequested = true;
+                    m_ResetCompanyTrucksToVanillaRequested = true;
                 }
 
                 OnIndustryChanged();
@@ -157,7 +157,7 @@ namespace PublicWorksPlus
 
         [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
-        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(EnableExtractorTruckControl), true)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(EnableCompanyTruckControl), true)]
         public float ExtractorMaxTrucksScalar
         {
             get => m_ExtractorMaxTrucksScalar;
@@ -174,6 +174,7 @@ namespace PublicWorksPlus
 
         [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(EnableCompanyTruckControl), true)]
         public float WarehouseMaxTrucksScalar
         {
             get => m_WarehouseMaxTrucksScalar;
@@ -189,6 +190,7 @@ namespace PublicWorksPlus
 
         [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(EnableCompanyTruckControl), true)]
         public float IndustryMaxTrucksScalar
         {
             get => m_IndustryMaxTrucksScalar;
@@ -256,8 +258,8 @@ namespace PublicWorksPlus
         {
             // Keep live request helpers opt-in until large-city testing is solid.
             m_EnableFullLoadDispatchHelper = false;
-            m_EnableExtractorTruckControl = true;
-            m_ResetExtractorsToVanillaRequested = false;
+            m_EnableCompanyTruckControl = true;
+            m_ResetCompanyTrucksToVanillaRequested = false;
 
             m_SemiTruckCargoScalar = kVanillaPercent;
             m_DeliveryVanCargoScalar = kVanillaPercent;

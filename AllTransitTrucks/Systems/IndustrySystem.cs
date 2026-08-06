@@ -112,32 +112,42 @@ namespace PublicWorksPlus
             ApplyCargoStationFleet(settings, ref ecb, ref anyPrefabTaggedUpdated);
             ApplyDeliveryCargo(settings, in tractorLookup, in trailerLookup, ref ecb, ref anyPrefabTaggedUpdated);
 
-            // Only one mod should own extractor m_MaxTransports.
-            if (settings.EnableExtractorTruckControl)
+            // Only one mod should own company fleet m_MaxTransports.
+            if (settings.EnableCompanyTruckControl)
             {
                 ApplyExtractorFleet(
                     settings.ExtractorMaxTrucksScalar,
                     ref ecb,
                     ref anyPrefabTaggedUpdated);
+
+                ApplyWarehouseFleet(
+                    settings.WarehouseMaxTrucksScalar,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
+
+                ApplyIndustryFleet(
+                    settings.IndustryMaxTrucksScalar,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
             }
-            else if (settings.ConsumeExtractorResetRequest())
+            else if (settings.ConsumeCompanyTruckResetRequest())
             {
-                // Restore vanilla once, then leave extractor counts alone.
+                // Restore all three categories once, then leave them alone.
                 ApplyExtractorFleet(
                     1f,
                     ref ecb,
                     ref anyPrefabTaggedUpdated);
+
+                ApplyWarehouseFleet(
+                    1f,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
+
+                ApplyIndustryFleet(
+                    1f,
+                    ref ecb,
+                    ref anyPrefabTaggedUpdated);
             }
-
-            ApplyWarehouseFleet(
-                settings.WarehouseMaxTrucksScalar,
-                ref ecb,
-                ref anyPrefabTaggedUpdated);
-
-            ApplyIndustryFleet(
-                settings.IndustryMaxTrucksScalar,
-                ref ecb,
-                ref anyPrefabTaggedUpdated);
 
             if (anyPrefabTaggedUpdated)
             {

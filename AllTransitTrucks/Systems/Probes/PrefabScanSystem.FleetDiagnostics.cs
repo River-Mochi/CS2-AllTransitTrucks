@@ -13,7 +13,6 @@ namespace PublicWorksPlus
 {
     using System.Text;
     using Game.Companies;
-    using Game.Economy;
     using Game.Prefabs;
     using Unity.Collections;
     using Unity.Entities;
@@ -46,8 +45,8 @@ namespace PublicWorksPlus
                 settings.EnableFullLoadDispatchHelper ? "ON" : "OFF";
             string helperEffective =
                 settings.ShouldRunFullLoadDispatchHelper ? "ACTIVE" : "INACTIVE";
-            string extractorControl =
-                settings.EnableExtractorTruckControl ? "ON" : "OFF";
+            string companyTruckControl =
+                settings.EnableCompanyTruckControl ? "ON" : "OFF";
 
             AppendCapped(
                 sb,
@@ -77,7 +76,7 @@ namespace PublicWorksPlus
                 sb,
                 ref lines,
                 ref truncated,
-                $"Extractor control: {extractorControl}");
+                $"Company truck control: {companyTruckControl}");
 
             AppendCapped(sb, ref lines, ref truncated, string.Empty);
         }
@@ -330,6 +329,5 @@ namespace PublicWorksPlus
                    resource == Game.Economy.Resource.Financial ||
                    resource == Game.Economy.Resource.Media;
         }
-
     }
 }

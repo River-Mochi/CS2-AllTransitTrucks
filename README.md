@@ -39,7 +39,6 @@ Available on the About tab:
 - Live delivery cargo snapshot
 - Cargo-station resource watch
 - Open log/report folders
-- Optional verbose logging for troubleshooting
 
 ## Notes
 - Remove **Adjust Transit Capacity** before using this mod; its features are included here.
@@ -63,9 +62,6 @@ The live delivery cargo section is a **one-time snapshot**, not a long-running a
 ## Credits
 - River-Mochi — author and maintainer
 - Inspired by Wayz’s original **Depot Capacity Changer**
-- yenyang — code review and technical advice
-- Necko1996 and BugsyG — testing
-- StarQ — technical advice
 
 ## Links
 - GitHub: https://github.com/River-Mochi/CS2-AllTransitTrucks

@@ -45,8 +45,10 @@ Available on the About tab:
 - Settings apply while a city is loaded—no restart is required.
 - Avoid other mods that change the same capacities or policies, because one mod may overwrite another.
 - Use the Reset buttons before removal when you want to restore vanilla values first.
-- No Harmony patches are used.
-- Most changes apply only when loading a city or changing Options, then the mod goes idle.
+
+### Performance
+- No Harmony patches used.
+- This mod applies changes when a city loads or when you change Options settings, then goes idle, no city impact for the best performance.
 
 ## Languages (14)
 English, Français, Deutsch, Español, Italiano, Polski, Português (Brasil), Português (Portugal), Türkçe, 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt

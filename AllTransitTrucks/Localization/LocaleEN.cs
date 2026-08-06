@@ -211,35 +211,36 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Set delivery sliders back to **100%** (game default / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Total vehicles per facility" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Total trucks" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Total vehicles: cargo stations" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Cargo stations: total trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Maximum active cargo vehicles for each **cargo harbor, train terminal, and airport**.\n" +
                     "**1×** = vanilla, **5×** = 5 times more." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industry: adjust total trucks" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Adjust Industry trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] Default ON>.\n" +
                     "Controls ATT's extractor, warehouse, and industrial processing truck limits.\n" +
                     "Leave ON to use the three company-truck sliders below.\n" +
                     "Turn OFF to restore those three categories to vanilla once, hide their sliders, and stop ATT from writing their truck counts.\n" +
                     "Use OFF when another mod controls the same company fleets.\n" +
-                    "Cargo station vehicles and delivery cargo capacities are not affected.\n" +
-                    "<[x] Default ON>." },
+                    "Cargo station vehicles and delivery cargo capacities are not affected.\n"
+                     },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Total trucks: extractors" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Extractors" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Maximum trucks for each extractor company.\n" +
                     "Includes farms, forestry, fishing, oil, ore, coal, stone, cotton, livestock, and vegetables.\n" +
                     "**1×** = vanilla, **5×** = 5 times more." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Total trucks: warehouses" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Warehouses" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "Maximum trucks for each warehouse company.\n" +
                     "Includes all warehouse resource types that have their own vehicles.\n" +
                     "**1×** = vanilla, **5×** = 5 times more." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Total trucks: industry" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Industry" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "Maximum trucks for industrial processing companies.\n" +
                     "Does not include extractors, warehouses, cargo stations, commercial companies, or office companies.\n" +

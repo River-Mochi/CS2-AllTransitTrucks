@@ -1,13 +1,13 @@
 <Publish>
-	<!--Id must be set in order to update existing mod. it is not required for publishing mod for the first time-->
-	<ModId Value="138390" />
-	<!--Name of the mod to display to players-->
-	<DisplayName Value="All Transit + Trucks" />
-	<!--Short description of the mod-->
-	<ShortDescription Value="Adjust all Transit, Passengers, Industry Trucks + Cargo, and increase Transit Line slider limits." />
-	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
-	<!--LongDescription Value="This is a long description" /-->
-	<LongDescription>
+<!--Id must be set in order to update existing mod. it is not required for publishing mod for the first time-->
+<ModId Value="138390" />
+<!--Name of the mod to display to players-->
+<DisplayName Value="All Transit + Trucks" />
+<!--Short description of the mod-->
+<ShortDescription Value="Adjust all Transit, Passengers, Industry Trucks + Cargo, and increase Transit Line slider limits." />
+<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
+<!--LongDescription Value="This is a long description" /-->
+<LongDescription>
 ### All Transit + Trucks (ATT)
 
 Everything is OPTIONAL - you choose!
@@ -17,41 +17,37 @@ Everything is OPTIONAL - you choose!
 - Industry Delivery vehicles, Cargo stations, Extractors.
 - Parks/Roads Maintenance
 
-**NEW Company Deliveries will now actually use the increase truck/van larger capacities you set, reducing traffic with fewer trips.**
-Storage Transfers are also improved. Future: other dispatch paths may be improved (more research needed).
+**Industry deliveries can use the increased vehicle capacities you set, including company shopping and road storage transfers.**
 
 ### Features
 - Transit Line adjuster: can allow as low as 1 bus or higher ~30-60 buses (tram, train, etc.).
 - **Parks + Roads Repairs**: fleet size, work shift + rate
 - Road wear (beta): scale speed roads accumulate damage over time
-- **Industry Deliveries**: scale capacity of delivery vehicles (Semi trucks, Delivery vans, Motorbike, Raw material trucks - coal, oil, etc.)
-- *Extractor companies*: max fleet size (usually semi trucks for Fish, Grain, Vegetables, etc.)
-- *Cargo Stations*: max active transporters (harbor/train/airport)
+- **Industry Deliveries**: capacity of Semi trucks, delivery vans/motorbike, Raw material trucks (coal, oil...)
+- **Total vehicles per facility:** Extractors, warehouses, and industrial Processing (Fish, Oil, etc.).
+- *Cargo Stations*: max active trucks (harbor/train/airport)
+- **Industry compatibility toggle:** restores Extractor, Warehouse, and Industry fleets to vanilla.
 
-#### Complete ATC features included
+#### Public Transit
 
 - **Transit depots:** change max vehicles per depot (Bus, Ferry, Subway, Taxi, Tram, Train)
 - **Passengers:** change maximum seats (Bus, Tram, Train, Subway, Ship, Ferry, Airplane)
-- Includes everything from *Adjust Transit Capacity* (ATC) mod plus all new mods above are *combined* into one PwP mod.
-
+- Includes everything from *Adjust Transit Capacity* (ATC) mod plus all new mods above are *combined* into one mod.
 
 ### Notes 🚍🚋🚆✈️🚢
 - *Remove* "Adjust Transit Capacity" if you install this mod.
-- *Adjust Sliders* at any time, no restart needed; supports switching cities.
 - Avoid other depot/passenger capacity mods to avoid conflicts (they override each other).
-- No Harmony or Reflection used; more compatible - less likely to break on patch days.
+- No Harmony patch used, more compatible - less likely to break on patch days.
 - Safe to remove any time (use Reset buttons to return to vanilla game default values).
 - ✅ Transit Line checkbox: Pick only one mod to adjust this - Don't use other mods that also adjust the in-game slider. There may be conflicts if you also have Transit Policy Adjuster or Smart transportation.
 If both are enabled, it's not going to explode, it may be inconsistent like two people changing the radio station.
-- How PwP Transit lines is different: follows the game’s method (travel time + stops); you can have just 1 bus per line or ~30-60+ buses (see before/after screenshot).
-PwP is made differently; no Harmony patch used and maximum is not static (will not be 250 buses on one line). You still get many more buses per each route line than game vanilla gives.
+- How Transit lines is different: follows the game’s method (travel time + stops); you can have just 1 bus per line or ~30-60+ buses (see before/after screenshot).
 
 
 ### Support and feedback
-- If the mod helps you, give it a Like, it's free + easy :)
-- This mod is 5 new mods combined +ATC; feedback was to combine more features into a single mod.
-All details not above might be answered in forums or in tool tips of the mod menu.
-- Feedback on: Github, Discord, Forum links on this page.
+- please don't forget to give it a Like button (top right).
+- All details not above might be answered in forums or in tool tips of the mod menu.
+- Feedback on: Github, Discord links on this page (right side).
 
 ### Credits
 - River-Mochi: author
@@ -60,10 +56,13 @@ All details not above might be answered in forums or in tool tips of the mod men
 - Nukprach, BugsyG, Necko1996: testing
 
 ### Performance advantage
-This is designed to *not* run in the city per-frame. Make changes in Options Menu > then mod goes idle. Debug tools are optional.
+This is designed to *not* run in the city per-frame. Make changes in Options Menu > then mod goes idle.
 
-### 11+ Languages Supported
-- English, Français, Deutsch, Español, Italiano, Polski, Português Brazilian
+Most changes apply only when a city loads or you change Options, then ATT goes idle.
+
+### 12+ Languages Supported
+- English, Français, Deutsch, Español, Italiano, Polski
+- Português Brasileiro, Português (Portugal), Türkçe
 - 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt
 
 ### Tip:
@@ -75,35 +74,35 @@ tags: city dispatch, transit line increase, control municipal, public transit sy
 delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extractor fish
 
 </LongDescription>
-	<!--Thumbnail-->
-	<Thumbnail Value="Properties/Thumbnail-All01.jpg" />
-	<!--Screenshot, can be set multiple times-->
-	<Screenshot Value="Properties/image10-Transit.jpg" />
-    <Screenshot Value="Properties/image15-Before-After.jpg" />
-	<Screenshot Value="Properties/image20-Passengers.jpg" />
-	<Screenshot Value="Properties/image30-Industry.jpg" />
-    <Screenshot Value="Properties/image35-IndustryTrucks.jpg" />
-	<Screenshot Value="Properties/image40-Maintenance.jpg" />
-    <Screenshot Value="Properties/image50-Senryu-Bus.jpg" />
-	<!--Tag, can be set multiple times-->
-	<Tag Value="Code Mod" />
-	<!--Link to the forum post where the mod can be discussed-->
-	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/all-transit-industry-delivery-trucks.1910233/" />
-	<!--Version of the mod-->
-	<ModVersion Value="2.3.0" />
-	<!--Recommended version of the base game to use the mod-->
-	<GameVersion Value="1.6.*" />
-	<!--Dependency for the mod, can be set multiple times-->
-	<Dependency Id="" />
-	<!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
+<!--Thumbnail-->
+<Thumbnail Value="Properties/Thumbnail-All01.jpg" />
+<!--Screenshot, can be set multiple times-->
+<Screenshot Value="Properties/image10-Transit.jpg" />
+<Screenshot Value="Properties/image15-Before-After.jpg" />
+<Screenshot Value="Properties/image20-Passengers.jpg" />
+<Screenshot Value="Properties/image30-Industry.jpg" />
+<Screenshot Value="Properties/image35-IndustryTrucks.jpg" />
+<Screenshot Value="Properties/image40-Maintenance.jpg" />
+<Screenshot Value="Properties/image50-Senryu-Bus.jpg" />
+<!--Tag, can be set multiple times-->
+<Tag Value="Code Mod" />
+<!--Link to the forum post where the mod can be discussed-->
+<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/all-transit-industry-delivery-trucks.1910233/" />
+<!--Version of the mod-->
+<ModVersion Value="2.3.0" />
+<!--Recommended version of the base game to use the mod-->
+<GameVersion Value="1.6.*" />
+<!--Dependency for the mod, can be set multiple times-->
+<Dependency Id="" />
+<!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
-- Added more granular sliders to control different industry types separately.
-- Improved large-city performance for industry.
-- internal refactor and cleanup.
-- Add Turkish and Portuguese-PT translations.
-- update all locales.
+- Added separate sliders for Industry, extractors, warehouses,
+- Added an Industry Compatibility toggle - if other mods are being used for adjusting all city fleet sizes.
+- Improved industry fleet targeting and large-city performance.
+- Added Turkish and Portuguese (Portugal); refreshed all translations.
+- Expanded Scan Report details for industry fleets and live truck loads.
 </ChangeLog>
-	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
-    <ExternalLink Type="discord" Url="https://discord.gg/gwXgvtyhjc" />
-    <ExternalLink Type="github" Url="https://github.com/River-Mochi/CS2-AllTransitTrucks" />
+<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
+<ExternalLink Type="discord" Url="https://discord.gg/gwXgvtyhjc" />
+<ExternalLink Type="github" Url="https://github.com/River-Mochi/CS2-AllTransitTrucks" />
 </Publish>

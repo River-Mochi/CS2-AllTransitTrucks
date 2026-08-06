@@ -176,6 +176,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "배송 차량 (화물 용량)" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "ì™„ì „ ì ìž¬ ë°°ì†¡ ë„ìš°ë¯¸" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "íšŒì‚¬ì™€ ì°½ê³  ìš”ì²­ëŸ‰ì„ ë°°ì†¡ ì°¨ëŸ‰ í•œ ëŒ€ì˜ ì ìž¬ëŸ‰ì— ê°€ê¹ê²Œ ëŠ˜ë¦½ë‹ˆë‹¤.\n" +
+                    "ëŒ€ë„ì‹œì—ì„œëŠ” CPU ì‚¬ìš©ëŸ‰ì´ ëŠ˜ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.\n" +
+                    "<[ ] ê¸°ë³¸ê°’ êº¼ì§>." },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "세미트럭" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "**세미트럭** 용량입니다.\n" +

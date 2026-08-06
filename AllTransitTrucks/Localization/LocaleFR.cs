@@ -176,6 +176,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Véhicules de livraison (capacité de charge)" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Assistant de chargement complet" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "Augmente les demandes des entreprises et entrepÃ´ts vers un chargement complet.\n" +
+                    "Peut utiliser plus de processeur dans les grandes villes.\n" +
+                    "<[ ] DÃ©sactivÃ© par dÃ©faut>." },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Semi-remorques" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "Capacité des **semi-remorques**.\n" +

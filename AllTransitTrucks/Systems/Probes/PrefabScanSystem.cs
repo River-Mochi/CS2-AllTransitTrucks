@@ -9,8 +9,7 @@
 // File: Systems/Probes/PrefabScanSystem.cs
 // Purpose: One-shot prefab scan triggered by Options UI button.
 // Output: Writes report to {EnvPath.kUserDataPath}/ModsData/AllTransitTrucks/ScanReport-Prefabs.txt
-// Notes:
-// - Runs only when requested. Main scan flow stays here.
+// Notes: Runs only when requested. Main scan flow stays here.
 // - Helper/report methods live in PrefabScanSystem.ReportSections.cs to keep this file shorter.
 
 namespace PublicWorksPlus
@@ -158,6 +157,8 @@ namespace PublicWorksPlus
                 Append($"Prefab Scan Report for: {Mod.ModName} {Mod.ModVersion}");
                 Append($"Timestamp (local): {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
                 Append("");
+
+                AppendATTSettingsSnapshot(sb, ref lines, ref truncated);
 
                 // Lane wear prefabs
                 const float kUpdatesPerDay = 16f;
@@ -555,40 +556,12 @@ namespace PublicWorksPlus
                 Append($"Cargo station summary: Total={cargoTotal}");
                 Append("");
 
-                // Industrial extractor companies
-                Append("== Industrial Extractor TransportCompanies (for Extractor trucks slider) ==");
-                Append("Filter: name starts with Industrial_ AND contains Extractor/Coal/Stone/Mine/Quarry. Skips CurMaxTransports=0. Deduped by name.");
-
-                HashSet<string> seenExtractors = new(StringComparer.OrdinalIgnoreCase);
-
-                foreach ((RefRO<TransportCompanyData> tcRef, Entity e) in SystemAPI
-                             .Query<RefRO<TransportCompanyData>>()
-                             .WithAll<PrefabData>()
-                             .WithEntityAccess())
-                {
-                    if (truncated) break;
-
-                    string name = NameOf(e);
-                    if (IsExcludedName(name))
-                        continue;
-
-                    if (!IsTargetIndustrialExtractorCompany(name))
-                        continue;
-
-                    TransportCompanyData tc = tcRef.ValueRO;
-
-                    if (tc.m_MaxTransports == 0)
-                        continue;
-
-                    if (!seenExtractors.Add(name))
-                        continue;
-
-                    extractorCompanies++;
-                    Append($"- {name} ({e.Index}:{e.Version}) CurMaxTransports={tc.m_MaxTransports}");
-                }
-
-                Append($"Industrial extractor summary: Unique={extractorCompanies}");
-                Append("");
+                // Exact component matches plus warehouse/industry discovery.
+                AppendCompanyFleetCandidates(
+                    sb,
+                    ref lines,
+                    ref truncated,
+                    ref extractorCompanies);
 
                 // Cargo station watch comes first, then the live delivery snapshot last.
                 CargoStationResourceWatch.Append(

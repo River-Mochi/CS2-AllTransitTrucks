@@ -176,6 +176,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "配送車両（貨物容量）" },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "æº€è¼‰é…é€ãƒ˜ãƒ«ãƒ‘ãƒ¼" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
+                    "ä¼šç¤¾ã¨å€‰åº«ã®è¦æ±‚é‡ã‚’é…é€è»Š1å°åˆ†ã«è¿‘ã¥ã‘ã¾ã™ã€‚\n" +
+                    "å¤§éƒ½å¸‚ã§ã¯CPUè² è·ãŒå¢—ãˆã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚\n" +
+                    "<[ ] åˆæœŸè¨­å®šã¯ã‚ªãƒ•>ã€‚" },
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "セミトラック" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
                     "**セミトラック**容量です。\n" +

@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Expandir mín./máx. das linhas" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "Aumenta o **intervalo** do seletor de veículos de cada linha de transporte no jogo.\n" +
-                    "**Pode chegar a (1)** em todas as rotas testadas.\n" +
-                    "O **limite máximo varia**, mas é pelo menos 3× superior ao do jogo base.\n" +
+                    "Expande o **intervalo** do seletor de veículos de cada linha de transporte no jogo.\n" +
+                    "**Pode chegar a 1 veículo** em todas as rotas testadas.\n" +
+                    "O **limite máximo varia**, mas as rotas testadas permitem pelo menos 3× o máximo do jogo base.\n" +
                     "Nota técnica: o jogo usa o tempo da rota (tempo de viagem + número de paragens), por isso o máximo é variável. Este mod segue a lógica do jogo e não define um limite fixo, como 200.\n" +
                     "Funciona com todos os transportes públicos.\n\n" +
                     "**---------------**\n" +
@@ -179,7 +179,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Camiões semirreboque" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "Capacidade dos **camiões semirreboque**.\n" +
+                    "**Capacidade dos camiões semirreboque**.\n" +
                     "**100% = 25 t** (jogo base)\n" +
                     "**500% = 125 t**.\n" +
                     "Inclui:\n" +

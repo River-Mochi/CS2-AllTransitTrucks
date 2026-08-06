@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Étendre le min/max des lignes de transport" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "Augmente la **plage** du curseur des lignes de transport en jeu pour chaque itinéraire.\n" +
-                    "**Jusqu’à (1)** sur tous les itinéraires testés.\n" +
-                    "La **limite maximale varie** ; mais toutes sont 3× ou plus au-dessus du vanilla.\n" +
+                    "Étend la **plage** du curseur des lignes de transport en jeu pour chaque itinéraire.\n" +
+                    "**Jusqu’à 1 véhicule** sur tous les itinéraires testés.\n" +
+                    "La **limite maximale varie**, mais les itinéraires testés permettent au moins 3× le maximum vanilla.\n" +
                     "Note technique : le jeu utilise le temps d’itinéraire (temps de conduite + nombre d’arrêts) ; cela crée un maximum variable (ce mod suit la logique du jeu et ne définit donc pas de limite maximale statique comme 200).\n" +
                     "Fonctionne pour tous les transports : bus, ferry, tram, train, métro, navire, avion.\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Véhicules de livraison (capacité de charge)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Assistant de chargement complet" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "Augmente les demandes des entreprises et entrepÃ´ts vers un chargement complet.\n" +
-                    "Peut utiliser plus de processeur dans les grandes villes.\n" +
-                    "<[ ] DÃ©sactivÃ© par dÃ©faut>." },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Semi-remorques" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "Capacité des **semi-remorques**.\n" +
+                    "**Capacité des semi-remorques**.\n" +
                     "**100% = 25t** (vanilla)\n" +
                     "**500% = 125t**.\n" +
                     "Comprend :\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Remet les curseurs de livraison à **100%** (valeur par défaut du jeu / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Flotte de fret (port, train, aéroport)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Nombre total de véhicules par installation" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Flotte max des gares de fret" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Véhicules totaux : stations de fret" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "Modifie le maximum de transporteurs actifs des **stations de transport de fret**.\n" +
-                    "**1×** = vanilla, **5×** = 5× plus." },
+                    "Nombre maximal de véhicules de fret actifs pour chaque **port de fret, terminal ferroviaire et aéroport**.\n" +
+                    "**1×** = vanilla, **5×** = 5 fois plus." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Flotte des extracteurs" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrie : ajuster le total des camions" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "Contrôle les limites de camions d’ATT pour les extracteurs, les entrepôts et les entreprises de transformation industrielle.\n" +
+                    "Laisser ACTIVÉ pour utiliser les trois curseurs de camions d’entreprise ci-dessous.\n" +
+                    "Désactiver rétablit une fois ces trois catégories aux valeurs vanilla, masque leurs curseurs et empêche ATT de modifier leur nombre de camions.\n" +
+                    "Utiliser DÉSACTIVÉ lorsqu’un autre mod contrôle les mêmes flottes d’entreprise.\n" +
+                    "Les véhicules des stations de fret et les capacités de charge des véhicules de livraison ne sont pas affectés.\n" +
+                    "<[x] ACTIVÉ par défaut>." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Camions totaux : extracteurs" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "Modifie le **nombre max de camions** des extracteurs industriels.\n" +
-                    "(fermes, pêche, foresterie, minerai, pétrole, charbon, pierre).\n" +
-                    "**1×** = vanilla\n" +
-                    "**5×** = 5 fois plus.\n" +
-                    "Le vanilla autorise généralement 5 camions par bâtiment extracteur."
-                },
+                    "Nombre maximal de camions pour chaque entreprise d’extraction.\n" +
+                    "Comprend l’agriculture, la foresterie, la pêche, le pétrole, le minerai, le charbon, la pierre, le coton, l’élevage et les légumes.\n" +
+                    "**1×** = vanilla, **5×** = 5 fois plus." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Réinitialiser fret + extracteurs" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Camions totaux : entrepôts" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "Nombre maximal de camions pour chaque entreprise d’entreposage.\n" +
+                    "Comprend tous les types de ressources d’entrepôt disposant de leurs propres véhicules.\n" +
+                    "**1×** = vanilla, **5×** = 5 fois plus." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Camions totaux : industrie" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "Nombre maximal de camions pour les entreprises de transformation industrielle.\n" +
+                    "N’inclut pas les extracteurs, entrepôts, stations de fret, entreprises commerciales ni entreprises de bureaux.\n" +
+                    "**1×** = vanilla, **5×** = 5 fois plus." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Réinitialiser tous les véhicules industriels" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "Remet les multiplicateurs des gares de fret + extracteurs à **1×** (valeur par défaut du jeu / vanilla)." },
+                    "Réinitialise les curseurs des stations de fret, extracteurs, entrepôts et industries à **1×** (valeurs vanilla).\n" +
+                    "Le bouton de contrôle des camions d’entreprise reste ACTIVÉ ou DÉSACTIVÉ selon le choix." },
 
                 // -------------------
                 // Parks-Roads
@@ -283,7 +296,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Usure des routes" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
+                    "<Fonction bêta>\n" +
                     "Contrôle la vitesse de détérioration des routes selon des facteurs de **temps et de trafic**.\n" +
                     "**10%** = 10× plus lente (moins de réparations nécessaires)\n" +
                     "**100%** = vanilla\n" +
@@ -327,8 +340,8 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "État de l’analyse des prefabs" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
-                    "Affiche l’état de l’analyse : Idle / Queued / Running / Done / No Data.\n" +
-                    "Queued/Running shows elapsed time; Done shows duration + finish time." },
+                    "Affiche l’état de l’analyse : Inactif / En attente / En cours / Terminé / Aucune donnée.\n" +
+                    "En attente/En cours affiche le temps écoulé ; Terminé affiche la durée et l’heure de fin." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "Journaux debug détaillés" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),
@@ -347,10 +360,10 @@ namespace PublicWorksPlus
                     "Ensuite : ouvrir <ScanReport-Prefabs.txt> avec un éditeur de texte (par ex. Notepad++)." },
 
                 // ---- Scan Report Status Text (format string templates) ----
-                { "PWP_SCAN_IDLE", "Idle" },
-                { "PWP_SCAN_QUEUED_FMT", "Queued ({0})" },
-                { "PWP_SCAN_RUNNING_FMT", "Running ({0})" },
-                { "PWP_SCAN_DONE_FMT", "Done ({0} | {1})" },
+                { "PWP_SCAN_IDLE", "Inactif" },
+                { "PWP_SCAN_QUEUED_FMT", "En attente ({0})" },
+                { "PWP_SCAN_RUNNING_FMT", "En cours ({0})" },
+                { "PWP_SCAN_DONE_FMT", "Terminé ({0} | {1})" },
                 { "PWP_SCAN_FAILED", "Échec" },
                 { "PWP_SCAN_FAIL_NO_CITY", "Charger d’abord une ville" },
                 { "PWP_SCAN_UNKNOWN_TIME", "heure inconnue" },

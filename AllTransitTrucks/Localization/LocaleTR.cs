@@ -57,8 +57,8 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Hat min./maks. aralığını genişlet" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
                     "Her rota için oyun içindeki toplu taşıma hattı kaydırıcısının **aralığını** genişletir.\n" +
-                    "Test edilen tüm rotalarda **(1) araca kadar düşebilir**.\n" +
-                    "**Azami sınır değişkendir**, ancak temel oyundan en az 3× daha yüksektir.\n" +
+                    "Test edilen tüm rotalarda **1 araca kadar düşebilir**.\n" +
+                    "**Azami sınır değişkendir**, ancak test edilen rotalar temel oyundaki azami değerin en az 3 katına izin verir.\n" +
                     "Teknik not: Oyun rota süresini (seyahat süresi + durak sayısı) kullanır; bu nedenle azami değer değişkendir. Bu mod oyun mantığını izler ve 200 gibi sabit bir sınır koymaz.\n" +
                     "Tüm toplu taşıma türlerinde çalışır.\n\n" +
                     "**---------------**\n" +
@@ -179,7 +179,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Tırlar" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "**Tırların** kapasitesi.\n" +
+                    "**Tır kapasitesi**.\n" +
                     "**100% = 25 t** (temel oyun)\n" +
                     "**500% = 125 t**.\n" +
                     "Kapsar:\n" +

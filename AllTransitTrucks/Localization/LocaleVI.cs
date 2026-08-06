@@ -56,15 +56,15 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Mở rộng min/max tuyến" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "Tăng **phạm vi** của thanh trượt số xe trên từng tuyến trong game.\n" +
-                    "**Có thể thấp tới (1)** trên các tuyến đã thử nghiệm.\n" +
-                    "**Giới hạn tối đa thay đổi**; nhưng đều cao hơn vanilla ít nhất 3x.\n" +
+                    "Mở rộng **phạm vi** của thanh trượt số xe trên từng tuyến trong game.\n" +
+                    "Các tuyến đã thử nghiệm đều có thể giảm xuống **1 xe**.\n" +
+                    "**Giới hạn tối đa thay đổi**, nhưng các tuyến đã thử nghiệm cho phép ít nhất gấp 3 lần mức tối đa vanilla.\n" +
                     "Ghi chú kỹ thuật: game dùng thời gian tuyến (thời gian chạy + số điểm dừng); nên mức tối đa thay đổi theo tuyến (mod này theo logic của game, không đặt một giới hạn cố định như 200).\n" +
                     "Hoạt động với mọi loại giao thông công cộng.\n\n" +
                     "**---------------**\n" +
                     "Mẹo: nếu muốn tăng thêm một chút giới hạn tối đa của thanh trượt, hãy thêm vài điểm dừng vào tuyến.\n" +
                     "Game tự tăng mức tối đa dựa trên số điểm dừng + các yếu tố khác; thêm điểm dừng là cách dễ nhất để đẩy giới hạn lên.\n" +
-                    "<Tránh xung đột>: gỡ các mod chỉnh cùng Transit Line policy.\n" +
+                    "<Tránh xung đột>: gỡ các mod chỉnh cùng chính sách Tuyến giao thông.\n" +
                     "Tắt nếu bạn không cần tính năng này hoặc muốn dùng mod khác cho cùng việc."
                 },
 
@@ -78,7 +78,7 @@ namespace PublicWorksPlus
                     "**1000%** = nhiều hơn 10×.\n" +
                     "Áp dụng cho tòa nhà chính." },
 
-                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.FerryDepotScalar)), "Depot phà" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.FerryDepotScalar)), "Depot phà" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.FerryDepotScalar)),
                     "Số xe tối đa mỗi **Ferry Depot**.\n" +
                     "**100%** = vanilla (mặc định của game).\n" +
@@ -106,7 +106,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainDepotScalar)),
                     "Thay đổi số tàu mà mỗi **Train Depot** có thể bảo trì.\n" +
                     "Áp dụng cho tòa nhà chính." },
-
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)), "Đặt lại depot mặc định" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
@@ -177,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Xe giao hàng (sức chứa hàng hóa)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Há»— trá»£ Ä‘iá»u phá»‘i Ä‘áº§y táº£i" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "TÄƒng yÃªu cáº§u cá»§a cÃ´ng ty vÃ  kho lÃªn gáº§n má»™t xe Ä‘áº§y táº£i.\n" +
-                    "CÃ³ thá»ƒ dÃ¹ng thÃªm CPU trong thÃ nh phá»‘ lá»›n.\n" +
-                    "<[ ] Máº·c Ä‘á»‹nh Táº®T>." },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Xe tải semi" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "Sức chứa **xe tải semi**.\n" +
+                    "**Sức chứa xe tải semi**.\n" +
                     "**100% = 25t** (vanilla)\n" +
                     "**500% = 125t**.\n" +
                     "Bao gồm:\n" +
@@ -216,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Đưa các thanh trượt giao hàng về **100%** (mặc định của game / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Đội xe hàng hóa (cảng, tàu, sân bay)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Tổng số xe trên mỗi cơ sở" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Đội xe tối đa ga hàng hóa" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Tổng số xe: ga hàng hóa" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "Thay đổi số phương tiện vận chuyển tối đa đang hoạt động của **ga vận tải hàng hóa**.\n" +
-                    "**1×** = vanilla, **5×** = nhiều hơn 5×." },
+                    "Số xe hàng hóa đang hoạt động tối đa cho mỗi **cảng hàng hóa, ga tàu hàng và sân bay**.\n" +
+                    "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Đội xe khai thác" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Công nghiệp: điều chỉnh tổng số xe tải" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "Kiểm soát giới hạn xe tải ATT cho cơ sở khai thác, kho và công ty chế biến công nghiệp.\n" +
+                    "Để BẬT để dùng ba thanh trượt xe tải công ty bên dưới.\n" +
+                    "Tắt để khôi phục ba nhóm này về vanilla một lần, ẩn các thanh trượt và ngừng ATT ghi số lượng xe tải.\n" +
+                    "Dùng TẮT khi một mod khác kiểm soát cùng các đội xe công ty.\n" +
+                    "Xe của ga hàng hóa và sức chứa xe giao hàng không bị ảnh hưởng.\n" +
+                    "<[x] Mặc định BẬT>." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Tổng xe tải: khai thác" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "Thay đổi **số xe tải tối đa** cho cơ sở khai thác.\n" +
-                    "(nông trại, đánh cá, lâm nghiệp, quặng, dầu, than, đá).\n" +
-                    "**1×** = vanilla\n" +
-                    "**5×** = nhiều hơn 5 lần.\n" +
-                    "Vanilla thường cho phép 5 xe tải mỗi cơ sở khai thác."
-                },
+                    "Số xe tải tối đa cho mỗi công ty khai thác.\n" +
+                    "Bao gồm nông trại, lâm nghiệp, đánh cá, dầu, quặng, than, đá, bông, chăn nuôi và rau.\n" +
+                    "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Đặt lại đội xe hàng + khai thác" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Tổng xe tải: kho" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "Số xe tải tối đa cho mỗi công ty kho.\n" +
+                    "Bao gồm mọi loại tài nguyên kho có xe riêng.\n" +
+                    "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Tổng xe tải: công nghiệp" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "Số xe tải tối đa cho các công ty chế biến công nghiệp.\n" +
+                    "Không bao gồm cơ sở khai thác, kho, ga hàng hóa, công ty thương mại hoặc công ty văn phòng.\n" +
+                    "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Đặt lại tất cả xe công nghiệp" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "Đưa hệ số ga hàng hóa + cơ sở khai thác về **1×** (mặc định của game / vanilla)." },
+                    "Đưa các thanh trượt ga hàng hóa, khai thác, kho và công nghiệp về **1×** (giá trị vanilla).\n" +
+                    "Nút điều khiển xe tải công ty giữ nguyên BẬT hoặc TẮT như đã chọn." },
 
                 // -------------------
                 // Parks-Roads
@@ -251,7 +263,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Tốc độ làm việc" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
                     "Tăng/giảm **tốc độ làm việc của xe**.\n" +
-                    "**Rate** = lượng việc xe làm mỗi tick mô phỏng khi đang dừng." },
+                    "**Tốc độ** = lượng việc xe làm mỗi tick mô phỏng khi đang dừng." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Kích thước đội xe depot" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
@@ -277,7 +289,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Tốc độ sửa chữa" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "**Rate** = lượng việc xe làm mỗi tick mô phỏng khi đang dừng.\n" +
+                    "**Tốc độ** = lượng việc xe làm mỗi tick mô phỏng khi đang dừng.\n" +
                     "Xe vẫn dừng-rồi-đi rất nhanh ngay cả ở mức cao nhất; chỉ là mỗi lần dừng làm được nhiều việc hơn.\n" +
                     "Trong vanilla, một lần dừng không nhất thiết sửa đường về 100%; vì vậy tính năng này hiệu quả hơn theo thời gian.\n"
                 },
@@ -290,7 +302,7 @@ namespace PublicWorksPlus
                     "**100%** = vanilla\n" +
                     "**500%** = hư hại nhanh hơn 5× (cần nhiều sửa chữa/xe tải hơn)\n" +
                     "Cách hoạt động trong game:\n" +
-                    "Nếu m_Wear <= 2.5 factor, không bị chậm.\n" +
+                    "Nếu m_Wear <= 2.5, không bị chậm.\n" +
                     "Nếu m_Wear >= 17.5, phạt tối đa, xe chạy chậm hơn 50% trên đường.\n" +
                     "Xem Roads Infoview: hiển thị màu đỏ trên đường hư nặng làm xe chạy chậm."
                 },
@@ -324,12 +336,12 @@ namespace PublicWorksPlus
                     "Tạo báo cáo <một lần> để gỡ lỗi.\n" +
                     "Không cần cho gameplay bình thường.\n" +
                     "Vị trí file: <ModsData/AllTransitTrucks/ScanReport-Prefabs.txt>\n" +
-                    "Mẹo: bấm <một lần>; nếu trạng thái hiện Done, dùng <Mở thư mục báo cáo>." },
+                    "Mẹo: bấm <một lần>; nếu trạng thái hiện Hoàn tất, dùng <Mở thư mục báo cáo>." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Trạng thái quét prefab" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
-                    "Hiển thị trạng thái quét: Idle / Queued / Running / Done / No Data.\n" +
-                    "Queued/Running hiển thị thời gian đã chạy; Done hiển thị thời lượng + thời điểm hoàn tất." },
+                    "Hiển thị trạng thái quét: Đang chờ / Đã xếp hàng / Đang chạy / Hoàn tất / Không có dữ liệu.\n" +
+                    "Đã xếp hàng/Đang chạy hiển thị thời gian đã trôi qua; Hoàn tất hiển thị thời lượng + thời điểm hoàn tất." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "Log gỡ lỗi chi tiết" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),
@@ -348,10 +360,10 @@ namespace PublicWorksPlus
                     "Tiếp theo: mở <ScanReport-Prefabs.txt> bằng trình soạn thảo văn bản (ví dụ Notepad++)." },
 
                 // ---- Scan Report Status Text (format string templates) ----
-                { "PWP_SCAN_IDLE", "Idle" },
-                { "PWP_SCAN_QUEUED_FMT", "Queued ({0})" },
-                { "PWP_SCAN_RUNNING_FMT", "Running ({0})" },
-                { "PWP_SCAN_DONE_FMT", "Done ({0} | {1})" },
+                { "PWP_SCAN_IDLE", "Đang chờ" },
+                { "PWP_SCAN_QUEUED_FMT", "Đã xếp hàng ({0})" },
+                { "PWP_SCAN_RUNNING_FMT", "Đang chạy ({0})" },
+                { "PWP_SCAN_DONE_FMT", "Hoàn tất ({0} | {1})" },
                 { "PWP_SCAN_FAILED", "Thất bại" },
                 { "PWP_SCAN_FAIL_NO_CITY", "Hãy tải thành phố trước" },
                 { "PWP_SCAN_UNKNOWN_TIME", "không rõ thời gian" },

@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "扩展交通线路最小/最大值" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "增加每条线路的游戏内交通线路滑块**范围**。\n" +
-                    "在所有已测试线路上，**最低可到 (1)**。\n" +
-                    "**最大上限会变化**；但都比原版高 3× 或更多。\n" +
+                    "扩展每条线路的游戏内交通线路滑块**范围**。\n" +
+                    "在所有已测试线路上，**最低可到 1 辆车**。\n" +
+                    "**最大上限会变化**，但已测试线路至少可达到原版最大值的 3 倍。\n" +
                     "技术说明：游戏使用线路时间（行驶时间 + 站点数量）；这会形成可变的最大值（本模组遵循游戏逻辑，因此不会设置像 200 这样的固定上限）。\n" +
                     "适用于所有公共交通：公交、渡轮、电车、火车、地铁、客船、飞机。\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "配送车辆（货物容量）" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "æ»¡è½½è°ƒåº¦è¾…åŠ©" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "å°†å…¬å¸å’Œä»“å‚¨è¯·æ±‚æé«˜åˆ°æŽ¥è¿‘ä¸€è¾†è½¦çš„æ»¡è½½é‡ã€‚\n" +
-                    "åœ¨å¤§åž‹åŸŽå¸‚ä¸­å¯èƒ½ä¼šå¢žåŠ  CPU ä½¿ç”¨é‡ã€‚\n" +
-                    "<[ ] é»˜è®¤å…³é—­>ã€‚" },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "半挂卡车" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "**半挂卡车**容量。\n" +
+                    "**半挂卡车容量**。\n" +
                     "**100% = 25t**（原版）\n" +
                     "**500% = 125t**。\n" +
                     "包括：\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "将配送滑块恢复到 **100%**（游戏默认值 / 原版）。" },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "货运车队（港口、铁路、机场）" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "每个设施的车辆总数" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "货运站最大车队" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "车辆总数：货运站" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "修改**货运运输站**的最大活跃运输车辆数。\n" +
-                    "**1×** = 原版，**5×** = 5× 更多。" },
+                    "每个**货运港、货运铁路终端和机场**的最大活跃货运车辆数。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "采集设施车队" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "工业：调整卡车总数" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "控制 ATT 对采集设施、仓库和工业加工公司的卡车上限。\n" +
+                    "保持开启以使用下方三个公司卡车滑块。\n" +
+                    "关闭后会将这三类一次性恢复为原版值、隐藏滑块，并停止 ATT 写入其卡车数量。\n" +
+                    "当其他模组控制相同公司车队时，请关闭。\n" +
+                    "货运站车辆和配送车辆货物容量不受影响。\n" +
+                    "<[x] 默认开启>。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "卡车总数：采集设施" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "修改工业**采集设施最大卡车数**。\n" +
-                    "（农场、渔业、林业、矿石、石油、煤炭、石材）。\n" +
-                    "**1×** = 原版\n" +
-                    "**5×** = 5 倍。\n" +
-                    "原版通常允许每个采集设施建筑拥有 5 辆卡车。"
-                },
+                    "每个采集公司的最大卡车数。\n" +
+                    "包括农场、林业、渔业、石油、矿石、煤炭、石材、棉花、畜牧和蔬菜。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "重置货运 + 采集设施车队" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "卡车总数：仓库" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "每个仓库公司的最大卡车数。\n" +
+                    "包括所有拥有自有车辆的仓库资源类型。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "卡车总数：工业" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "工业加工公司的最大卡车数。\n" +
+                    "不包括采集设施、仓库、货运站、商业公司或办公公司。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "重置所有工业车辆" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "将货运站 + 采集设施倍率恢复到 **1×**（游戏默认值 / 原版）。" },
+                    "将货运站、采集设施、仓库和工业滑块重置为 **1×**（原版值）。\n" +
+                    "公司卡车控制开关会保持所选的开启或关闭状态。" },
 
                 // -------------------
                 // Parks-Roads
@@ -283,7 +296,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "道路磨损" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
+                    "<测试功能>\n" +
                     "控制道路因**时间和交通**因素而劣化的速度。\n" +
                     "**10%** = 磨损速度慢 10×（所需维修更少）\n" +
                     "**100%** = 原版\n" +
@@ -328,7 +341,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Prefab 扫描状态" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
                     "显示扫描状态：空闲 / 排队中 / 运行中 / 完成 / 无数据。\n" +
-                    "排队中/运行中 显示已用时间；完成 显示耗时 + 完成时间。" },
+                    "排队中/运行中显示已用时间；完成显示耗时 + 完成时间。" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "详细调试日志" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),

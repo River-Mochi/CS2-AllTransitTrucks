@@ -57,8 +57,8 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Min./Max. der Transitlinien erweitern" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
                     "Erhöht den **Bereich** des Transitlinien-Schiebereglers im Spiel für jede Route.\n" +
-                    "**Bis auf (1)** bei allen getesteten Routen.\n" +
-                    "Das **Maximallimit variiert**; aber alle liegen 3× oder mehr über Vanilla.\n" +
+                    "**Bis auf 1 Fahrzeug** bei allen getesteten Routen.\n" +
+                    "Das **Maximallimit variiert**, aber getestete Routen erlauben mindestens das Dreifache des Vanilla-Maximums.\n" +
                     "Technischer Hinweis: Das Spiel nutzt die Routenzeit (Fahrzeit + Haltestellenanzahl); dadurch entsteht ein variables Maximum (dieser Mod folgt der Spiellogik und setzt daher kein statisches Maximum wie 200).\n" +
                     "Funktioniert für alle Verkehrsmittel: Bus, Fähre, Straßenbahn, Zug, U-Bahn, Schiff, Flugzeug.\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Lieferfahrzeuge (Frachtkapazität)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Vollladungs-Dispatchhilfe" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "ErhÃ¶ht Firmen- und Lageranfragen auf ungefÃ¤hr eine volle Lkw-Ladung.\n" +
-                    "Kann in groÃŸen StÃ¤dten mehr CPU benÃ¶tigen.\n" +
-                    "<[ ] StandardmÃ¤ÃŸig AUS>." },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Sattelzüge" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "Kapazität der **Sattelzüge**.\n" +
+                    "**Sattelzug-Kapazität**.\n" +
                     "**100% = 25t** (Vanilla)\n" +
                     "**500% = 125t**.\n" +
                     "Enthält:\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Liefer-Schieberegler wieder auf **100%** setzen (Spielstandard / Vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Frachtflotte (Hafen, Zug, Flughafen)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Gesamtfahrzeuge pro Einrichtung" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Max. Frachtstationsflotte" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Gesamtfahrzeuge: Frachtstationen" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "Ändert die maximale Anzahl aktiver Transporter von **Frachttransportstationen**.\n" +
-                    "**1×** = Vanilla, **5×** = 5× mehr." },
+                    "Maximale aktive Frachtfahrzeuge für jeden **Frachtschiffhafen, Frachtbahnhof und Flughafen**.\n" +
+                    "**1×** = Vanilla, **5×** = fünfmal mehr." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Fördererflotte" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrie: Gesamtzahl der LKW anpassen" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "Steuert die LKW-Limits von ATT für Förderer, Lager und industrielle Verarbeitungsbetriebe.\n" +
+                    "EIN lassen, um die drei Firmen-LKW-Schieberegler unten zu verwenden.\n" +
+                    "AUS stellt diese drei Kategorien einmalig auf Vanilla zurück, blendet ihre Schieberegler aus und ATT schreibt ihre LKW-Anzahl nicht mehr.\n" +
+                    "AUS verwenden, wenn ein anderer Mod dieselben Firmenflotten steuert.\n" +
+                    "Frachtstationsfahrzeuge und Lieferfahrzeug-Frachtkapazitäten sind nicht betroffen.\n" +
+                    "<[x] Standard EIN>." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Gesamt-LKW: Förderer" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "Ändert die **maximale LKW-Anzahl** industrieller Förderer.\n" +
-                    "(Farmen, Fischerei, Forstwirtschaft, Erz, Öl, Kohle, Stein).\n" +
-                    "**1×** = Vanilla\n" +
-                    "**5×** = 5-mal mehr.\n" +
-                    "Vanilla erlaubt pro Fördergebäude normalerweise 5 LKW."
-                },
+                    "Maximale LKW-Anzahl für jedes Förderunternehmen.\n" +
+                    "Umfasst Landwirtschaft, Forstwirtschaft, Fischerei, Öl, Erz, Kohle, Stein, Baumwolle, Viehzucht und Gemüse.\n" +
+                    "**1×** = Vanilla, **5×** = fünfmal mehr." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Fracht + Förderer zurücksetzen" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Gesamt-LKW: Lager" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "Maximale LKW-Anzahl für jedes Lagerunternehmen.\n" +
+                    "Umfasst alle Lager-Ressourcentypen mit eigenen Fahrzeugen.\n" +
+                    "**1×** = Vanilla, **5×** = fünfmal mehr." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Gesamt-LKW: Industrie" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "Maximale LKW-Anzahl für industrielle Verarbeitungsbetriebe.\n" +
+                    "Förderer, Lager, Frachtstationen, Gewerbebetriebe und Bürounternehmen sind nicht enthalten.\n" +
+                    "**1×** = Vanilla, **5×** = fünfmal mehr." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Alle Industriefahrzeuge zurücksetzen" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "Frachtstations- + Förderer-Multiplikatoren wieder auf **1×** setzen (Spielstandard / Vanilla)." },
+                    "Frachtstationen, Förderer, Lager und Industrie-Schieberegler auf **1×** (Vanilla-Werte) zurücksetzen.\n" +
+                    "Der Firmen-LKW-Steuerschalter bleibt wie gewählt EIN oder AUS." },
 
                 // -------------------
                 // Parks-Roads
@@ -327,8 +340,8 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Prefab-Scanstatus" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
-                    "Zeigt den Scanstatus: Idle / Queued / Running / Done / No Data.\n" +
-                    "Queued/Running shows elapsed time; Done shows duration + finish time." },
+                    "Zeigt den Scanstatus: Inaktiv / Warteschlange / Läuft / Fertig / Keine Daten.\n" +
+                    "Warteschlange/Läuft zeigt die verstrichene Zeit; Fertig zeigt Dauer + Endzeit." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "Ausführliche Debug-Logs" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),
@@ -347,10 +360,10 @@ namespace PublicWorksPlus
                     "Danach: <ScanReport-Prefabs.txt> mit einem Texteditor öffnen (z. B. Notepad++)." },
 
                 // ---- Scan Report Status Text (format string templates) ----
-                { "PWP_SCAN_IDLE", "Idle" },
-                { "PWP_SCAN_QUEUED_FMT", "Queued ({0})" },
-                { "PWP_SCAN_RUNNING_FMT", "Running ({0})" },
-                { "PWP_SCAN_DONE_FMT", "Done ({0} | {1})" },
+                { "PWP_SCAN_IDLE", "Inaktiv" },
+                { "PWP_SCAN_QUEUED_FMT", "Warteschlange ({0})" },
+                { "PWP_SCAN_RUNNING_FMT", "Läuft ({0})" },
+                { "PWP_SCAN_DONE_FMT", "Fertig ({0} | {1})" },
                 { "PWP_SCAN_FAILED", "Fehlgeschlagen" },
                 { "PWP_SCAN_FAIL_NO_CITY", "Zuerst Stadt laden" },
                 { "PWP_SCAN_UNKNOWN_TIME", "unbekannte Zeit" },

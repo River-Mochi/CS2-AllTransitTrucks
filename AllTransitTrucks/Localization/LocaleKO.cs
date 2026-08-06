@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "교통 노선 최소/최대 확장" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "각 노선별 게임 내 교통 노선 슬라이더의 **범위**를 늘립니다.\n" +
-                    "테스트된 모든 노선에서 **최저 (1)** 까지 내려갑니다.\n" +
-                    "**최대 한도는 가변적**이지만, 모두 바닐라보다 3× 이상 높습니다.\n" +
+                    "각 노선의 게임 내 교통 노선 슬라이더 **범위**를 확장합니다.\n" +
+                    "테스트된 모든 노선에서 **최저 1대**까지 내려갑니다.\n" +
+                    "**최대 한도는 가변적**이지만, 테스트된 노선은 바닐라 최대값의 최소 3배까지 허용합니다.\n" +
                     "기술 참고: 게임은 노선 시간(주행 시간 + 정류장 수)을 사용하므로 최대값이 가변적입니다(이 모드는 게임 로직을 따르므로 200 같은 고정 최대값은 설정하지 않습니다).\n" +
                     "모든 교통수단에 적용됩니다: 버스, 페리, 트램, 기차, 지하철, 선박, 비행기.\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "배송 차량 (화물 용량)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "ì™„ì „ ì ìž¬ ë°°ì†¡ ë„ìš°ë¯¸" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "íšŒì‚¬ì™€ ì°½ê³  ìš”ì²­ëŸ‰ì„ ë°°ì†¡ ì°¨ëŸ‰ í•œ ëŒ€ì˜ ì ìž¬ëŸ‰ì— ê°€ê¹ê²Œ ëŠ˜ë¦½ë‹ˆë‹¤.\n" +
-                    "ëŒ€ë„ì‹œì—ì„œëŠ” CPU ì‚¬ìš©ëŸ‰ì´ ëŠ˜ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.\n" +
-                    "<[ ] ê¸°ë³¸ê°’ êº¼ì§>." },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "세미트럭" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "**세미트럭** 용량입니다.\n" +
+                    "**세미트럭 용량**.\n" +
                     "**100% = 25t** (바닐라)\n" +
                     "**500% = 125t**.\n" +
                     "포함:\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "배송 슬라이더를 **100%** (게임 기본값 / 바닐라)로 되돌립니다." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "화물 플릿 (항구, 철도, 공항)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "시설당 총 차량 수" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "화물역 최대 플릿" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "총 차량 수: 화물역" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "**화물 운송역**의 최대 활성 운송 차량 수를 변경합니다.\n" +
+                    "각 **화물 항구, 화물 철도 터미널, 공항**의 최대 활성 화물 차량 수입니다.\n" +
                     "**1×** = 바닐라, **5×** = 5배." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "채취 시설 플릿" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "산업용 **채취 시설 최대 트럭 수**를 변경합니다.\n" +
-                    "(농장, 어업, 임업, 광석, 석유, 석탄, 석재).\n" +
-                    "**1×** = 바닐라\n" +
-                    "**5×** = 5배.\n" +
-                    "바닐라에서는 보통 채취 시설 건물당 트럭 5대를 허용합니다."
-                },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "산업: 총 트럭 수 조정" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "ATT가 채취 시설, 창고, 산업 가공 회사의 트럭 한도를 제어합니다.\n" +
+                    "아래의 세 회사 트럭 슬라이더를 사용하려면 켜 둡니다.\n" +
+                    "끄면 이 세 범주를 한 번 바닐라 값으로 복원하고 슬라이더를 숨기며, ATT가 트럭 수를 변경하지 않습니다.\n" +
+                    "다른 모드가 같은 회사 차량을 제어할 때는 끄세요.\n" +
+                    "화물역 차량과 배송 차량의 화물 용량에는 영향을 주지 않습니다.\n" +
+                    "<[x] 기본값 켜짐>." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "화물 + 채취 시설 플릿 리셋" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "총 트럭 수: 채취 시설" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
+                    "각 채취 회사의 최대 트럭 수입니다.\n" +
+                    "농장, 임업, 어업, 석유, 광석, 석탄, 석재, 면화, 축산, 채소를 포함합니다.\n" +
+                    "**1×** = 바닐라, **5×** = 5배." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "총 트럭 수: 창고" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "각 창고 회사의 최대 트럭 수입니다.\n" +
+                    "자체 차량이 있는 모든 창고 자원 유형을 포함합니다.\n" +
+                    "**1×** = 바닐라, **5×** = 5배." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "총 트럭 수: 산업" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "산업 가공 회사의 최대 트럭 수입니다.\n" +
+                    "채취 시설, 창고, 화물역, 상업 회사 또는 사무실 회사는 포함하지 않습니다.\n" +
+                    "**1×** = 바닐라, **5×** = 5배." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "모든 산업 차량 리셋" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "화물역 + 채취 시설 배수를 **1×** (게임 기본값 / 바닐라)로 되돌립니다." },
+                    "화물역, 채취 시설, 창고, 산업 슬라이더를 **1×** (바닐라 값)로 되돌립니다.\n" +
+                    "회사 트럭 제어 토글은 선택한 켜짐 또는 꺼짐 상태를 유지합니다." },
 
                 // -------------------
                 // Parks-Roads
@@ -283,7 +296,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "도로 마모" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
+                    "<베타 기능>\n" +
                     "**시간과 교통량** 요인으로 도로가 얼마나 빨리 손상되는지 제어합니다.\n" +
                     "**10%** = 마모 10× 느림 (수리 필요 감소)\n" +
                     "**100%** = 바닐라\n" +
@@ -328,7 +341,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Prefab 스캔 상태" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
                     "스캔 상태 표시: 대기 중 / 대기열 / 실행 중 / 완료 / 데이터 없음.\n" +
-                    "대기열/실행 중 은 경과 시간을 표시하고, 완료 는 소요 시간 + 완료 시각을 표시합니다." },
+                    "대기열/실행 중은 경과 시간을 표시하고, 완료는 소요 시간 + 완료 시각을 표시합니다." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "상세 디버그 로그" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),

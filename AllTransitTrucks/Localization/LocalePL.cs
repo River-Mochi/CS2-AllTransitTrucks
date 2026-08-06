@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Rozszerz min/max linii transportu" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "Zwiększa **zakres** suwaka linii transportu w grze dla każdej trasy.\n" +
-                    "**Nawet do (1)** na wszystkich testowanych trasach.\n" +
-                    "**Maksymalny limit jest zmienny**; ale wszystkie są 3× lub więcej wyższe niż w vanilli.\n" +
+                    "Rozszerza **zakres** suwaka linii transportu w grze dla każdej trasy.\n" +
+                    "Na wszystkich testowanych trasach można zejść **nawet do 1 pojazdu**.\n" +
+                    "**Maksymalny limit jest zmienny**, ale testowane trasy pozwalają na co najmniej 3× większe maksimum niż w vanilli.\n" +
                     "Uwaga techniczna: gra używa czasu trasy (czas jazdy + liczba przystanków); to tworzy zmienne maksimum (ten mod trzyma się logiki gry, więc nie ustawia stałego maksimum jak 200).\n" +
                     "Działa dla całego transportu: autobus, prom, tramwaj, pociąg, metro, statek, samolot.\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Pojazdy dostawcze (pojemność ładunku)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "Pomoc peÅ‚nego zaÅ‚adunku" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "ZwiÄ™ksza Å¼Ä…dania firm i magazynÃ³w do okoÅ‚o jednego peÅ‚nego Å‚adunku.\n" +
-                    "W duÅ¼ych miastach moÅ¼e uÅ¼ywaÄ‡ wiÄ™cej CPU.\n" +
-                    "<[ ] DomyÅ›lnie WYÅ.>." },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Ciągniki siodłowe" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "Pojemność **ciągników siodłowych**.\n" +
+                    "**Pojemność ciągników siodłowych**.\n" +
                     "**100% = 25t** (vanilla)\n" +
                     "**500% = 125t**.\n" +
                     "Obejmuje:\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Ustaw suwaki dostaw z powrotem na **100%** (domyślna wartość gry / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Flota cargo (port, kolej, lotnisko)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Łączna liczba pojazdów na obiekt" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Maks. flota stacji cargo" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Łączna liczba pojazdów: stacje cargo" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "Zmień maksymalną liczbę aktywnych transporterów **stacji transportu cargo**.\n" +
-                    "**1×** = vanilla, **5×** = 5× więcej." },
+                    "Maksymalna liczba aktywnych pojazdów cargo dla każdego **portu cargo, terminalu kolejowego i lotniska**.\n" +
+                    "**1×** = vanilla, **5×** = 5 razy więcej." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Flota zakładów wydobywczych" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Przemysł: dostosuj łączną liczbę ciężarówek" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "Kontroluje limity ciężarówek ATT dla zakładów wydobywczych, magazynów i zakładów przetwórstwa przemysłowego.\n" +
+                    "Pozostaw WŁĄCZONE, aby używać trzech poniższych suwaków ciężarówek firmowych.\n" +
+                    "Wyłącz, aby jednorazowo przywrócić te trzy kategorie do wartości vanilla, ukryć ich suwaki i zatrzymać zmiany liczby ciężarówek przez ATT.\n" +
+                    "Użyj WYŁĄCZONE, gdy inny mod kontroluje te same floty firmowe.\n" +
+                    "Pojazdy stacji cargo i pojemności ładunkowe pojazdów dostawczych pozostają bez zmian.\n" +
+                    "<[x] Domyślnie WŁĄCZONE>." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Łączna liczba ciężarówek: wydobycie" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "Zmień **maksymalną liczbę ciężarówek** dla przemysłowych zakładów wydobywczych.\n" +
-                    "(farmy, rybołówstwo, leśnictwo, ruda, ropa, węgiel, kamień).\n" +
-                    "**1×** = vanilla\n" +
-                    "**5×** = 5 razy więcej.\n" +
-                    "Vanilla zwykle pozwala na 5 ciężarówek na budynek wydobywczy."
-                },
+                    "Maksymalna liczba ciężarówek dla każdej firmy wydobywczej.\n" +
+                    "Obejmuje farmy, leśnictwo, rybołówstwo, ropę, rudę, węgiel, kamień, bawełnę, hodowlę i warzywa.\n" +
+                    "**1×** = vanilla, **5×** = 5 razy więcej." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Resetuj flotę cargo + wydobycie" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Łączna liczba ciężarówek: magazyny" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "Maksymalna liczba ciężarówek dla każdej firmy magazynowej.\n" +
+                    "Obejmuje wszystkie typy zasobów magazynowych, które mają własne pojazdy.\n" +
+                    "**1×** = vanilla, **5×** = 5 razy więcej." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Łączna liczba ciężarówek: przemysł" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "Maksymalna liczba ciężarówek dla zakładów przetwórstwa przemysłowego.\n" +
+                    "Nie obejmuje zakładów wydobywczych, magazynów, stacji cargo, firm handlowych ani biurowych.\n" +
+                    "**1×** = vanilla, **5×** = 5 razy więcej." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Resetuj wszystkie pojazdy przemysłowe" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "Ustaw mnożniki stacji cargo + wydobycia z powrotem na **1×** (domyślna wartość gry / vanilla)." },
+                    "Ustaw suwaki stacji cargo, wydobycia, magazynów i przemysłu na **1×** (wartości vanilla).\n" +
+                    "Przełącznik sterowania ciężarówkami firmowymi pozostaje WŁĄCZONY lub WYŁĄCZONY zgodnie z wyborem." },
 
                 // -------------------
                 // Parks-Roads
@@ -283,7 +296,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Zużycie dróg" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
+                    "<Funkcja beta>\n" +
                     "Kontroluje, jak szybko drogi niszczeją od czynników **czasu i ruchu**.\n" +
                     "**10%** = 10× wolniejsze zużycie (mniej potrzebnych napraw)\n" +
                     "**100%** = vanilla\n" +

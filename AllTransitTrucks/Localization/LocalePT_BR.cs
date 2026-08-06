@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Expandir mín/máx da linha de transporte" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "Aumenta o **intervalo** do controle deslizante de Linha de Transporte no jogo para cada rota.\n" +
-                    "**Tão baixo quanto (1)** em todas as rotas testadas.\n" +
-                    "O **limite máximo varia**; mas todos ficam 3× ou mais acima do vanilla.\n" +
+                    "Expande o **intervalo** do controle deslizante de Linha de Transporte no jogo para cada rota.\n" +
+                    "**Pode chegar a 1 veículo** em todas as rotas testadas.\n" +
+                    "O **limite máximo varia**, mas as rotas testadas permitem pelo menos 3× o máximo vanilla.\n" +
                     "Nota técnica: o jogo usa o tempo da rota (tempo de direção + número de paradas); isso cria um máximo variável (este mod segue a lógica do jogo, então não define um máximo fixo como 200).\n" +
                     "Funciona para todo transporte: ônibus, ferry, bonde, trem, metrô, navio, avião.\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "Veículos de entrega (capacidade de carga)" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "AuxÃ­lio de despacho com carga cheia" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "Aumenta pedidos de empresas e depÃ³sitos para perto de uma carga completa.\n" +
-                    "Pode usar mais CPU em cidades grandes.\n" +
-                    "<[ ] Desativado por padrÃ£o>." },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Caminhões semirreboque" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "Capacidade dos **caminhões semirreboque**.\n" +
+                    "**Capacidade dos caminhões semirreboque**.\n" +
                     "**100% = 25t** (vanilla)\n" +
                     "**500% = 125t**.\n" +
                     "Inclui:\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Define os controles de entrega de volta para **100%** (padrão do jogo / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Frota de carga (porto, trem, aeroporto)" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Total de veículos por instalação" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Máx. frota da estação de carga" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Total de veículos: estações de carga" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "Altera o máximo de transportadores ativos das **estações de transporte de carga**.\n" +
-                    "**1×** = vanilla, **5×** = 5× mais." },
+                    "Máximo de veículos de carga ativos para cada **porto de carga, terminal ferroviário e aeroporto**.\n" +
+                    "**1×** = vanilla, **5×** = 5 vezes mais." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Frota dos extratores" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Indústria: ajustar total de caminhões" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "Controla os limites de caminhões do ATT para extratores, armazéns e empresas de processamento industrial.\n" +
+                    "Deixe LIGADO para usar os três controles de caminhões das empresas abaixo.\n" +
+                    "Desligue para restaurar essas três categorias ao vanilla uma vez, ocultar seus controles e impedir o ATT de alterar a quantidade de caminhões.\n" +
+                    "Use DESLIGADO quando outro mod controlar as mesmas frotas de empresas.\n" +
+                    "Veículos de estações de carga e capacidades dos veículos de entrega não são afetados.\n" +
+                    "<[x] LIGADO por padrão>." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Total de caminhões: extratores" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "Altera os **caminhões máximos** dos extratores industriais.\n" +
-                    "(fazendas, pesca, silvicultura, minério, petróleo, carvão, pedra).\n" +
-                    "**1×** = vanilla\n" +
-                    "**5×** = 5 vezes mais.\n" +
-                    "O vanilla normalmente permite 5 caminhões por instalação extratora."
-                },
+                    "Máximo de caminhões para cada empresa extratora.\n" +
+                    "Inclui fazendas, silvicultura, pesca, petróleo, minério, carvão, pedra, algodão, pecuária e vegetais.\n" +
+                    "**1×** = vanilla, **5×** = 5 vezes mais." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Redefinir frota de carga + extratores" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Total de caminhões: armazéns" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "Máximo de caminhões para cada empresa de armazém.\n" +
+                    "Inclui todos os tipos de recursos de armazém que possuem veículos próprios.\n" +
+                    "**1×** = vanilla, **5×** = 5 vezes mais." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Total de caminhões: indústria" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "Máximo de caminhões para empresas de processamento industrial.\n" +
+                    "Não inclui extratores, armazéns, estações de carga, empresas comerciais ou empresas de escritórios.\n" +
+                    "**1×** = vanilla, **5×** = 5 vezes mais." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "Redefinir todos os veículos industriais" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "Define os multiplicadores da estação de carga + extratores de volta para **1×** (padrão do jogo / vanilla)." },
+                    "Redefine os controles de estações de carga, extratores, armazéns e indústria para **1×** (valores vanilla).\n" +
+                    "O controle de caminhões das empresas permanece LIGADO ou DESLIGADO conforme selecionado." },
 
                 // -------------------
                 // Parks-Roads
@@ -283,7 +296,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Desgaste das estradas" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
+                    "<Recurso beta>\n" +
                     "Controla a velocidade com que as estradas se deterioram por fatores de **tempo e tráfego**.\n" +
                     "**10%** = desgaste 10× mais lento (menos reparos necessários)\n" +
                     "**100%** = vanilla\n" +

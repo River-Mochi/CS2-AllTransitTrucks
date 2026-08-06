@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "交通路線の最小/最大を拡張" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "各路線ごとのゲーム内交通路線スライダーの**範囲**を広げます。\n" +
-                    "テストしたすべての路線で**最小 (1)** まで下げられます。\n" +
-                    "**最大上限は可変**ですが、すべてバニラより3×以上高くなります。\n" +
+                    "各路線のゲーム内交通路線スライダーの**範囲**を広げます。\n" +
+                    "テストしたすべての路線で**最小1台**まで下げられます。\n" +
+                    "**最大上限は可変**ですが、テストした路線ではバニラ最大値の少なくとも3倍まで設定できます。\n" +
                     "技術メモ: ゲームは路線時間（走行時間 + 停留所数）を使用するため、最大値は可変になります（このMODはゲームロジックに従うため、200のような固定上限は設定しません）。\n" +
                     "すべての交通機関で動作します: バス、フェリー、トラム、列車、地下鉄、船、飛行機。\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "配送車両（貨物容量）" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "æº€è¼‰é…é€ãƒ˜ãƒ«ãƒ‘ãƒ¼" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "ä¼šç¤¾ã¨å€‰åº«ã®è¦æ±‚é‡ã‚’é…é€è»Š1å°åˆ†ã«è¿‘ã¥ã‘ã¾ã™ã€‚\n" +
-                    "å¤§éƒ½å¸‚ã§ã¯CPUè² è·ãŒå¢—ãˆã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚\n" +
-                    "<[ ] åˆæœŸè¨­å®šã¯ã‚ªãƒ•>ã€‚" },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "セミトラック" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "**セミトラック**容量です。\n" +
+                    "**セミトラック容量**。\n" +
                     "**100% = 25t**（バニラ）\n" +
                     "**500% = 125t**。\n" +
                     "対象:\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "配送スライダーを**100%**（ゲーム既定値 / バニラ）に戻します。" },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "貨物フリート（港、鉄道、空港）" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "施設ごとの総車両数" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "貨物駅最大フリート" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "総車両数: 貨物駅" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "**貨物輸送駅**のアクティブ輸送車両最大数を変更します。\n" +
+                    "各**貨物港、貨物鉄道ターミナル、空港**の稼働中貨物車両の最大数です。\n" +
                     "**1×** = バニラ、**5×** = 5倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "採取施設フリート" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "産業用**採取施設の最大トラック数**を変更します。\n" +
-                    "（農業、漁業、林業、鉱石、石油、石炭、石材）。\n" +
-                    "**1×** = バニラ\n" +
-                    "**5×** = 5倍。\n" +
-                    "バニラでは通常、採取施設1棟あたり5台のトラックが使えます。"
-                },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "産業: 総トラック数を調整" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "ATTが採取施設、倉庫、産業加工企業のトラック上限を制御します。\n" +
+                    "下の3つの企業トラックスライダーを使う場合はオンのままにしてください。\n" +
+                    "オフにすると、その3カテゴリを一度バニラ値へ戻し、スライダーを非表示にして、ATTがトラック数を書き換えなくなります。\n" +
+                    "別のMODが同じ企業フリートを制御する場合はオフにしてください。\n" +
+                    "貨物駅の車両数と配送車両の貨物容量には影響しません。\n" +
+                    "<[x] 既定はオン>。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "貨物 + 採取施設フリートをリセット" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "総トラック数: 採取施設" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
+                    "各採取企業の最大トラック数です。\n" +
+                    "農業、林業、漁業、石油、鉱石、石炭、石材、綿花、畜産、野菜を含みます。\n" +
+                    "**1×** = バニラ、**5×** = 5倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "総トラック数: 倉庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "各倉庫企業の最大トラック数です。\n" +
+                    "独自の車両を持つすべての倉庫資源タイプを含みます。\n" +
+                    "**1×** = バニラ、**5×** = 5倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "総トラック数: 産業" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "産業加工企業の最大トラック数です。\n" +
+                    "採取施設、倉庫、貨物駅、商業企業、オフィス企業は含みません。\n" +
+                    "**1×** = バニラ、**5×** = 5倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "すべての産業車両をリセット" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "貨物駅 + 採取施設の倍率を**1×**（ゲーム既定値 / バニラ）に戻します。" },
+                    "貨物駅、採取施設、倉庫、産業のスライダーを**1×**（バニラ値）に戻します。\n" +
+                    "企業トラック制御の切り替えは、選択したオンまたはオフの状態を維持します。" },
 
                 // -------------------
                 // Parks-Roads
@@ -283,7 +296,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "道路摩耗" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
+                    "<ベータ機能>\n" +
                     "**時間と交通量**の要因によって道路がどれだけ速く劣化するかを制御します。\n" +
                     "**10%** = 摩耗が10×遅い（修理回数減少）\n" +
                     "**100%** = バニラ\n" +
@@ -327,8 +340,8 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Prefabスキャン状態" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
-                    "スキャン状態を表示します: 待機中 / 待機列 / 実行中 / 完了 / データなし.\n" +
-                    "待機列/実行中 は経過時間を表示し、完了 は所要時間 + 完了時刻を表示します。" },
+                    "スキャン状態を表示します: 待機中 / 待機列 / 実行中 / 完了 / データなし。\n" +
+                    "待機列/実行中は経過時間を表示し、完了は所要時間 + 完了時刻を表示します。" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "詳細デバッグログ" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),

@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "擴充交通路線最小/最大值" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "增加每條路線的遊戲內交通路線滑桿**範圍**。\n" +
-                    "在所有已測試路線上，**最低可到 (1)**。\n" +
-                    "**最大上限會變動**；但都比原版高 3× 或更多。\n" +
+                    "擴充每條路線的遊戲內交通路線滑桿**範圍**。\n" +
+                    "在所有已測試路線上，**最低可到 1 輛車**。\n" +
+                    "**最大上限會變動**，但已測試路線至少可達原版最大值的 3 倍。\n" +
                     "技術說明：遊戲使用路線時間（行駛時間 + 站點數量）；這會形成可變的最大值（本模組遵循遊戲邏輯，因此不會設定像 200 這樣的固定上限）。\n" +
                     "適用於所有大眾運輸：公車、渡輪、電車、火車、地鐵、客船、飛機。\n\n" +
                     "**---------------**\n" +
@@ -176,15 +176,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.DeliveryGroup), "配送車輛（貨物容量）" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)), "æ»¿è¼‰èª¿åº¦è¼”åŠ©" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableFullLoadDispatchHelper)),
-                    "å°‡å…¬å¸å’Œå€‰å„²è«‹æ±‚æé«˜åˆ°æŽ¥è¿‘ä¸€è¼›è»Šçš„æ»¿è¼‰é‡ã€‚\n" +
-                    "åœ¨å¤§åž‹åŸŽå¸‚ä¸­å¯èƒ½æœƒå¢žåŠ  CPU ä½¿ç”¨é‡ã€‚\n" +
-                    "<[ ] é è¨­é—œé–‰>ã€‚" },
-
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "半掛卡車" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "半掛卡車的**載貨容量**。\n" +
+                    "**半掛卡車容量**。\n" +
                     "**100% = 25t**（原版）\n" +
                     "**500% = 125t**。\n" +
                     "包括：\n" +
@@ -215,25 +209,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "將配送滑桿恢復到 **100%**（遊戲預設值 / 原版）。" },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "貨運車隊（港口、鐵路、機場）" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "每個設施的車輛總數" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "貨運站最大車隊" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "車輛總數：貨運站" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
-                    "修改**貨運運輸站**的最大活躍運輸車輛數。\n" +
-                    "**1×** = 原版，**5×** = 5× 更多。" },
+                    "每個**貨運港、貨運鐵路終端與機場**的最大活躍貨運車輛數。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "採集設施車隊" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "工業：調整卡車總數" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "控制 ATT 對採集設施、倉庫與工業加工公司的卡車上限。\n" +
+                    "保持開啟以使用下方三個公司卡車滑桿。\n" +
+                    "關閉後會將這三類一次性恢復為原版值、隱藏滑桿，並停止 ATT 寫入其卡車數量。\n" +
+                    "當其他模組控制相同公司車隊時，請關閉。\n" +
+                    "貨運站車輛與配送車輛貨物容量不受影響。\n" +
+                    "<[x] 預設開啟>。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "卡車總數：採集設施" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
-                    "修改工業**採集設施最大卡車數**。\n" +
-                    "（農場、漁業、林業、礦石、石油、煤炭、石材）。\n" +
-                    "**1×** = 原版\n" +
-                    "**5×** = 5 倍。\n" +
-                    "原版通常允許每個採集設施建築擁有 5 輛卡車。"
-                },
+                    "每個採集公司的最大卡車數。\n" +
+                    "包括農場、林業、漁業、石油、礦石、煤炭、石材、棉花、畜牧與蔬菜。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "重設貨運 + 採集設施車隊" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "卡車總數：倉庫" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
+                    "每個倉庫公司的最大卡車數。\n" +
+                    "包括所有擁有自有車輛的倉庫資源類型。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "卡車總數：工業" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
+                    "工業加工公司的最大卡車數。\n" +
+                    "不包括採集設施、倉庫、貨運站、商業公司或辦公公司。\n" +
+                    "**1×** = 原版，**5×** = 5 倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)), "重設所有工業車輛" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
-                    "將貨運站 + 採集設施倍率恢復到 **1×**（遊戲預設值 / 原版）。" },
+                    "將貨運站、採集設施、倉庫與工業滑桿重設為 **1×**（原版值）。\n" +
+                    "公司卡車控制開關會保持所選的開啟或關閉狀態。" },
 
                 // -------------------
                 // Parks-Roads
@@ -283,7 +296,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "道路磨損" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
+                    "<測試功能>\n" +
                     "控制道路因**時間與交通**因素而劣化的速度。\n" +
                     "**10%** = 磨損速度慢 10×（所需維修更少）\n" +
                     "**100%** = 原版\n" +
@@ -328,7 +341,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.PrefabScanStatus)), "Prefab 掃描狀態" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.PrefabScanStatus)),
                     "顯示掃描狀態：閒置 / 排隊中 / 執行中 / 完成 / 無資料。\n" +
-                    "排隊中/執行中 會顯示已用時間；完成 會顯示耗時 + 完成時間。" },
+                    "排隊中/執行中會顯示已用時間；完成會顯示耗時 + 完成時間。" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableDebugLogging)), "詳細除錯日誌" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableDebugLogging)),

@@ -225,7 +225,7 @@ namespace PublicWorksPlus
                     "Maximum active cargo vehicles for each **cargo harbor, train terminal, and airport**.\n" +
                     "**1×** = vanilla, **5×** = 5 times more." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Adjust company trucks" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Adjust industry total trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
                     "Controls ATT's extractor, warehouse, and industrial processing truck limits.\n" +
                     "Leave ON to use the three company-truck sliders below.\n" +

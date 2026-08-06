@@ -56,7 +56,7 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 - Nukprach, BugsyG, Necko1996: testing
 
 ### Performance advantage
-This is designed to *not* run in the city per-frame. Make changes in Options Menu > then mod goes idle.
+Designed to *not* run in the city per-frame. It only runs when a change is made in the Options Menu, then the mod goes idle - simple, no city impact.
 
 Most changes apply only when a city loads or you change Options, then ATT goes idle.
 

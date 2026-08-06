@@ -56,9 +56,9 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)), "Expand transit line min/max" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableLineVehicleCountTuner)),
-                    "Increases the **range** of in-game Transit Line Slider per each route.\n" +
-                    "**As low as (1)** on all routes tested.\n" +
-                    "**Maximum limit varies**; but all are 3x or more higher than vanilla.\n" +
+                    "Expands the **range** of the in-game Transit Line slider for each route.\n" +
+                    "**As low as 1 vehicle** on all routes tested.\n" +
+                    "**Maximum limit varies**, but tested routes allow at least 3× the vanilla maximum.\n" +
                     "Tech note: game uses route time (driving time + stop count); this creates a variable max (this mod follows game logic so does not set a static max limit like 200).\n" +
                     "Works for all public transit.\n\n" +
                     "**---------------**\n" +
@@ -108,7 +108,7 @@ namespace PublicWorksPlus
                     "Applies to the base building." },
 
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)), "Reset depots defaults" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)), "Reset depot defaults" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Set all depot sliders back to **100%** (game default / vanilla)." },
 
@@ -180,7 +180,7 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)), "Semi trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SemiTruckCargoScalar)),
-                    "**Semi trucks** capacity.\n" +
+                    "**Semi-truck capacity**.\n" +
                     "**100% = 25t** (vanilla)\n" +
                     "**500% = 125t**.\n" +
                     "Includes:\n" +

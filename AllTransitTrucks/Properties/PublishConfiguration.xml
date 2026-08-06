@@ -97,13 +97,13 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <Dependency Id="" />
 <!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
-- Added separate sliders for Industry, extractors, warehouses,
+- Added separate sliders for Industry, extractors, warehouses.
 - Added an Industry Compatibility toggle - if other mods are being used for adjusting all city fleet sizes.
 - Improved industry fleet targeting and large-city performance.
 - Added Turkish and Portuguese (Portugal); refreshed all translations.
 - Expanded Scan Report details for industry fleets and live truck loads.
 </ChangeLog>
 <!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
-<ExternalLink Type="discord" Url="https://discord.gg/gwXgvtyhjc" />
 <ExternalLink Type="github" Url="https://github.com/River-Mochi/CS2-AllTransitTrucks" />
+<ExternalLink Type="discord" Url="https://discord.gg/gwXgvtyhjc" />
 </Publish>

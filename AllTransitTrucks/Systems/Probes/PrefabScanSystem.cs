@@ -9,8 +9,7 @@
 // File: Systems/Probes/PrefabScanSystem.cs
 // Purpose: One-shot prefab scan triggered by Options UI button.
 // Output: Writes report to {EnvPath.kUserDataPath}/ModsData/AllTransitTrucks/ScanReport-Prefabs.txt
-// Notes:
-// - Runs only when requested. Main scan flow stays here.
+// Notes: Runs only when requested. Main scan flow stays here.
 // - Helper/report methods live in PrefabScanSystem.ReportSections.cs to keep this file shorter.
 
 namespace PublicWorksPlus

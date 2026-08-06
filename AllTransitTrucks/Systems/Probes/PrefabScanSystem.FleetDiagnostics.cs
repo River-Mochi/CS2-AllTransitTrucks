@@ -285,7 +285,7 @@ namespace PublicWorksPlus
                 IndustrialProcessData process =
                     EntityManager.GetComponentData<IndustrialProcessData>(entity);
 
-                if (EconomyUtils.IsOfficeResource(process.m_Output.m_Resource))
+                if (IsOfficeResource(process.m_Output.m_Resource))
                 {
                     skippedOffice++;
                     continue;
@@ -322,5 +322,14 @@ namespace PublicWorksPlus
 
             AppendCapped(sb, ref lines, ref truncated, string.Empty);
         }
+
+        private static bool IsOfficeResource(Game.Economy.Resource resource)
+        {
+            return resource == Game.Economy.Resource.Software ||
+                   resource == Game.Economy.Resource.Telecom ||
+                   resource == Game.Economy.Resource.Financial ||
+                   resource == Game.Economy.Resource.Media;
+        }
+
     }
 }

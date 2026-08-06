@@ -4,7 +4,7 @@
 	<!--Name of the mod to display to players-->
 	<DisplayName Value="All Transit + Trucks" />
 	<!--Short description of the mod-->
-	<ShortDescription Value="Adjust all Transit, Passengers, Industry Trucks Deliveries + Cargo, and increase Transit Line slider limits." />
+	<ShortDescription Value="Adjust all Transit, Passengers, Industry Trucks + Cargo, and increase Transit Line slider limits." />
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
@@ -90,15 +90,18 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/all-transit-industry-delivery-trucks.1910233/" />
 	<!--Version of the mod-->
-	<ModVersion Value="2.2.0" />
+	<ModVersion Value="2.3.0" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.6.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
-- Improved large-city performance for industry deliveries and storage transfers.
-- Improved settings save.
+- Added more granular sliders to control different industry types separately.
+- Improved large-city performance for industry.
+- internal refactor and cleanup.
+- Add Turkish and Portuguese-PT translations.
+- update all locales.
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
     <ExternalLink Type="discord" Url="https://discord.gg/gwXgvtyhjc" />

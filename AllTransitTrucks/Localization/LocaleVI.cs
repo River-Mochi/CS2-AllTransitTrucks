@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "Số xe hàng hóa đang hoạt động tối đa cho mỗi **cảng hàng hóa, ga tàu hàng và sân bay**.\n" +
                     "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Công nghiệp: điều chỉnh tổng số xe tải" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Điều chỉnh xe tải công nghiệp" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "Kiểm soát giới hạn xe tải ATT cho cơ sở khai thác, kho và công ty chế biến công nghiệp.\n" +
-                    "Để BẬT để dùng ba thanh trượt xe tải công ty bên dưới.\n" +
-                    "Tắt để khôi phục ba nhóm này về vanilla một lần, ẩn các thanh trượt và ngừng ATT ghi số lượng xe tải.\n" +
-                    "Dùng TẮT khi một mod khác kiểm soát cùng các đội xe công ty.\n" +
-                    "Xe của ga hàng hóa và sức chứa xe giao hàng không bị ảnh hưởng.\n" +
-                    "<[x] Mặc định BẬT>." },
+                    "Để tương thích với mod khác,\n" +
+                    "- dùng TẮT nếu bạn muốn mod khác kiểm soát tổng số xe tải của cùng các công ty công nghiệp.\n" +
+                    "<[x] Mặc định BẬT>.\n" +
+                    "Để BẬT để dùng ba thanh trượt bên dưới và chỉnh tổng số xe tải của công ty.\n" +
+                    "TẮT sẽ khôi phục ba nhóm này về mặc định của game và ẩn các thanh trượt.\n" +
+                    "Nếu muốn dùng thanh trượt của mod này, hãy kiểm tra xem mod kia có tùy chọn tắt số lượng xe tải riêng không."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Tổng xe tải: khai thác" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

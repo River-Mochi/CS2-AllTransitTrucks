@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "Máximo de vehículos de carga activos para cada **puerto de carga, terminal ferroviaria y aeropuerto**.\n" +
                     "**1×** = vanilla, **5×** = 5 veces más." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industria: ajustar camiones totales" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Ajustar camiones industriales" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "Controla los límites de camiones de ATT para extractores, almacenes y empresas de procesamiento industrial.\n" +
-                    "Déjalo ACTIVADO para usar los tres deslizadores de camiones de empresa siguientes.\n" +
-                    "Al DESACTIVARLO, esas tres categorías vuelven una vez a vanilla, se ocultan sus deslizadores y ATT deja de escribir sus cantidades de camiones.\n" +
-                    "Desactívalo cuando otro mod controle las mismas flotas de empresa.\n" +
-                    "Los vehículos de las estaciones de carga y las capacidades de carga de los vehículos de reparto no se ven afectados.\n" +
-                    "<[x] ACTIVADO de forma predeterminada>." },
+                    "Para compatibilidad con otros mods,\n" +
+                    "- usa DESACTIVADO si prefieres que otro mod controle el total de camiones de las mismas empresas industriales.\n" +
+                    "<[x] ACTIVADO por defecto>.\n" +
+                    "Déjalo ACTIVADO para usar los tres deslizadores siguientes y ajustar el total de camiones.\n" +
+                    "DESACTIVAR restaura esas tres categorías a los valores del juego y oculta los deslizadores.\n" +
+                    "Si prefieres los deslizadores de este mod, comprueba si el otro mod puede desactivar sus propios números de camiones."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Camiones totales: extractores" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "各**貨物港、貨物鉄道ターミナル、空港**の稼働中貨物車両の最大数です。\n" +
                     "**1×** = バニラ、**5×** = 5倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "産業: 総トラック数を調整" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "産業トラックを調整" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "ATTが採取施設、倉庫、産業加工企業のトラック上限を制御します。\n" +
-                    "下の3つの企業トラックスライダーを使う場合はオンのままにしてください。\n" +
-                    "オフにすると、その3カテゴリを一度バニラ値へ戻し、スライダーを非表示にして、ATTがトラック数を書き換えなくなります。\n" +
-                    "別のMODが同じ企業フリートを制御する場合はオフにしてください。\n" +
-                    "貨物駅の車両数と配送車両の貨物容量には影響しません。\n" +
-                    "<[x] 既定はオン>。" },
+                    "他のMODとの互換性設定です。\n" +
+                    "- 同じ産業企業の総トラック数を別のMODで調整したい場合はオフにしてください。\n" +
+                    "<[x] 既定はオン>。\n" +
+                    "下の3つのスライダーで企業の総トラック数を調整する場合はオンのままにします。\n" +
+                    "オフにすると3カテゴリをゲーム標準値へ戻し、スライダーを非表示にします。\n" +
+                    "このMODのスライダーを使う場合は、他のMOD側でトラック数の変更を無効にできるか確認してください。"
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "総トラック数: 採取施設" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

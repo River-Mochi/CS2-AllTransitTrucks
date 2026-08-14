@@ -78,6 +78,7 @@ namespace PublicWorksPlus
                     localizationManager.AddSource("pt-PT", new LocalePT_PT(setting));
                     localizationManager.AddSource("tr-TR", new LocaleTR(setting));
                     localizationManager.AddSource("vi-VN", new LocaleVI(setting));
+                    localizationManager.AddSource("nl-NL", new LocaleNL(setting));
                 }
             }
             catch (Exception ex)

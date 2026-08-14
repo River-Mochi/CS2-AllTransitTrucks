@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "Maximale aktive Frachtfahrzeuge für jeden **Frachtschiffhafen, Frachtbahnhof und Flughafen**.\n" +
                     "**1×** = Vanilla, **5×** = fünfmal mehr." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrie: Gesamtzahl der LKW anpassen" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrie-LKW anpassen" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "Steuert die LKW-Limits von ATT für Förderer, Lager und industrielle Verarbeitungsbetriebe.\n" +
-                    "EIN lassen, um die drei Firmen-LKW-Schieberegler unten zu verwenden.\n" +
-                    "AUS stellt diese drei Kategorien einmalig auf Vanilla zurück, blendet ihre Schieberegler aus und ATT schreibt ihre LKW-Anzahl nicht mehr.\n" +
-                    "AUS verwenden, wenn ein anderer Mod dieselben Firmenflotten steuert.\n" +
-                    "Frachtstationsfahrzeuge und Lieferfahrzeug-Frachtkapazitäten sind nicht betroffen.\n" +
-                    "<[x] Standard EIN>." },
+                    "Für die Kompatibilität mit anderen Mods,\n" +
+                    "- AUS verwenden, wenn ein anderer Mod die Gesamtzahl der LKW derselben Industriefirmen steuern soll.\n" +
+                    "<[x] Standard EIN>.\n" +
+                    "EIN lassen, um mit den drei Reglern unten die Gesamtzahl der Firmen-LKW anzupassen.\n" +
+                    "AUS stellt diese drei Kategorien auf die Spielstandardwerte zurück und blendet die Regler aus.\n" +
+                    "Wenn du die Regler dieses Mods verwenden möchtest, prüfe, ob der andere Mod seine LKW-Anzahl deaktivieren kann."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Gesamt-LKW: Förderer" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

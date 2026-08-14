@@ -217,14 +217,15 @@ namespace PublicWorksPlus
                     "Her **yük limanı, yük tren terminali ve havaalanı** için azami aktif yük aracı.\n" +
                     "**1×** = temel oyun, **5×** = 5 kat daha fazla." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Sanayi: toplam kamyonları ayarla" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Sanayi kamyonlarını ayarla" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "ATT’nin kaynak çıkarma, depo ve sanayi işleme şirketleri için kamyon sınırlarını kontrol eder.\n" +
-                    "Aşağıdaki üç şirket kamyonu kaydırıcısını kullanmak için AÇIK bırakın.\n" +
-                    "KAPALI yapıldığında bu üç kategori bir kez temel oyun değerlerine döner, kaydırıcıları gizlenir ve ATT kamyon sayılarını değiştirmeyi bırakır.\n" +
-                    "Aynı şirket filolarını başka bir mod kontrol ediyorsa KAPALI kullanın.\n" +
-                    "Yük istasyonu araçları ve teslimat yük kapasiteleri etkilenmez.\n" +
-                    "<[x] Varsayılan AÇIK>." },
+                    "Diğer modlarla uyumluluk için,\n" +
+                    "- aynı sanayi şirketlerinin toplam kamyon sayısını başka bir mod yönetsin istiyorsanız KAPALI kullanın.\n" +
+                    "<[x] Varsayılan AÇIK>.\n" +
+                    "Aşağıdaki üç kaydırıcıyla şirketlerin toplam kamyon sayısını ayarlamak için AÇIK bırakın.\n" +
+                    "KAPALI, bu üç kategoriyi oyun varsayılanına döndürür ve kaydırıcıları gizler.\n" +
+                    "Bu modun kaydırıcılarını kullanacaksanız diğer modda kendi kamyon sayısı ayarını kapatma seçeneği olup olmadığını kontrol edin."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Toplam kamyon: kaynak çıkarma" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

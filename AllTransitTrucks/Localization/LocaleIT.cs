@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "Numero massimo di veicoli cargo attivi per ogni **porto cargo, terminal ferroviario e aeroporto**.\n" +
                     "**1×** = vanilla, **5×** = 5 volte in più." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industria: regola camion totali" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Regola camion industriali" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "Controlla i limiti dei camion ATT per estrattori, magazzini e aziende di lavorazione industriale.\n" +
-                    "Lascia ATTIVO per usare i tre cursori dei camion aziendali qui sotto.\n" +
-                    "Disattiva per ripristinare una volta queste tre categorie ai valori vanilla, nascondere i cursori e impedire ad ATT di modificare il numero di camion.\n" +
-                    "Usa DISATTIVO quando un’altra mod controlla le stesse flotte aziendali.\n" +
-                    "I veicoli delle stazioni cargo e le capacità di carico dei veicoli di consegna non sono interessati.\n" +
-                    "<[x] ATTIVO per impostazione predefinita>." },
+                    "Per compatibilità con altre mod,\n" +
+                    "- usa DISATTIVO se preferisci che un’altra mod controlli il totale dei camion delle stesse aziende industriali.\n" +
+                    "<[x] ATTIVO per impostazione predefinita>.\n" +
+                    "Lascia ATTIVO per usare i tre cursori qui sotto e regolare il totale dei camion.\n" +
+                    "DISATTIVARE ripristina queste tre categorie ai valori del gioco e nasconde i cursori.\n" +
+                    "Se preferisci i cursori di questa mod, controlla se l’altra mod può disattivare il proprio numero di camion."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Camion totali: estrattori" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

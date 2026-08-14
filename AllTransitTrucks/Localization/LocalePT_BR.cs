@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "Máximo de veículos de carga ativos para cada **porto de carga, terminal ferroviário e aeroporto**.\n" +
                     "**1×** = vanilla, **5×** = 5 vezes mais." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Indústria: ajustar total de caminhões" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Ajustar caminhões da indústria" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "Controla os limites de caminhões do ATT para extratores, armazéns e empresas de processamento industrial.\n" +
-                    "Deixe LIGADO para usar os três controles de caminhões das empresas abaixo.\n" +
-                    "Desligue para restaurar essas três categorias ao vanilla uma vez, ocultar seus controles e impedir o ATT de alterar a quantidade de caminhões.\n" +
-                    "Use DESLIGADO quando outro mod controlar as mesmas frotas de empresas.\n" +
-                    "Veículos de estações de carga e capacidades dos veículos de entrega não são afetados.\n" +
-                    "<[x] LIGADO por padrão>." },
+                    "Para compatibilidade com outros mods,\n" +
+                    "- use DESLIGADO se preferir que outro mod controle o total de caminhões das mesmas empresas industriais.\n" +
+                    "<[x] LIGADO por padrão>.\n" +
+                    "Deixe LIGADO para usar os três controles abaixo e ajustar o total de caminhões das empresas.\n" +
+                    "DESLIGAR restaura essas três categorias aos valores do jogo e oculta os controles.\n" +
+                    "Se preferir os controles deste mod, veja se o outro mod permite desativar a própria quantidade de caminhões."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Total de caminhões: extratores" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

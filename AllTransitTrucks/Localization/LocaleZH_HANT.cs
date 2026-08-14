@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "每個**貨運港、貨運鐵路終端與機場**的最大活躍貨運車輛數。\n" +
                     "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "工業：調整卡車總數" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "調整工業卡車" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "控制 ATT 對採集設施、倉庫與工業加工公司的卡車上限。\n" +
-                    "保持開啟以使用下方三個公司卡車滑桿。\n" +
-                    "關閉後會將這三類一次性恢復為原版值、隱藏滑桿，並停止 ATT 寫入其卡車數量。\n" +
-                    "當其他模組控制相同公司車隊時，請關閉。\n" +
-                    "貨運站車輛與配送車輛貨物容量不受影響。\n" +
-                    "<[x] 預設開啟>。" },
+                    "用於相容其他模組：\n" +
+                    "- 如果想讓其他模組控制相同工業公司的卡車總數，請關閉此項。\n" +
+                    "<[x] 預設開啟>。\n" +
+                    "保持開啟可使用下方三個滑桿調整公司卡車總數。\n" +
+                    "關閉後會將這三類恢復為遊戲預設值，並隱藏滑桿。\n" +
+                    "如果想使用本模組的滑桿，請檢查其他模組是否可以關閉其卡車數量調整。"
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "卡車總數：採集設施" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

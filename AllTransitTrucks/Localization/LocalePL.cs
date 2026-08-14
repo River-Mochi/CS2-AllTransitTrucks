@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "Maksymalna liczba aktywnych pojazdów cargo dla każdego **portu cargo, terminalu kolejowego i lotniska**.\n" +
                     "**1×** = vanilla, **5×** = 5 razy więcej." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Przemysł: dostosuj łączną liczbę ciężarówek" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Dostosuj ciężarówki przemysłowe" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "Kontroluje limity ciężarówek ATT dla zakładów wydobywczych, magazynów i zakładów przetwórstwa przemysłowego.\n" +
-                    "Pozostaw WŁĄCZONE, aby używać trzech poniższych suwaków ciężarówek firmowych.\n" +
-                    "Wyłącz, aby jednorazowo przywrócić te trzy kategorie do wartości vanilla, ukryć ich suwaki i zatrzymać zmiany liczby ciężarówek przez ATT.\n" +
-                    "Użyj WYŁĄCZONE, gdy inny mod kontroluje te same floty firmowe.\n" +
-                    "Pojazdy stacji cargo i pojemności ładunkowe pojazdów dostawczych pozostają bez zmian.\n" +
-                    "<[x] Domyślnie WŁĄCZONE>." },
+                    "Dla zgodności z innymi modami,\n" +
+                    "- użyj WYŁĄCZONE, jeśli wolisz, aby inny mod kontrolował łączną liczbę ciężarówek tych samych firm przemysłowych.\n" +
+                    "<[x] Domyślnie WŁĄCZONE>.\n" +
+                    "Pozostaw WŁĄCZONE, aby trzema suwakami poniżej ustawiać łączną liczbę ciężarówek firmowych.\n" +
+                    "WYŁĄCZENIE przywraca te trzy kategorie do wartości gry i ukrywa suwaki.\n" +
+                    "Jeśli wolisz suwaki tego moda, sprawdź, czy drugi mod pozwala wyłączyć własne ustawienia liczby ciężarówek."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Łączna liczba ciężarówek: wydobycie" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

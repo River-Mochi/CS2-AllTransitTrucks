@@ -216,14 +216,15 @@ namespace PublicWorksPlus
                     "각 **화물 항구, 화물 철도 터미널, 공항**의 최대 활성 화물 차량 수입니다.\n" +
                     "**1×** = 바닐라, **5×** = 5배." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "산업: 총 트럭 수 조정" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "산업 트럭 조정" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "ATT가 채취 시설, 창고, 산업 가공 회사의 트럭 한도를 제어합니다.\n" +
-                    "아래의 세 회사 트럭 슬라이더를 사용하려면 켜 둡니다.\n" +
-                    "끄면 이 세 범주를 한 번 바닐라 값으로 복원하고 슬라이더를 숨기며, ATT가 트럭 수를 변경하지 않습니다.\n" +
-                    "다른 모드가 같은 회사 차량을 제어할 때는 끄세요.\n" +
-                    "화물역 차량과 배송 차량의 화물 용량에는 영향을 주지 않습니다.\n" +
-                    "<[x] 기본값 켜짐>." },
+                    "다른 모드와의 호환성 설정입니다.\n" +
+                    "- 같은 산업 회사의 총 트럭 수를 다른 모드로 조정하려면 끄세요.\n" +
+                    "<[x] 기본값 켜짐>.\n" +
+                    "아래 세 슬라이더로 회사의 총 트럭 수를 조정하려면 켜 두세요.\n" +
+                    "끄면 세 범주를 게임 기본값으로 복원하고 슬라이더를 숨깁니다.\n" +
+                    "이 모드의 슬라이더를 쓰려면 다른 모드에서 자체 트럭 수 조정을 끌 수 있는지 확인하세요."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "총 트럭 수: 채취 시설" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

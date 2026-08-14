@@ -217,14 +217,15 @@ namespace PublicWorksPlus
                     "Máximo de veículos de carga ativos em cada **porto de carga, terminal ferroviário e aeroporto**.\n" +
                     "**1×** = jogo base, **5×** = 5 vezes mais." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Indústria: ajustar total de camiões" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Ajustar camiões da indústria" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
-                    "Controla os limites de camiões da ATT para empresas extratoras, armazéns e empresas de processamento industrial.\n" +
-                    "Deixe ATIVADO para utilizar os três seletores de camiões das empresas abaixo.\n" +
-                    "Desative para repor estas três categorias no jogo base uma vez, ocultar os seletores e impedir a ATT de alterar os respetivos totais de camiões.\n" +
-                    "Utilize DESATIVADO quando outro mod controlar as mesmas frotas.\n" +
-                    "Os veículos das estações de carga e as capacidades de carga das entregas não são afetados.\n" +
-                    "<[x] Predefinição: ATIVADO>." },
+                    "Para compatibilidade com outros mods,\n" +
+                    "- use DESATIVADO se preferir que outro mod controle o total de camiões das mesmas empresas industriais.\n" +
+                    "<[x] Predefinição: ATIVADO>.\n" +
+                    "Deixe ATIVADO para usar os três seletores abaixo e ajustar o total de camiões das empresas.\n" +
+                    "DESATIVAR repõe estas três categorias nos valores do jogo e oculta os seletores.\n" +
+                    "Se preferir os seletores deste mod, verifique se o outro mod permite desativar o próprio número de camiões."
+                     },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Total de camiões: extração" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

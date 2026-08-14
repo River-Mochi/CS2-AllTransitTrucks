@@ -8,9 +8,9 @@
 <!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 <!--LongDescription Value="This is a long description" /-->
 <LongDescription>
-### All Transit + Trucks (ATT)
+### All Transit + Trucks (AT+T)
 
-### No UI bloat - do what you need reliably.
+### Do what you need reliably without UI bloat.
 
 - Scale many aspects for:
 - all Public Transit + Passengers
@@ -62,14 +62,9 @@ Designed to *not* run in the city per-frame. It only runs when a change is made 
 Most changes apply only when a city loads or you change Options, then ATT goes idle.
 
 ### 12+ Languages Supported
-- English, Français, Deutsch, Español, Italiano, Polski
+- Français, Deutsch, Español, Italiano, Nederlands, Polski
 - Português Brasileiro, Português (Portugal), Türkçe
 - 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt
-
-### Tip:
-If you want to increase maximum of the transit route slider a little more, add some stops to the route.
-Game auto-increases the max based on different factors, adding stops is just the easiest to nudge.
-
 
 tags: city dispatch, transit line increase, control municipal, public transit system, change size, increase people passengers, depot size demand, decrease passengers,
 delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extractor fish
@@ -85,7 +80,7 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <Screenshot Value="Properties/image30-Industry.jpg" />
 <Screenshot Value="Properties/image35-IndustryTrucks.jpg" />
 <Screenshot Value="Properties/image40-Maintenance.jpg" />
-<Screenshot Value="Properties/image50-Senryu-Bus.jpg" />
+<Screenshot Value="Properties/image42-TruckCompatibility.jpg" />
 <!--Tag, can be set multiple times-->
 <Tag Value="Code Mod" />
 <!--Link to the forum post where the mod can be discussed-->
@@ -98,9 +93,8 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <Dependency Id="" />
 <!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
-- Added an Industry Compatibility toggle - if other mods are being used for total number of Industry trucks.
-- Added Dutch (nl-NL) translation
-- update all locales for clarity on tool tips.
+- Added Dutch (nl-NL) translation. Updated all translation files for tooltips clarity.
+- recent important: Industry Compatibility toggle [x]. If using another mod for increasing total trucks.
 </ChangeLog>
 <!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 <ExternalLink Type="github" Url="https://github.com/River-Mochi/CS2-AllTransitTrucks" />

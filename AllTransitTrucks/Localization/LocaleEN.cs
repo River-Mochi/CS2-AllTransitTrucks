@@ -220,8 +220,8 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Show Industry Trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] Default ON> to adjust total number of trucks.\n" +
                     "For Compatibility with other mods,\n" +
-                    "<[x] Default ON>.\n" +
                     "- use OFF if you prefer to use another mod to control the same industry/company total of trucks.\n" +
                     "Leave ON to use the three Industrial company-truck sliders for adjusting total trucks numbers.\n" +
                     "Turn OFF to restore these 3 sliders to game default and hide the sliders.\n" +

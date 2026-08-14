@@ -164,6 +164,22 @@ namespace PublicWorksPlus
             }
         }
 
+        [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
+        [SettingsUISection(IndustryTab, CargoStationsGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(EnableCompanyTruckControl), true)]
+        public float IndustryMaxTrucksScalar
+        {
+            get => m_IndustryMaxTrucksScalar;
+            set
+            {
+                float v = ScalarMath.ClampScalar(value, CargoStationMinScalar, CargoStationMaxScalar);
+                if (m_IndustryMaxTrucksScalar == v) return;
+
+                m_IndustryMaxTrucksScalar = v;
+                OnIndustryChanged();
+            }
+        }
+
 
         [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
         [SettingsUISection(IndustryTab, CargoStationsGroup)]
@@ -177,22 +193,6 @@ namespace PublicWorksPlus
                 if (m_WarehouseMaxTrucksScalar == v) return;
 
                 m_WarehouseMaxTrucksScalar = v;
-                OnIndustryChanged();
-            }
-        }
-
-        [SettingsUISlider(min = CargoStationMinScalar, max = CargoStationMaxScalar, step = CargoStationStepScalar)]
-        [SettingsUISection(IndustryTab, CargoStationsGroup)]
-        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(EnableCompanyTruckControl), true)]
-        public float IndustryMaxTrucksScalar
-        {
-            get => m_IndustryMaxTrucksScalar;
-            set
-            {
-                float v = ScalarMath.ClampScalar(value, CargoStationMinScalar, CargoStationMaxScalar);
-                if (m_IndustryMaxTrucksScalar == v) return;
-
-                m_IndustryMaxTrucksScalar = v;
                 OnIndustryChanged();
             }
         }

@@ -194,7 +194,7 @@ namespace PublicWorksPlus
                     "**Delivery vans**\n" +
                     "**100% = 4t** (vanilla)\n" +
                     "**500% = 20t**" },
-                
+
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CoalTruckScalar)), "Raw material trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CoalTruckScalar)),
                     "**Raw material trucks** (oil, coal, ore, stone, dump trucks for industrial waste - same shared truck type)\n" +
@@ -220,12 +220,12 @@ namespace PublicWorksPlus
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Adjust Industry Trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "For Compatibility with other mods,\n" +
+                    "- use OFF if you prefer to use another mod to control the same industry/company total of trucks.\n" +
                     "<[x] Default ON>.\n" +
-                    "Controls ATT's extractor, warehouse, and industrial processing truck limits.\n" +
-                    "Leave ON to use the three company-truck sliders below.\n" +
-                    "Turn OFF to restore those three categories to vanilla once, hide their sliders, and stop ATT from writing their truck counts.\n" +
-                    "Use OFF when another mod controls the same company fleets.\n" +
-                    "Cargo station vehicles and delivery cargo capacities are not affected.\n"
+                    "Leave ON to use the three Industrial company-truck sliders below for adjusting total trucks numbers.\n" +
+                    "Turn OFF to restore those three categories game default and hide the sliders.\n" +
+                    "If you prefer to use this mod's sliders, then check if the other mod has a toggle to disable its own truck numbers."
                      },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Extractor trucks" },
@@ -375,7 +375,7 @@ namespace PublicWorksPlus
             };
         }
 
-        public void Unload( )
+        public void Unload()
         {
         }
     }

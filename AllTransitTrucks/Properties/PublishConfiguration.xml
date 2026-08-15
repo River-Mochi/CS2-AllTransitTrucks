@@ -13,10 +13,9 @@
 ### Do what you need reliably without UI bloat.
 
 - Scale many aspects for:
-- all Public Transit + Passengers
+- all Public Transit + Passengers (change total vehicles, capacity, service/fuel range).
 - Industry Delivery vehicles, Cargo stations, Extractors.
 - Parks/Roads Maintenance
-- Everything is OPTIONAL
 
 **Industry deliveries can use the increased vehicle capacities you set, including company shopping and road storage transfers.**
 
@@ -38,7 +37,7 @@
 ### Notes 🚍🚋🚆✈️🚢
 - *Remove* "Adjust Transit Capacity" if you install this mod.
 - Avoid other depot/passenger capacity mods to avoid conflicts (they override each other).
-- No Harmony patch used, more compatible - less likely to break on patch days.
+- No Harmony patch, more compatible - less likely to break on patch days.
 - Safe to remove any time (use Reset buttons to return to vanilla game default values).
 - ✅ Transit Line checkbox: Pick only one mod to adjust this - Don't use other mods that also adjust the in-game slider. There may be conflicts if you also have Transit Policy Adjuster or Smart transportation.
 If both are enabled, it's not going to explode, it may be inconsistent like two people changing the radio station.

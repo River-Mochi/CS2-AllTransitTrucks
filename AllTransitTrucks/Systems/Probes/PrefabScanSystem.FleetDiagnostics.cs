@@ -45,6 +45,9 @@ namespace PublicWorksPlus
             string companyTruckControl =
                 settings.EnableCompanyTruckControl ? "ON" : "OFF";
 
+            string serviceFuelRangeVisible =
+                settings.ShowServiceFuelRange ? "ON" : "OFF";
+
 
             AppendCapped(
                 sb,
@@ -70,7 +73,19 @@ namespace PublicWorksPlus
                 ref truncated,
                 $"Company truck control: {companyTruckControl}");
 
+            AppendCapped(
+                sb,
+                ref lines,
+                ref truncated,
+                $"Service/fuel range: Show={serviceFuelRangeVisible} " +
+                $"Bus={settings.BusServiceFuelRangeScalar:0.#}% " +
+                $"Tram={settings.TramServiceFuelRangeScalar:0.#}% " +
+                $"Train={settings.TrainServiceFuelRangeScalar:0.#}% " +
+                $"Subway={settings.SubwayServiceFuelRangeScalar:0.#}%");
+
             AppendCapped(sb, ref lines, ref truncated, string.Empty);
+
+            AppendPublicTransportMaintenanceRanges(sb, ref lines, ref truncated);
         }
 
         private void AppendCompanyFleetCandidates(

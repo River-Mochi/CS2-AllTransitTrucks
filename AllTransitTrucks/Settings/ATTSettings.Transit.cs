@@ -7,7 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Settings/ATTSettings.Transit.cs
-// Purpose: Public Transit settings (depots, passengers, line vehicle policy toggle).
+// Purpose: Public Transit settings (depots, service/refuel range, passengers, line vehicle policy toggle).
 
 namespace PublicWorksPlus
 {
@@ -78,6 +78,48 @@ namespace PublicWorksPlus
                 if (!value) return;
 
                 ResetDepotToVanilla();
+                ApplyAndSave();
+            }
+        }
+
+        // ------------------------
+        // SERVICE / FUEL RANGE (percent)
+        // ------------------------
+
+        [SettingsUISection(PublicTransitTab, ServiceFuelRangeGroup)]
+        public bool ShowServiceFuelRange { get; set; }
+
+        [SettingsUISlider(min = ServiceFuelRangeMinPercent, max = ServiceFuelRangeMaxPercent, step = ServiceFuelRangeStepPercent, scalarMultiplier = 1, unit = Unit.kPercentage)]
+        [SettingsUISection(PublicTransitTab, ServiceFuelRangeGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(ShowServiceFuelRange), true)]
+        public float BusServiceFuelRangeScalar { get; set; }
+
+        [SettingsUISlider(min = ServiceFuelRangeMinPercent, max = ServiceFuelRangeMaxPercent, step = ServiceFuelRangeStepPercent, scalarMultiplier = 1, unit = Unit.kPercentage)]
+        [SettingsUISection(PublicTransitTab, ServiceFuelRangeGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(ShowServiceFuelRange), true)]
+        public float TramServiceFuelRangeScalar { get; set; }
+
+        [SettingsUISlider(min = ServiceFuelRangeMinPercent, max = ServiceFuelRangeMaxPercent, step = ServiceFuelRangeStepPercent, scalarMultiplier = 1, unit = Unit.kPercentage)]
+        [SettingsUISection(PublicTransitTab, ServiceFuelRangeGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(ShowServiceFuelRange), true)]
+        public float TrainServiceFuelRangeScalar { get; set; }
+
+        [SettingsUISlider(min = ServiceFuelRangeMinPercent, max = ServiceFuelRangeMaxPercent, step = ServiceFuelRangeStepPercent, scalarMultiplier = 1, unit = Unit.kPercentage)]
+        [SettingsUISection(PublicTransitTab, ServiceFuelRangeGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(ShowServiceFuelRange), true)]
+        public float SubwayServiceFuelRangeScalar { get; set; }
+
+        [SettingsUIButtonGroup(ServiceFuelRangeGroup)]
+        [SettingsUIButton]
+        [SettingsUISection(PublicTransitTab, ServiceFuelRangeGroup)]
+        [SettingsUIHideByCondition(typeof(ATTSettings), nameof(ShowServiceFuelRange), true)]
+        public bool ResetServiceFuelRangeToVanillaButton
+        {
+            set
+            {
+                if (!value) return;
+
+                ResetServiceFuelRangeToVanilla();
                 ApplyAndSave();
             }
         }
@@ -159,6 +201,14 @@ namespace PublicWorksPlus
             TramDepotScalar = kVanillaPercent;
         }
 
+        internal void ResetServiceFuelRangeToVanilla()
+        {
+            BusServiceFuelRangeScalar = kVanillaPercent;
+            TramServiceFuelRangeScalar = kVanillaPercent;
+            TrainServiceFuelRangeScalar = kVanillaPercent;
+            SubwayServiceFuelRangeScalar = kVanillaPercent;
+        }
+
         internal void ResetPassengerToVanilla()
         {
             AirplanePassengerScalar = kVanillaPercent;
@@ -173,8 +223,10 @@ namespace PublicWorksPlus
         partial void SetDefaults_Transit()
         {
             m_EnableLineVehicleCountTuner = true;
+            ShowServiceFuelRange = false;
 
             ResetDepotToVanilla();
+            ResetServiceFuelRangeToVanilla();
             ResetPassengerToVanilla();
         }
 
@@ -186,6 +238,11 @@ namespace PublicWorksPlus
             TaxiDepotScalar = ClampPercentOrVanilla(TaxiDepotScalar, DepotMinPercent, MaxPercent, kVanillaPercent);
             TrainDepotScalar = ClampPercentOrVanilla(TrainDepotScalar, DepotMinPercent, MaxPercent, kVanillaPercent);
             TramDepotScalar = ClampPercentOrVanilla(TramDepotScalar, DepotMinPercent, MaxPercent, kVanillaPercent);
+
+            BusServiceFuelRangeScalar = ClampPercentOrVanilla(BusServiceFuelRangeScalar, ServiceFuelRangeMinPercent, ServiceFuelRangeMaxPercent, kVanillaPercent);
+            TramServiceFuelRangeScalar = ClampPercentOrVanilla(TramServiceFuelRangeScalar, ServiceFuelRangeMinPercent, ServiceFuelRangeMaxPercent, kVanillaPercent);
+            TrainServiceFuelRangeScalar = ClampPercentOrVanilla(TrainServiceFuelRangeScalar, ServiceFuelRangeMinPercent, ServiceFuelRangeMaxPercent, kVanillaPercent);
+            SubwayServiceFuelRangeScalar = ClampPercentOrVanilla(SubwayServiceFuelRangeScalar, ServiceFuelRangeMinPercent, ServiceFuelRangeMaxPercent, kVanillaPercent);
 
             BusPassengerScalar = ClampPercentOrVanilla(BusPassengerScalar, PassengerMinPercent, MaxPercent, kVanillaPercent);
             TramPassengerScalar = ClampPercentOrVanilla(TramPassengerScalar, PassengerMinPercent, MaxPercent, kVanillaPercent);

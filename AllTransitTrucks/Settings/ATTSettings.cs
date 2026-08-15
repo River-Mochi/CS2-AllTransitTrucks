@@ -26,13 +26,13 @@ namespace PublicWorksPlus
     [FileLocation("ModsSettings/AllTransitTrucks/AllTransitTrucks")]
     [SettingsUITabOrder(PublicTransitTab, IndustryTab, ParksRoadsTab, AboutTab)]
     [SettingsUIGroupOrder(
-        LineVehiclesGroup, DepotGroup, PassengerGroup,
+        LineVehiclesGroup, DepotGroup, ServiceFuelRangeGroup, PassengerGroup,
         DeliveryGroup, CargoStationsGroup,
         RoadMaintenanceGroup, ParkMaintenanceGroup,
         AboutInfoGroup, AboutLinksGroup, DebugGroup
     )]
     [SettingsUIShowGroupName(
-        LineVehiclesGroup, DepotGroup, PassengerGroup,
+        LineVehiclesGroup, DepotGroup, ServiceFuelRangeGroup, PassengerGroup,
         DeliveryGroup, CargoStationsGroup,
         RoadMaintenanceGroup, ParkMaintenanceGroup,
         AboutLinksGroup, DebugGroup
@@ -48,6 +48,7 @@ namespace PublicWorksPlus
         // Group ids (must match Locale ids).
         public const string LineVehiclesGroup = "LineVehicles";
         public const string DepotGroup = "DepotCapacity";
+        public const string ServiceFuelRangeGroup = "ServiceFuelRange";
         public const string PassengerGroup = "PassengerCapacity";
 
         public const string DeliveryGroup = "DeliveryVehicles";
@@ -69,6 +70,11 @@ namespace PublicWorksPlus
         public const float PassengerMinPercent = 10f;
         public const float MaxPercent = 1000f;
         public const float StepPercent = 10f;
+
+        // Public-transit service/refuel range: 50%..500% of each prefab's vanilla range.
+        public const float ServiceFuelRangeMinPercent = 50f;
+        public const float ServiceFuelRangeMaxPercent = 500f;
+        public const float ServiceFuelRangeStepPercent = 25f;
 
         private const float kVanillaPercent = 100f;
         private const float kVanillaScalar = 1f;
@@ -146,6 +152,7 @@ namespace PublicWorksPlus
 
             // Settings changes re-run systems once.
             TryEnableOnce<TransitSystem>(world, "TransitSystem");
+            TryEnableOnce<TransitServiceRangeSystem>(world, "TransitServiceRangeSystem");
             TryEnableOnce<MaintenanceSystem>(world, "MaintenanceSystem");
             TryEnableOnce<IndustrySystem>(world, "IndustrySystem");
             TryEnableOnce<LaneWearSystem>(world, "LaneWearSystem");

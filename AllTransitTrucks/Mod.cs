@@ -91,6 +91,7 @@ namespace PublicWorksPlus
             setting.RegisterInOptionsUI();
 
             updateSystem.UpdateAfter<TransitSystem>(SystemUpdatePhase.PrefabUpdate);
+            updateSystem.UpdateAfter<TransitServiceRangeSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<MaintenanceSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<LaneWearSystem>(SystemUpdatePhase.PrefabUpdate);
 

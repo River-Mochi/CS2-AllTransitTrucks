@@ -56,7 +56,7 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 - Nukprach, BugsyG, Necko1996: testing
 
 ### Performance advantage
-Applies changes when you change Options, then goes idle; does not run every frame to impact the city. Scan Report runs only when the report button is clicked.
+Applies changes when you change Options, then goes idle; it does not run every frame to impact the city. Scan Report runs only when the report button is clicked.
 
 ### 12+ Languages Supported
 - Français, Deutsch, Español, Italiano, Nederlands, Polski

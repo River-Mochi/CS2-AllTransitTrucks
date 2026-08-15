@@ -122,30 +122,30 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Bus" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
                     "Distance before a bus needs service/refueling.\n" +
-                    "**100%** = game default.\n" +
                     "**50%** = half is less range, more trips needed.\n" +
+                    "**100%** = game default.\n" +
                     "**500%** = 5× longer range\n" +
                     "Fuel and electric buses keep their own base range." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Tram" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
                     "Distance before a tram needs service.\n" +
-                    "**100%** = game default.\n" +
                     "**50%** = half is less range, more trips needed.\n" +
+                    "**100%** = game default.\n" +
                     "**500%** = 5× longer range" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Train" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
                     "Distance before a train needs service/refueling.\n" +
-                    "**100%** = game default.\n" +
                     "**50%** = half is less range, more trips needed.\n" +
+                    "**100%** = game default.\n" +
                     "**500%** = 5× longer range" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "Subway" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
                     "Distance before a subway needs service.\n" +
-                    "**100%** = game default.\n" +
                     "**50%** = half is less range, more trips needed.\n" +
+                    "**100%** = game default.\n" +
                     "**500%** = 5× longer range" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Reset service/fuel defaults" },

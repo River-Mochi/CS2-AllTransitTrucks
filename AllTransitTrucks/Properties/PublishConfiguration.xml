@@ -85,13 +85,14 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <!--Link to the forum post where the mod can be discussed-->
 <ForumLink Value="https://forum.paradoxplaza.com/forum/threads/all-transit-industry-delivery-trucks.1910233/" />
 <!--Version of the mod-->
-<ModVersion Value="2.3.2" />
+<ModVersion Value="2.4.0" />
 <!--Recommended version of the base game to use the mod-->
 <GameVersion Value="1.6.*" />
 <!--Dependency for the mod, can be set multiple times-->
 <Dependency Id="" />
 <!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
+- Added Service + Fuel Range adjusters for public transit vehicles (bus, train, tram, subway). 
 - Added Dutch (nl-NL) translation. Updated all translation files for tooltips clarity.
 - recent important: Industry Compatibility truck toggle [x]. If using another mod for ↑ total trucks, you can toggle this off.
 - fix order of sliders.

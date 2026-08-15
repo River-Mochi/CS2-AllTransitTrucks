@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Devuelve todos los deslizadores de depósitos a **100%** (valor predeterminado del juego / vanilla)." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "Rango de servicio / combustible" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Mostrar rango de servicio/repostaje" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Muestra los cuatro deslizadores de rango. Ocultarlos no restablece sus valores." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Bus" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "Distancia antes de que un bus necesite servicio/repostaje.\n" +
+                    "**50%** = la mitad de rango, más viajes necesarios.\n" +
+                    "**100%** = valor del juego.\n" +
+                    "**500%** = 5× más rango.\n" +
+                    "Los buses de combustible y eléctricos conservan su rango base." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Tranvía" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "Distancia antes de que un tranvía necesite servicio.\n" +
+                    "**50%** = la mitad de rango, más viajes de servicio.\n" +
+                    "**100%** = valor del juego.\n" +
+                    "**500%** = 5× más rango." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Tren" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "Distancia antes de que un tren necesite servicio/repostaje.\n" +
+                    "**50%** = la mitad de rango, más viajes de servicio.\n" +
+                    "**100%** = valor del juego.\n" +
+                    "**500%** = 5× más rango." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "Metro" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "Distancia antes de que un metro necesite servicio.\n" +
+                    "**50%** = la mitad de rango, más viajes de servicio.\n" +
+                    "**100%** = valor del juego.\n" +
+                    "**500%** = 5× más rango." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Restablecer servicio/combustible" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Restablece los cuatro deslizadores de rango a **100%** (valor del juego)." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Capacidad de pasajeros (máx personas por vehículo)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Autobús" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Devuelve los deslizadores de reparto a **100%** (valor predeterminado del juego / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Vehículos totales por instalación" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Total de camiones" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Vehículos totales: estaciones de carga" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Estaciones de carga, total de camiones" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Máximo de vehículos de carga activos para cada **puerto de carga, terminal ferroviaria y aeropuerto**.\n" +
                     "**1×** = vanilla, **5×** = 5 veces más." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Ajustar camiones industriales" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Mostrar camiones industriales" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] ACTIVADO por defecto> para ajustar el total de camiones.\n" +
                     "Para compatibilidad con otros mods,\n" +
                     "- usa DESACTIVADO si prefieres que otro mod controle el total de camiones de las mismas empresas industriales.\n" +
-                    "<[x] ACTIVADO por defecto>.\n" +
-                    "Déjalo ACTIVADO para usar los tres deslizadores siguientes y ajustar el total de camiones.\n" +
-                    "DESACTIVAR restaura esas tres categorías a los valores del juego y oculta los deslizadores.\n" +
-                    "Si prefieres los deslizadores de este mod, comprueba si el otro mod puede desactivar sus propios números de camiones."
-                     },
+                    "Déjalo ACTIVADO para usar los tres deslizadores de camiones industriales.\n" +
+                    "DESACTIVAR restaura esos 3 deslizadores al valor del juego y los oculta.\n" +
+                    "Si usas los deslizadores de este mod, comprueba si el otro mod permite desactivar su propio número de camiones." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Camiones totales: extractores" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Camiones de extracción" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Máximo de camiones para cada empresa extractora.\n" +
                     "Incluye agricultura, silvicultura, pesca, petróleo, mineral, carbón, piedra, algodón, ganado y verduras.\n" +
                     "**1×** = vanilla, **5×** = 5 veces más." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Camiones totales: almacenes" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Camiones de almacén" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "Máximo de camiones para cada empresa de almacén.\n" +
                     "Incluye todos los tipos de recursos de almacén que tienen vehículos propios.\n" +
                     "**1×** = vanilla, **5×** = 5 veces más." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Camiones totales: industria" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Camiones industriales" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "Máximo de camiones para empresas de procesamiento industrial.\n" +
                     "No incluye extractores, almacenes, estaciones de carga, empresas comerciales ni empresas de oficinas.\n" +

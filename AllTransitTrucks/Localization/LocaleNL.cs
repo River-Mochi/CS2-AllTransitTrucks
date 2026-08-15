@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Zet alle depotschuifregelaars terug op **100%** (gamestandaard / vanilla)." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "Service- / brandstofbereik" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Service-/tankbereik tonen" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Toont de vier bereikschuifregelaars hieronder. Verbergen reset de waarden niet." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Bus" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "Afstand voordat een bus service/tanken nodig heeft.\n" +
+                    "**50%** = half bereik, vaker terugrijden nodig.\n" +
+                    "**100%** = gamestandaard.\n" +
+                    "**500%** = 5× langer bereik.\n" +
+                    "Brandstof- en elektrische bussen houden hun eigen basisbereik." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Tram" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "Afstand voordat een tram service nodig heeft.\n" +
+                    "**50%** = half bereik, vaker service nodig.\n" +
+                    "**100%** = gamestandaard.\n" +
+                    "**500%** = 5× langer bereik." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Trein" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "Afstand voordat een trein service/tanken nodig heeft.\n" +
+                    "**50%** = half bereik, vaker service nodig.\n" +
+                    "**100%** = gamestandaard.\n" +
+                    "**500%** = 5× langer bereik." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "Metro" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "Afstand voordat een metro service nodig heeft.\n" +
+                    "**50%** = half bereik, vaker service nodig.\n" +
+                    "**100%** = gamestandaard.\n" +
+                    "**500%** = 5× langer bereik." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Service/brandstof resetten" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Zet alle vier bereikschuifregelaars terug op **100%** (gamestandaard)." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Passagierscapaciteit (max. personen per voertuig)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Bus" },
@@ -209,22 +247,21 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Zet de bezorgschuifregelaars terug op **100%** (gamestandaard / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Totaal aantal trucks" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Totaal trucks" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Vrachtstations, totaal trucks" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Maximaal aantal actieve vrachtvoertuigen voor elke **vrachthaven, goederentreinterminal en luchthaven**.\n" +
                     "**1×** = vanilla, **5×** = 5 keer zoveel." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrietrucks aanpassen" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrietrucks tonen" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] Standaard AAN> om het totale aantal trucks aan te passen.\n" +
                     "Voor compatibiliteit met andere mods,\n" +
-                    "- gebruik UIT als je liever een andere mod het totale aantal trucks van dezelfde industriebedrijven laat regelen.\n" +
-                    "<[x] Standaard AAN>.\n" +
-                    "Laat AAN om met de drie schuifregelaars hieronder het totale aantal bedrijfstrucks aan te passen.\n" +
-                    "UIT zet die drie categorieën terug naar de gamestandaard en verbergt de schuifregelaars.\n" +
-                    "Wil je de schuifregelaars van deze mod gebruiken, kijk dan of de andere mod zijn eigen truckaantallen kan uitschakelen."
-                     },
+                    "- gebruik UIT als een andere mod het totale aantal trucks van dezelfde industriebedrijven moet regelen.\n" +
+                    "Laat AAN om de drie industrietruck-schuifregelaars te gebruiken.\n" +
+                    "UIT zet deze 3 schuifregelaars terug naar de gamestandaard en verbergt ze.\n" +
+                    "Gebruik je de schuifregelaars van deze mod, kijk dan of de andere mod zijn eigen truckaantallen kan uitschakelen." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Trucks voor winning" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),

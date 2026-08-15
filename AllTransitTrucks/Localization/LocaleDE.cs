@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Alle Depot-Schieberegler wieder auf **100%** setzen (Spielstandard / Vanilla)." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "Service- / Kraftstoffreichweite" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Service-/Tankreichweite anzeigen" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Zeigt die vier Reichweiten-Regler unten. Ausblenden setzt die Werte nicht zurück." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Bus" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "Strecke, bevor ein Bus Service/Tanken braucht.\n" +
+                    "**50%** = halbe Reichweite, mehr Rückfahrten nötig.\n" +
+                    "**100%** = Spielstandard.\n" +
+                    "**500%** = 5× längere Reichweite.\n" +
+                    "Kraftstoff- und Elektrobusse behalten ihre eigene Basisreichweite." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Straßenbahn" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "Strecke, bevor eine Straßenbahn Service braucht.\n" +
+                    "**50%** = halbe Reichweite, mehr Servicefahrten nötig.\n" +
+                    "**100%** = Spielstandard.\n" +
+                    "**500%** = 5× längere Reichweite." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Zug" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "Strecke, bevor ein Zug Service/Tanken braucht.\n" +
+                    "**50%** = halbe Reichweite, mehr Servicefahrten nötig.\n" +
+                    "**100%** = Spielstandard.\n" +
+                    "**500%** = 5× längere Reichweite." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "U-Bahn" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "Strecke, bevor eine U-Bahn Service braucht.\n" +
+                    "**50%** = halbe Reichweite, mehr Servicefahrten nötig.\n" +
+                    "**100%** = Spielstandard.\n" +
+                    "**500%** = 5× längere Reichweite." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Service-/Kraftstoffwerte zurücksetzen" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Alle vier Reichweiten-Regler auf **100%** (Spielstandard) zurücksetzen." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Passagierkapazität (max. Personen pro Fahrzeug)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Bus" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Liefer-Schieberegler wieder auf **100%** setzen (Spielstandard / Vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Gesamtfahrzeuge pro Einrichtung" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Gesamt-LKW" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Gesamtfahrzeuge: Frachtstationen" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Frachtstationen, Gesamt-LKW" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Maximale aktive Frachtfahrzeuge für jeden **Frachtschiffhafen, Frachtbahnhof und Flughafen**.\n" +
                     "**1×** = Vanilla, **5×** = fünfmal mehr." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrie-LKW anpassen" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Industrie-LKW anzeigen" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] Standard EIN> zum Anpassen der Gesamtzahl der LKW.\n" +
                     "Für die Kompatibilität mit anderen Mods,\n" +
-                    "- AUS verwenden, wenn ein anderer Mod die Gesamtzahl der LKW derselben Industriefirmen steuern soll.\n" +
-                    "<[x] Standard EIN>.\n" +
-                    "EIN lassen, um mit den drei Reglern unten die Gesamtzahl der Firmen-LKW anzupassen.\n" +
-                    "AUS stellt diese drei Kategorien auf die Spielstandardwerte zurück und blendet die Regler aus.\n" +
-                    "Wenn du die Regler dieses Mods verwenden möchtest, prüfe, ob der andere Mod seine LKW-Anzahl deaktivieren kann."
-                     },
+                    "- AUS verwenden, wenn ein anderer Mod die Gesamtzahl der gleichen Industrie-/Firmen-LKW steuern soll.\n" +
+                    "EIN lassen, um die drei Industrie-LKW-Regler zu verwenden.\n" +
+                    "AUS setzt diese 3 Regler auf Spielstandard zurück und blendet sie aus.\n" +
+                    "Wenn du die Regler dieses Mods nutzt, prüfe, ob der andere Mod seine eigene LKW-Anzahl deaktivieren kann." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Gesamt-LKW: Förderer" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Förder-LKW" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Maximale LKW-Anzahl für jedes Förderunternehmen.\n" +
                     "Umfasst Landwirtschaft, Forstwirtschaft, Fischerei, Öl, Erz, Kohle, Stein, Baumwolle, Viehzucht und Gemüse.\n" +
                     "**1×** = Vanilla, **5×** = fünfmal mehr." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Gesamt-LKW: Lager" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Lager-LKW" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "Maximale LKW-Anzahl für jedes Lagerunternehmen.\n" +
                     "Umfasst alle Lager-Ressourcentypen mit eigenen Fahrzeugen.\n" +
                     "**1×** = Vanilla, **5×** = fünfmal mehr." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Gesamt-LKW: Industrie" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Industrie-LKW" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "Maximale LKW-Anzahl für industrielle Verarbeitungsbetriebe.\n" +
                     "Förderer, Lager, Frachtstationen, Gewerbebetriebe und Bürounternehmen sind nicht enthalten.\n" +

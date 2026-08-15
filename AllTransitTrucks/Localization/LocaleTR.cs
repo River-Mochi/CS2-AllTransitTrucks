@@ -112,6 +112,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Tüm depo kaydırıcılarını **100%** değerine (temel oyun varsayılanına) döndürür." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "Servis / Yakıt Menzili" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Servis/yakıt menzilini göster" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Aşağıdaki dört menzil kaydırıcısını gösterir. Gizlemek değerleri sıfırlamaz." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Otobüs" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "Otobüsün servis/yakıt ihtiyacından önce gideceği mesafe.\n" +
+                    "**50%** = yarı menzil, daha fazla dönüş gerekir.\n" +
+                    "**100%** = oyun varsayılanı.\n" +
+                    "**500%** = 5× daha uzun menzil.\n" +
+                    "Yakıtlı ve elektrikli otobüsler kendi temel menzilini korur." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Tramvay" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "Tramvayın servis ihtiyacından önce gideceği mesafe.\n" +
+                    "**50%** = yarı menzil, daha fazla servis dönüşü.\n" +
+                    "**100%** = oyun varsayılanı.\n" +
+                    "**500%** = 5× daha uzun menzil." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Tren" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "Trenin servis/yakıt ihtiyacından önce gideceği mesafe.\n" +
+                    "**50%** = yarı menzil, daha fazla servis dönüşü.\n" +
+                    "**100%** = oyun varsayılanı.\n" +
+                    "**500%** = 5× daha uzun menzil." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "Metro" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "Metronun servis ihtiyacından önce gideceği mesafe.\n" +
+                    "**50%** = yarı menzil, daha fazla servis dönüşü.\n" +
+                    "**100%** = oyun varsayılanı.\n" +
+                    "**500%** = 5× daha uzun menzil." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Servis/yakıt varsayılanlarını sıfırla" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Dört menzil kaydırıcısını **100%** (oyun varsayılanı) yapar." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Yolcu kapasitesi (araç başına azami kişi)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Otobüs" },
@@ -210,36 +248,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Teslimat kaydırıcılarını **100%** değerine (temel oyun varsayılanına) döndürür." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Tesis başına toplam araç" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Toplam kamyon" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Toplam araç: yük istasyonları" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Yük istasyonları, toplam kamyon" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Her **yük limanı, yük tren terminali ve havaalanı** için azami aktif yük aracı.\n" +
                     "**1×** = temel oyun, **5×** = 5 kat daha fazla." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Sanayi kamyonlarını ayarla" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Sanayi kamyonlarını göster" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] Varsayılan AÇIK> — toplam kamyon sayısını ayarlar.\n" +
                     "Diğer modlarla uyumluluk için,\n" +
                     "- aynı sanayi şirketlerinin toplam kamyon sayısını başka bir mod yönetsin istiyorsanız KAPALI kullanın.\n" +
-                    "<[x] Varsayılan AÇIK>.\n" +
-                    "Aşağıdaki üç kaydırıcıyla şirketlerin toplam kamyon sayısını ayarlamak için AÇIK bırakın.\n" +
-                    "KAPALI, bu üç kategoriyi oyun varsayılanına döndürür ve kaydırıcıları gizler.\n" +
-                    "Bu modun kaydırıcılarını kullanacaksanız diğer modda kendi kamyon sayısı ayarını kapatma seçeneği olup olmadığını kontrol edin."
-                     },
+                    "Üç sanayi kamyonu kaydırıcısını kullanmak için AÇIK bırakın.\n" +
+                    "KAPALI, bu 3 kaydırıcıyı oyun varsayılanına döndürür ve gizler.\n" +
+                    "Bu modun kaydırıcılarını kullanıyorsanız diğer modun kendi kamyon sayısı ayarını kapatıp kapatamadığını kontrol edin." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Toplam kamyon: kaynak çıkarma" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Çıkarıcı kamyonları" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Her kaynak çıkarma şirketi için azami kamyon sayısı.\n" +
                     "Çiftlikler, ormancılık, balıkçılık, petrol, maden cevheri, kömür, taş, pamuk, hayvancılık ve sebze üretimini kapsar.\n" +
                     "**1×** = temel oyun, **5×** = 5 kat daha fazla." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Toplam kamyon: depolar" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Depo kamyonları" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "Her depo şirketi için azami kamyon sayısı.\n" +
                     "Kendi araçlarına sahip tüm depo kaynak türlerini kapsar.\n" +
                     "**1×** = temel oyun, **5×** = 5 kat daha fazla." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Toplam kamyon: sanayi" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Sanayi kamyonları" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "Sanayi işleme şirketleri için azami kamyon sayısı.\n" +
                     "Kaynak çıkarma şirketlerini, depoları, yük istasyonlarını, ticari şirketleri veya ofis şirketlerini kapsamaz.\n" +

@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Remet tous les curseurs des dépôts à **100%** (valeur par défaut du jeu / vanilla)." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "Autonomie service / carburant" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Afficher autonomie service/ravitaillement" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Affiche les quatre curseurs d’autonomie. Les masquer ne réinitialise pas leurs valeurs." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Bus" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "Distance avant qu’un bus ait besoin de service/ravitaillement.\n" +
+                    "**50%** = moitié moins d’autonomie, plus de retours.\n" +
+                    "**100%** = valeur du jeu.\n" +
+                    "**500%** = autonomie 5× plus longue.\n" +
+                    "Les bus thermiques et électriques gardent leur autonomie de base." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Tram" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "Distance avant qu’un tram ait besoin de service.\n" +
+                    "**50%** = moitié moins d’autonomie, plus de retours.\n" +
+                    "**100%** = valeur du jeu.\n" +
+                    "**500%** = autonomie 5× plus longue." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Train" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "Distance avant qu’un train ait besoin de service/ravitaillement.\n" +
+                    "**50%** = moitié moins d’autonomie, plus de retours.\n" +
+                    "**100%** = valeur du jeu.\n" +
+                    "**500%** = autonomie 5× plus longue." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "Métro" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "Distance avant qu’un métro ait besoin de service.\n" +
+                    "**50%** = moitié moins d’autonomie, plus de retours.\n" +
+                    "**100%** = valeur du jeu.\n" +
+                    "**500%** = autonomie 5× plus longue." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Réinitialiser service/carburant" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Remet les quatre curseurs d’autonomie à **100%** (valeur du jeu)." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Capacité passagers (max personnes par véhicule)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Bus" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Remet les curseurs de livraison à **100%** (valeur par défaut du jeu / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Nombre total de véhicules par installation" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Total des camions" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Véhicules totaux : stations de fret" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Stations de fret, total des camions" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Nombre maximal de véhicules de fret actifs pour chaque **port de fret, terminal ferroviaire et aéroport**.\n" +
                     "**1×** = vanilla, **5×** = 5 fois plus." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Ajuster les camions industriels" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Afficher les camions industriels" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] ACTIVÉ par défaut> pour régler le total des camions.\n" +
                     "Pour la compatibilité avec les autres mods,\n" +
-                    "- utilisez DÉSACTIVÉ si vous préférez qu’un autre mod contrôle le nombre total de camions des mêmes entreprises industrielles.\n" +
-                    "<[x] ACTIVÉ par défaut>.\n" +
-                    "Laissez ACTIVÉ pour utiliser les trois curseurs ci-dessous et régler le nombre total de camions.\n" +
-                    "DÉSACTIVER rétablit les valeurs du jeu pour ces trois catégories et masque les curseurs.\n" +
-                    "Si vous préférez les curseurs de ce mod, vérifiez si l’autre mod peut désactiver ses propres nombres de camions."
-                     },
+                    "- utilisez DÉSACTIVÉ si un autre mod doit contrôler le total des camions des mêmes entreprises industrielles.\n" +
+                    "Laissez ACTIVÉ pour utiliser les trois curseurs de camions industriels.\n" +
+                    "DÉSACTIVER remet ces 3 curseurs aux valeurs du jeu et les masque.\n" +
+                    "Si vous utilisez les curseurs de ce mod, vérifiez si l’autre mod peut désactiver son propre nombre de camions." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Camions totaux : extracteurs" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Camions des extracteurs" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Nombre maximal de camions pour chaque entreprise d’extraction.\n" +
                     "Comprend l’agriculture, la foresterie, la pêche, le pétrole, le minerai, le charbon, la pierre, le coton, l’élevage et les légumes.\n" +
                     "**1×** = vanilla, **5×** = 5 fois plus." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Camions totaux : entrepôts" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Camions d’entrepôt" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "Nombre maximal de camions pour chaque entreprise d’entreposage.\n" +
                     "Comprend tous les types de ressources d’entrepôt disposant de leurs propres véhicules.\n" +
                     "**1×** = vanilla, **5×** = 5 fois plus." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Camions totaux : industrie" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Camions industriels" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "Nombre maximal de camions pour les entreprises de transformation industrielle.\n" +
                     "N’inclut pas les extracteurs, entrepôts, stations de fret, entreprises commerciales ni entreprises de bureaux.\n" +

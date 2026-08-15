@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "すべての車庫スライダーを**100%**（ゲーム既定値 / バニラ）に戻します。" },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "整備 / 給油距離" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "整備/給油距離を表示" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "下の4つの距離スライダーを表示します。非表示にしても値はリセットされません。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "バス" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "バスが整備/給油を必要とするまでの距離です。\n" +
+                    "**50%** = 半分の距離、戻る回数が増えます。\n" +
+                    "**100%** = ゲーム標準。\n" +
+                    "**500%** = 距離が5倍。\n" +
+                    "燃料バスと電気バスはそれぞれの基本距離を維持します。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "路面電車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "路面電車が整備を必要とするまでの距離です。\n" +
+                    "**50%** = 半分の距離、整備回数が増えます。\n" +
+                    "**100%** = ゲーム標準。\n" +
+                    "**500%** = 距離が5倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "列車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "列車が整備/給油を必要とするまでの距離です。\n" +
+                    "**50%** = 半分の距離、整備回数が増えます。\n" +
+                    "**100%** = ゲーム標準。\n" +
+                    "**500%** = 距離が5倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "地下鉄" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "地下鉄が整備を必要とするまでの距離です。\n" +
+                    "**50%** = 半分の距離、整備回数が増えます。\n" +
+                    "**100%** = ゲーム標準。\n" +
+                    "**500%** = 距離が5倍。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "整備/給油距離をリセット" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "4つの距離スライダーを**100%**（ゲーム標準）に戻します。" },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "乗客容量（車両ごとの最大人数）" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "バス" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "配送スライダーを**100%**（ゲーム既定値 / バニラ）に戻します。" },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "施設ごとの総車両数" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "トラック総数" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "総車両数: 貨物駅" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "貨物駅、トラック総数" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "各**貨物港、貨物鉄道ターミナル、空港**の稼働中貨物車両の最大数です。\n" +
                     "**1×** = バニラ、**5×** = 5倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "産業トラックを調整" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "産業トラックを表示" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] 既定はオン>。トラック総数を調整します。\n" +
                     "他のMODとの互換性設定です。\n" +
-                    "- 同じ産業企業の総トラック数を別のMODで調整したい場合はオフにしてください。\n" +
-                    "<[x] 既定はオン>。\n" +
-                    "下の3つのスライダーで企業の総トラック数を調整する場合はオンのままにします。\n" +
-                    "オフにすると3カテゴリをゲーム標準値へ戻し、スライダーを非表示にします。\n" +
-                    "このMODのスライダーを使う場合は、他のMOD側でトラック数の変更を無効にできるか確認してください。"
-                     },
+                    "- 同じ産業企業のトラック総数を別のMODで調整する場合はオフにしてください。\n" +
+                    "3つの産業トラックスライダーを使う場合はオンのままにします。\n" +
+                    "オフにすると3つのスライダーをゲーム標準値へ戻し、非表示にします。\n" +
+                    "このMODのスライダーを使う場合は、他のMOD側でトラック数の変更を無効にできるか確認してください。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "総トラック数: 採取施設" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "採取施設トラック" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "各採取企業の最大トラック数です。\n" +
                     "農業、林業、漁業、石油、鉱石、石炭、石材、綿花、畜産、野菜を含みます。\n" +
                     "**1×** = バニラ、**5×** = 5倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "総トラック数: 倉庫" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "倉庫トラック" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "各倉庫企業の最大トラック数です。\n" +
                     "独自の車両を持つすべての倉庫資源タイプを含みます。\n" +
                     "**1×** = バニラ、**5×** = 5倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "総トラック数: 産業" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "産業トラック" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "産業加工企業の最大トラック数です。\n" +
                     "採取施設、倉庫、貨物駅、商業企業、オフィス企業は含みません。\n" +

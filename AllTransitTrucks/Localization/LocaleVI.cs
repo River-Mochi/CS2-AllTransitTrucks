@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Đưa tất cả thanh trượt depot về **100%** (mặc định của game / vanilla)." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "Phạm vi bảo dưỡng / nhiên liệu" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Hiện phạm vi bảo dưỡng/tiếp nhiên liệu" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Hiện bốn thanh trượt phạm vi bên dưới. Ẩn chúng không đặt lại giá trị." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Xe buýt" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "Quãng đường trước khi xe buýt cần bảo dưỡng/tiếp nhiên liệu.\n" +
+                    "**50%** = nửa phạm vi, cần quay về nhiều hơn.\n" +
+                    "**100%** = mặc định game.\n" +
+                    "**500%** = phạm vi dài gấp 5.\n" +
+                    "Xe buýt nhiên liệu và điện giữ phạm vi gốc riêng." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Xe điện" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "Quãng đường trước khi xe điện cần bảo dưỡng.\n" +
+                    "**50%** = nửa phạm vi, bảo dưỡng thường xuyên hơn.\n" +
+                    "**100%** = mặc định game.\n" +
+                    "**500%** = phạm vi dài gấp 5." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Tàu hỏa" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "Quãng đường trước khi tàu cần bảo dưỡng/tiếp nhiên liệu.\n" +
+                    "**50%** = nửa phạm vi, bảo dưỡng thường xuyên hơn.\n" +
+                    "**100%** = mặc định game.\n" +
+                    "**500%** = phạm vi dài gấp 5." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "Tàu điện ngầm" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "Quãng đường trước khi tàu điện ngầm cần bảo dưỡng.\n" +
+                    "**50%** = nửa phạm vi, bảo dưỡng thường xuyên hơn.\n" +
+                    "**100%** = mặc định game.\n" +
+                    "**500%** = phạm vi dài gấp 5." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Đặt lại bảo dưỡng/nhiên liệu" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Đưa cả bốn thanh trượt phạm vi về **100%** (mặc định game)." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Sức chứa hành khách (số người tối đa mỗi xe)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Xe buýt" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Đưa các thanh trượt giao hàng về **100%** (mặc định của game / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Tổng số xe trên mỗi cơ sở" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Tổng xe tải" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Tổng số xe: ga hàng hóa" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Ga hàng hóa, tổng xe tải" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Số xe hàng hóa đang hoạt động tối đa cho mỗi **cảng hàng hóa, ga tàu hàng và sân bay**.\n" +
                     "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Điều chỉnh xe tải công nghiệp" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Hiện xe tải công nghiệp" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] Mặc định BẬT> để chỉnh tổng số xe tải.\n" +
                     "Để tương thích với mod khác,\n" +
-                    "- dùng TẮT nếu bạn muốn mod khác kiểm soát tổng số xe tải của cùng các công ty công nghiệp.\n" +
-                    "<[x] Mặc định BẬT>.\n" +
-                    "Để BẬT để dùng ba thanh trượt bên dưới và chỉnh tổng số xe tải của công ty.\n" +
-                    "TẮT sẽ khôi phục ba nhóm này về mặc định của game và ẩn các thanh trượt.\n" +
-                    "Nếu muốn dùng thanh trượt của mod này, hãy kiểm tra xem mod kia có tùy chọn tắt số lượng xe tải riêng không."
-                     },
+                    "- dùng TẮT nếu muốn mod khác kiểm soát tổng số xe tải của cùng các công ty công nghiệp.\n" +
+                    "Để BẬT để dùng ba thanh trượt xe tải công nghiệp.\n" +
+                    "TẮT sẽ đưa 3 thanh trượt về mặc định game và ẩn chúng.\n" +
+                    "Nếu dùng thanh trượt của mod này, hãy kiểm tra xem mod kia có thể tắt chỉnh số xe tải riêng không." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Tổng xe tải: khai thác" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Xe tải khai thác" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Số xe tải tối đa cho mỗi công ty khai thác.\n" +
                     "Bao gồm nông trại, lâm nghiệp, đánh cá, dầu, quặng, than, đá, bông, chăn nuôi và rau.\n" +
                     "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Tổng xe tải: kho" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Xe tải kho" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "Số xe tải tối đa cho mỗi công ty kho.\n" +
                     "Bao gồm mọi loại tài nguyên kho có xe riêng.\n" +
                     "**1×** = vanilla, **5×** = nhiều hơn 5 lần." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Tổng xe tải: công nghiệp" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Xe tải công nghiệp" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "Số xe tải tối đa cho các công ty chế biến công nghiệp.\n" +
                     "Không bao gồm cơ sở khai thác, kho, ga hàng hóa, công ty thương mại hoặc công ty văn phòng.\n" +

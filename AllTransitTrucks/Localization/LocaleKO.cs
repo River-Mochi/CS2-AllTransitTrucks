@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "모든 차고 슬라이더를 **100%** (게임 기본값 / 바닐라)로 되돌립니다." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "정비 / 연료 주행거리" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "정비/급유 주행거리 표시" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "아래 4개의 주행거리 슬라이더를 표시합니다. 숨겨도 값은 초기화되지 않습니다." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "버스" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "버스가 정비/급유가 필요해지기 전까지의 거리입니다.\n" +
+                    "**50%** = 절반 거리, 더 자주 돌아가야 합니다.\n" +
+                    "**100%** = 게임 기본값.\n" +
+                    "**500%** = 5배 더 긴 거리.\n" +
+                    "연료 및 전기 버스는 각자의 기본 주행거리를 유지합니다." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "트램" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "트램이 정비가 필요해지기 전까지의 거리입니다.\n" +
+                    "**50%** = 절반 거리, 정비 횟수가 늘어납니다.\n" +
+                    "**100%** = 게임 기본값.\n" +
+                    "**500%** = 5배 더 긴 거리." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "기차" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "기차가 정비/급유가 필요해지기 전까지의 거리입니다.\n" +
+                    "**50%** = 절반 거리, 정비 횟수가 늘어납니다.\n" +
+                    "**100%** = 게임 기본값.\n" +
+                    "**500%** = 5배 더 긴 거리." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "지하철" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "지하철이 정비가 필요해지기 전까지의 거리입니다.\n" +
+                    "**50%** = 절반 거리, 정비 횟수가 늘어납니다.\n" +
+                    "**100%** = 게임 기본값.\n" +
+                    "**500%** = 5배 더 긴 거리." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "정비/연료 기본값 복원" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "4개의 주행거리 슬라이더를 **100%**(게임 기본값)로 되돌립니다." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "승객 수용량 (차량당 최대 인원)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "버스" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "배송 슬라이더를 **100%** (게임 기본값 / 바닐라)로 되돌립니다." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "시설당 총 차량 수" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "총 트럭 수" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "총 차량 수: 화물역" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "화물 터미널, 총 트럭 수" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "각 **화물 항구, 화물 철도 터미널, 공항**의 최대 활성 화물 차량 수입니다.\n" +
                     "**1×** = 바닐라, **5×** = 5배." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "산업 트럭 조정" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "산업 트럭 표시" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] 기본값 켜짐>. 총 트럭 수를 조정합니다.\n" +
                     "다른 모드와의 호환성 설정입니다.\n" +
-                    "- 같은 산업 회사의 총 트럭 수를 다른 모드로 조정하려면 끄세요.\n" +
-                    "<[x] 기본값 켜짐>.\n" +
-                    "아래 세 슬라이더로 회사의 총 트럭 수를 조정하려면 켜 두세요.\n" +
-                    "끄면 세 범주를 게임 기본값으로 복원하고 슬라이더를 숨깁니다.\n" +
-                    "이 모드의 슬라이더를 쓰려면 다른 모드에서 자체 트럭 수 조정을 끌 수 있는지 확인하세요."
-                     },
+                    "- 같은 산업 회사의 총 트럭 수를 다른 모드가 조정하게 하려면 끄세요.\n" +
+                    "아래 3개의 산업 트럭 슬라이더를 쓰려면 켜 두세요.\n" +
+                    "끄면 3개 슬라이더를 게임 기본값으로 복원하고 숨깁니다.\n" +
+                    "이 모드의 슬라이더를 쓰려면 다른 모드에서 자체 트럭 수 조정을 끌 수 있는지 확인하세요." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "총 트럭 수: 채취 시설" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "채취 시설 트럭" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "각 채취 회사의 최대 트럭 수입니다.\n" +
                     "농장, 임업, 어업, 석유, 광석, 석탄, 석재, 면화, 축산, 채소를 포함합니다.\n" +
                     "**1×** = 바닐라, **5×** = 5배." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "총 트럭 수: 창고" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "창고 트럭" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "각 창고 회사의 최대 트럭 수입니다.\n" +
                     "자체 차량이 있는 모든 창고 자원 유형을 포함합니다.\n" +
                     "**1×** = 바닐라, **5×** = 5배." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "총 트럭 수: 산업" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "산업 트럭" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "산업 가공 회사의 최대 트럭 수입니다.\n" +
                     "채취 시설, 창고, 화물역, 상업 회사 또는 사무실 회사는 포함하지 않습니다.\n" +

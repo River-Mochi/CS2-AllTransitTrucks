@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "Ustaw wszystkie suwaki zajezdni z powrotem na **100%** (domyślna wartość gry / vanilla)." },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "Zasięg serwisu / paliwa" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Pokaż zasięg serwisu/tankowania" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "Pokazuje cztery suwaki zasięgu poniżej. Ukrycie ich nie resetuje wartości." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "Autobus" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "Dystans, po którym autobus wymaga serwisu/tankowania.\n" +
+                    "**50%** = połowa zasięgu, więcej powrotów.\n" +
+                    "**100%** = ustawienie gry.\n" +
+                    "**500%** = 5× większy zasięg.\n" +
+                    "Autobusy spalinowe i elektryczne zachowują własny zasięg bazowy." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "Tramwaj" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "Dystans, po którym tramwaj wymaga serwisu.\n" +
+                    "**50%** = połowa zasięgu, więcej wizyt w serwisie.\n" +
+                    "**100%** = ustawienie gry.\n" +
+                    "**500%** = 5× większy zasięg." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "Pociąg" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "Dystans, po którym pociąg wymaga serwisu/tankowania.\n" +
+                    "**50%** = połowa zasięgu, więcej wizyt w serwisie.\n" +
+                    "**100%** = ustawienie gry.\n" +
+                    "**500%** = 5× większy zasięg." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "Metro" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "Dystans, po którym metro wymaga serwisu.\n" +
+                    "**50%** = połowa zasięgu, więcej wizyt w serwisie.\n" +
+                    "**100%** = ustawienie gry.\n" +
+                    "**500%** = 5× większy zasięg." },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Reset serwisu/paliwa" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "Ustaw wszystkie cztery suwaki zasięgu z powrotem na **100%** (ustawienie gry)." },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "Pojemność pasażerska (maks. osób na pojazd)" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "Autobus" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "Ustaw suwaki dostaw z powrotem na **100%** (domyślna wartość gry / vanilla)." },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Łączna liczba pojazdów na obiekt" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "Łączna liczba ciężarówek" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Łączna liczba pojazdów: stacje cargo" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "Terminale cargo, łączna liczba ciężarówek" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "Maksymalna liczba aktywnych pojazdów cargo dla każdego **portu cargo, terminalu kolejowego i lotniska**.\n" +
                     "**1×** = vanilla, **5×** = 5 razy więcej." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Dostosuj ciężarówki przemysłowe" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "Pokaż ciężarówki przemysłowe" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] Domyślnie WŁĄCZONE> — pozwala zmieniać łączną liczbę ciężarówek.\n" +
                     "Dla zgodności z innymi modami,\n" +
-                    "- użyj WYŁĄCZONE, jeśli wolisz, aby inny mod kontrolował łączną liczbę ciężarówek tych samych firm przemysłowych.\n" +
-                    "<[x] Domyślnie WŁĄCZONE>.\n" +
-                    "Pozostaw WŁĄCZONE, aby trzema suwakami poniżej ustawiać łączną liczbę ciężarówek firmowych.\n" +
-                    "WYŁĄCZENIE przywraca te trzy kategorie do wartości gry i ukrywa suwaki.\n" +
-                    "Jeśli wolisz suwaki tego moda, sprawdź, czy drugi mod pozwala wyłączyć własne ustawienia liczby ciężarówek."
-                     },
+                    "- użyj WYŁĄCZONE, jeśli inny mod ma kontrolować łączną liczbę ciężarówek tych samych firm przemysłowych.\n" +
+                    "Pozostaw WŁĄCZONE, aby używać trzech suwaków ciężarówek przemysłowych.\n" +
+                    "WYŁĄCZENIE przywraca te 3 suwaki do wartości gry i je ukrywa.\n" +
+                    "Jeśli używasz suwaków tego moda, sprawdź, czy drugi mod pozwala wyłączyć własne ustawienia liczby ciężarówek." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Łączna liczba ciężarówek: wydobycie" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "Ciężarówki wydobywcze" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "Maksymalna liczba ciężarówek dla każdej firmy wydobywczej.\n" +
                     "Obejmuje farmy, leśnictwo, rybołówstwo, ropę, rudę, węgiel, kamień, bawełnę, hodowlę i warzywa.\n" +
                     "**1×** = vanilla, **5×** = 5 razy więcej." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Łączna liczba ciężarówek: magazyny" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "Ciężarówki magazynowe" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "Maksymalna liczba ciężarówek dla każdej firmy magazynowej.\n" +
                     "Obejmuje wszystkie typy zasobów magazynowych, które mają własne pojazdy.\n" +
                     "**1×** = vanilla, **5×** = 5 razy więcej." },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Łączna liczba ciężarówek: przemysł" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "Ciężarówki przemysłowe" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "Maksymalna liczba ciężarówek dla zakładów przetwórstwa przemysłowego.\n" +
                     "Nie obejmuje zakładów wydobywczych, magazynów, stacji cargo, firm handlowych ani biurowych.\n" +

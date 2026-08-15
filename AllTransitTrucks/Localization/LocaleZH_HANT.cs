@@ -111,6 +111,44 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDepotToVanillaButton)),
                     "將所有車庫滑桿恢復到 **100%**（遊戲預設值 / 原版）。" },
 
+                // Service / Fuel Range
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ServiceFuelRangeGroup), "維護 / 加油里程" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "顯示維護/加油里程" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ShowServiceFuelRange)), "顯示下方四個里程滑桿。隱藏不會重設數值。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)), "公車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.BusServiceFuelRangeScalar)),
+                    "公車需要維護/加油前可行駛的距離。\n" +
+                    "**50%** = 一半里程，需要更頻繁返回。\n" +
+                    "**100%** = 遊戲預設。\n" +
+                    "**500%** = 5倍里程。\n" +
+                    "燃油和電動公車會保留各自的基礎里程。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)), "電車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TramServiceFuelRangeScalar)),
+                    "電車需要維護前可行駛的距離。\n" +
+                    "**50%** = 一半里程，需要更頻繁維護。\n" +
+                    "**100%** = 遊戲預設。\n" +
+                    "**500%** = 5倍里程。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)), "火車" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.TrainServiceFuelRangeScalar)),
+                    "火車需要維護/加油前可行駛的距離。\n" +
+                    "**50%** = 一半里程，需要更頻繁維護。\n" +
+                    "**100%** = 遊戲預設。\n" +
+                    "**500%** = 5倍里程。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)), "地鐵" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.SubwayServiceFuelRangeScalar)),
+                    "地鐵需要維護前可行駛的距離。\n" +
+                    "**50%** = 一半里程，需要更頻繁維護。\n" +
+                    "**100%** = 遊戲預設。\n" +
+                    "**500%** = 5倍里程。" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "重設維護/加油里程" },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetServiceFuelRangeToVanillaButton)), "將四個里程滑桿恢復為 **100%**（遊戲預設）。" },
+
                 // Passenger capacity sliders
                 { m_Setting.GetOptionGroupLocaleID(ATTSettings.PassengerGroup), "載客量（每輛車最大人數）" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.BusPassengerScalar)), "公車" },
@@ -209,36 +247,35 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetDeliveryToVanillaButton)),
                     "將配送滑桿恢復到 **100%**（遊戲預設值 / 原版）。" },
 
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "每個設施的車輛總數" },
+                { m_Setting.GetOptionGroupLocaleID(ATTSettings.CargoStationsGroup), "卡車總數" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "車輛總數：貨運站" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)), "貨運站，卡車總數" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.CargoStationMaxTrucksScalar)),
                     "每個**貨運港、貨運鐵路終端與機場**的最大活躍貨運車輛數。\n" +
                     "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "調整工業卡車" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)), "顯示工業卡車" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.EnableCompanyTruckControl)),
+                    "<[x] 預設開啟>，用於調整卡車總數。\n" +
                     "用於相容其他模組：\n" +
                     "- 如果想讓其他模組控制相同工業公司的卡車總數，請關閉此項。\n" +
-                    "<[x] 預設開啟>。\n" +
-                    "保持開啟可使用下方三個滑桿調整公司卡車總數。\n" +
-                    "關閉後會將這三類恢復為遊戲預設值，並隱藏滑桿。\n" +
-                    "如果想使用本模組的滑桿，請檢查其他模組是否可以關閉其卡車數量調整。"
-                     },
+                    "保持開啟可使用下方三個工業卡車滑桿。\n" +
+                    "關閉後會將這3個滑桿恢復為遊戲預設值並隱藏。\n" +
+                    "如果使用本模組的滑桿，請檢查其他模組能否關閉其卡車數量調整。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "卡車總數：採集設施" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)), "採掘卡車" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ExtractorMaxTrucksScalar)),
                     "每個採集公司的最大卡車數。\n" +
                     "包括農場、林業、漁業、石油、礦石、煤炭、石材、棉花、畜牧與蔬菜。\n" +
                     "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "卡車總數：倉庫" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)), "倉庫卡車" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.WarehouseMaxTrucksScalar)),
                     "每個倉庫公司的最大卡車數。\n" +
                     "包括所有擁有自有車輛的倉庫資源類型。\n" +
                     "**1×** = 原版，**5×** = 5 倍。" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "卡車總數：工業" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)), "工業卡車" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.IndustryMaxTrucksScalar)),
                     "工業加工公司的最大卡車數。\n" +
                     "不包括採集設施、倉庫、貨運站、商業公司或辦公公司。\n" +

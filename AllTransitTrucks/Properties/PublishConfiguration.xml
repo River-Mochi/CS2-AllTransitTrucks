@@ -56,9 +56,7 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 - Nukprach, BugsyG, Necko1996: testing
 
 ### Performance advantage
-Designed to *not* run in the city per-frame. It only runs when a change is made in the Options Menu, then the mod goes idle - simple, no city impact.
-
-Most changes apply only when a city loads or you change Options, then ATT goes idle.
+Applies changes when you change Options, then goes idle; does not run every frame to impact the city. Scan Report runs only when the report button is clicked.
 
 ### 12+ Languages Supported
 - Français, Deutsch, Español, Italiano, Nederlands, Polski
@@ -91,7 +89,7 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <Dependency Id="" />
 <!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
-- Added Service + Fuel Range adjusters for public transit vehicles (bus, train, tram, subway). 
+- Added Service / Fuel Range adjusters for Bus, Train, Tram, Subway. 
 - Added Dutch (nl-NL) translation. Updated all translation files for tooltips clarity.
 - recent important: Industry Compatibility truck toggle [x]. If using another mod for ↑ total trucks, you can toggle this off.
 - fix order of sliders.

@@ -43,8 +43,6 @@ namespace PublicWorksPlus
             "deliveryvan",
             "trucktractor",
             "motorbike",
-            "roadmaintenance",
-            "parkmaintenance",
             "industrialaquaculturehub",
             "aquaculture",
         };
@@ -137,8 +135,6 @@ namespace PublicWorksPlus
             int deliveryTotal = 0;
             int depotTotal = 0;
             int cargoTotal = 0;
-            int laneTotal = 0;
-            int mvTotal = 0;
 
             try
             {
@@ -159,80 +155,6 @@ namespace PublicWorksPlus
                 Append("");
 
                 AppendATTSettingsSnapshot(sb, ref lines, ref truncated);
-
-                // Lane wear prefabs
-                const float kUpdatesPerDay = 16f;
-                const int kMaxLaneDetails = 250;
-
-                Append("== Lane wear (LaneDeteriorationData prefabs) ==");
-                Append("Wear sources:");
-                Append("- Time wear: LaneCondition.m_Wear += (1/16) * TimeFactor per deterioration tick.");
-                Append("- Traffic wear: Car/Train Navigation adds SideEffects.x * TrafficFactor when vehicles traverse lanes.");
-                Append("");
-
-                int laneListed = 0;
-                float minTf = float.MaxValue;
-                float maxTf = float.MinValue;
-                float minTraf = float.MaxValue;
-                float maxTraf = float.MinValue;
-
-                foreach ((RefRO<LaneDeteriorationData> laneRef, Entity e) in SystemAPI
-                             .Query<RefRO<LaneDeteriorationData>>()
-                             .WithAll<PrefabData>()
-                             .WithEntityAccess())
-                {
-                    if (truncated) break;
-
-                    laneTotal++;
-
-                    LaneDeteriorationData cur = laneRef.ValueRO;
-                    float tf = cur.m_TimeFactor;
-                    float traf = cur.m_TrafficFactor;
-
-                    if (tf < minTf) minTf = tf;
-                    if (tf > maxTf) maxTf = tf;
-                    if (traf < minTraf) minTraf = traf;
-                    if (traf > maxTraf) maxTraf = traf;
-
-                    if (laneListed < kMaxLaneDetails)
-                    {
-                        float vanTf = float.NaN;
-                        float vanTraf = float.NaN;
-
-                        if (m_PrefabSystem.TryGetPrefab(e, out PrefabBase pb) &&
-                            pb.TryGet(out Game.Prefabs.LaneDeterioration author))
-                        {
-                            vanTf = author.m_TimeDeterioration;
-                            vanTraf = author.m_TrafficDeterioration;
-                        }
-
-                        float xTime = (!float.IsNaN(vanTf) && vanTf > 0f) ? (tf / vanTf) : float.NaN;
-                        float xTraf2 = (!float.IsNaN(vanTraf) && vanTraf > 0f) ? (traf / vanTraf) : float.NaN;
-                        float expPerTick = tf / kUpdatesPerDay;
-
-                        Append(
-                            $"- {NameOf(e)} ({e.Index}:{e.Version}) " +
-                            $"Vanilla (Time={Fmt(vanTf)}, Traffic={Fmt(vanTraf)}) " +
-                            $"Current (Time={tf:0.###}, Traffic={traf:0.###}) " +
-                            $"xTime={Fmt(xTime)} xTraffic={Fmt(xTraf2)} ExpΔ(Time)/Tick={expPerTick:0.###}");
-
-                        laneListed++;
-                    }
-                }
-
-                if (laneTotal > laneListed)
-                {
-                    Append($"(details capped) Printed={laneListed} of Total={laneTotal} (cap={kMaxLaneDetails}).");
-                }
-
-                Append("");
-                Append(laneTotal > 0
-                    ? $"== Lane wear summary: Total={laneTotal} TimeFactor(min={minTf:0.###}, max={maxTf:0.###}) TrafficFactor(min={minTraf:0.###}, max={maxTraf:0.###})"
-                    : "Lane wear summary: Total=0");
-                Append("");
-
-                AppendLiveLaneUsage(sb, ref lines, ref truncated);
-                Append("");
 
                 // Transit line defaults
                 Append("== Transit lines (vanilla timing inputs) ==");
@@ -481,57 +403,6 @@ namespace PublicWorksPlus
                 Append("");
 
 
-                // Maintenance vehicles
-                Append("== MaintenanceVehicleData Prefabs ==");
-                foreach ((RefRO<MaintenanceVehicleData> mvRef, Entity e) in SystemAPI
-                             .Query<RefRO<MaintenanceVehicleData>>()
-                             .WithAll<PrefabData>()
-                             .WithEntityAccess())
-                {
-                    if (truncated) break;
-
-                    mvTotal++;
-                    MaintenanceVehicleData mv = mvRef.ValueRO;
-
-                    int vanillaCap = mv.m_MaintenanceCapacity;
-                    int vanillaRate = mv.m_MaintenanceRate;
-
-                    if (m_PrefabSystem.TryGetPrefab(e, out PrefabBase pb) &&
-                        pb.TryGet(out Game.Prefabs.MaintenanceVehicle baseMv))
-                    {
-                        vanillaCap = baseMv.m_MaintenanceCapacity;
-                        vanillaRate = baseMv.m_MaintenanceRate;
-                    }
-
-                    Append($"- {NameOf(e)} ({e.Index}:{e.Version}) Type={mv.m_MaintenanceType} VanillaCap={vanillaCap} CurCap={mv.m_MaintenanceCapacity} VanillaRate={vanillaRate} CurRate={mv.m_MaintenanceRate}");
-                }
-                Append($"MaintenanceVehicle summary: Total={mvTotal}");
-                Append("");
-
-                // Maintenance depots
-                Append("== MaintenanceDepotData Prefabs ==");
-                foreach ((RefRO<MaintenanceDepotData> depotRef, Entity e) in SystemAPI
-                             .Query<RefRO<MaintenanceDepotData>>()
-                             .WithAll<PrefabData>()
-                             .WithEntityAccess())
-                {
-                    if (truncated) break;
-
-                    depotTotal++;
-                    MaintenanceDepotData md = depotRef.ValueRO;
-
-                    int vanillaVehicles = md.m_VehicleCapacity;
-                    if (m_PrefabSystem.TryGetPrefab(e, out PrefabBase pb) &&
-                        pb.TryGet(out Game.Prefabs.MaintenanceDepot baseDepot))
-                    {
-                        vanillaVehicles = baseDepot.m_VehicleCapacity;
-                    }
-
-                    Append($"- {NameOf(e)} ({e.Index}:{e.Version}) Type={md.m_MaintenanceType} VanillaVehicles={vanillaVehicles} CurVehicles={md.m_VehicleCapacity}");
-                }
-                Append($"MaintenanceDepot summary: Total={depotTotal}");
-                Append("");
-
                 // Cargo stations
                 Append("== Cargo Transport Stations (CargoTransportStationData + TransportCompanyData) ==");
                 foreach ((RefRO<TransportCompanyData> tcRef, Entity e) in SystemAPI
@@ -618,8 +489,7 @@ namespace PublicWorksPlus
                     () =>
                     $"{Mod.ModTag} PrefabScan counts (prefab entities): " +
                     $"TransitLines={transitLinePrefabTotal}, DeliveryTrucks={deliveryTotal}, " +
-                    $"MaintVehicles={mvTotal}, MaintDepots={depotTotal}, CargoStations={cargoTotal}, " +
-                    $"ExtractorCompanies={extractorCompanies}, LaneWearPrefabs={laneTotal}, KeywordHits={keywordMatches}");
+                    $"CargoStations={cargoTotal}, ExtractorCompanies={extractorCompanies}, KeywordHits={keywordMatches}");
             }
             catch (Exception ex)
             {

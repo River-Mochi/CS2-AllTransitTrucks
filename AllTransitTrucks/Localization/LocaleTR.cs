@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleTR : IDictionarySource
+    public class LocaleTR : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Toplu Taşıma" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Sanayi" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Parklar-Yollar" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "Hakkında" },
 
                 // --------------------
@@ -286,70 +285,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "Yük istasyonu, kaynak çıkarma, depo ve sanayi kaydırıcılarını **1×** değerine (temel oyun değerlerine) döndürür.\n" +
                     "Şirket kamyonu kontrol seçeneği seçildiği gibi AÇIK veya KAPALI kalır." },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Park bakımı" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Çalışma vardiyası kapasitesi" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "**Çalışma vardiyası kapasitesini** (araç kapasitesini) ölçeklendirir.\n" +
-                    "Bir kamyonun binaya dönmeden önce yapabileceği toplam iş.\n" +
-                    "Ek malzeme = daha uzun süre görevde kalır." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Araç çalışma hızı" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "**Araç çalışma hızını** ölçeklendirir.\n" +
-                    "**Hız** = araç dururken her simülasyon adımında yaptığı iş miktarı." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Depo filo büyüklüğü" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "Depo binasında izin verilen **azami araç** sayısı.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Park bakımını sıfırla" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "Tüm değerleri **100%** değerine (temel oyun varsayılanına) döndürür." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Yol bakımı" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Depo filo büyüklüğü" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "Bina başına **depo azami araç** sayısı çarpanı.\n" +
-                    "Daha yüksek = daha fazla kamyon.\n" +
-                    "<Denge notu: Çok az veya çok fazla kamyon trafiği kötüleştirebilir.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Çalışma vardiyası kapasitesi" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "**Çalışma vardiyası kapasitesini** ölçeklendirir.\n" +
-                    "Bir kamyonun depoya dönmeden önce yapabileceği toplam iş.\n" +
-                    "**Daha yüksek = ana binaya daha az dönüş** ve daha yüksek verim." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Onarım hızı" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "**Hız** = araç dururken her simülasyon adımında yaptığı iş miktarı.\n" +
-                    "Kamyonlar en yüksek hızda bile kısa süre durup devam eder; yalnızca her durakta daha fazla iş yapar.\n" +
-                    "Temel oyunda tek bir durak yolu mutlaka %100 onarmaz; bu nedenle özellik zaman içinde daha iyi sonuç verir.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Yol aşınması" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta özellik>\n" +
-                    "Yolların **zaman ve trafik** etkileriyle ne kadar hızlı bozulacağını kontrol eder.\n" +
-                    "**10%** = 10× daha yavaş aşınma (daha az onarım gerekir)\n" +
-                    "**100%** = temel oyun\n" +
-                    "**500%** = 5× daha hızlı hasar (daha fazla onarım/kamyon gerekir)\n" +
-                    "Oyunda nasıl çalışır:\n" +
-                    "m_Wear <= 2.5 ise yavaşlama olmaz.\n" +
-                    "m_Wear >= 17.5 ise azami ceza uygulanır ve araçlar yollarda %50 daha yavaş gider.\n" +
-                    "Yollar bilgi görünümüne bakın: Araçları yavaşlatan ağır hasarlı yollar kırmızı görünür."
-
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Yol bakımını sıfırla" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "Tüm değerleri **100%** değerine (temel oyun varsayılanına) döndürür." },
 
                 // -------------------
                 // About tab

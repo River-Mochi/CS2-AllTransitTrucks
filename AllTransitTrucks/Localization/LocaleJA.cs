@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleJA : IDictionarySource
+    public class LocaleJA : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "公共交通" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "産業" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "公園・道路" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "情報" },
 
                 // --------------------
@@ -285,69 +284,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "貨物駅、採取施設、倉庫、産業のスライダーを**1×**（バニラ値）に戻します。\n" +
                     "企業トラック制御の切り替えは、選択したオンまたはオフの状態を維持します。" },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "公園メンテナンス" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "作業シフト容量" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "**作業シフト容量**（車両容量）への倍率です。\n" +
-                    "トラックが建物へ戻るまでにこなせる総作業量です。\n" +
-                    "イメージ: 補給が多い = より長く外で作業できる。" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "車両作業率" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "**車両作業率**への倍率です。\n" +
-                    "作業率 = 停車中にシミュレーションtickごとにこなす作業量。" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "車庫フリートサイズ" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "車庫建物の**最大車両数**への倍率です。\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "公園メンテナンスをリセット" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "すべての値を**100%**（ゲーム既定値 / バニラ）に戻します。" },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "道路メンテナンス" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "車庫フリートサイズ" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "建物ごとの**車庫最大車両数**への倍率です。\n" +
-                    "高いほど = トラックが増える。\n" +
-                    "<バランス注記: 少なすぎても多すぎても交通に悪影響があります。>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "作業シフト容量" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "**作業シフト容量**への倍率です。\n" +
-                    "トラックが車庫へ戻るまでにこなせる総作業量です。\n" +
-                    "**高いほど = 戻る回数が減る。** より効率的になります。" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "修理率" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "作業率 = 停車中にシミュレーションtickごとにこなす作業量。\n" +
-                    "最高レートでもトラックは短い停止+発進を行います（1回の停止でこなす作業量が増えます）。\n" +
-                    "バニラでは1回の停止で道路が必ず100%修理されるわけではないため、この機能は時間とともに効果が増します。\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "道路摩耗" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<ベータ機能>\n" +
-                    "**時間と交通量**の要因によって道路がどれだけ速く劣化するかを制御します。\n" +
-                    "**10%** = 摩耗が10×遅い（修理回数減少）\n" +
-                    "**100%** = バニラ\n" +
-                    "**500%** = ダメージが5×速い（より多くの修理/トラックが必要）\n" +
-                    "ゲーム内での仕組み:\n" +
-                    "m_Wear <= 2.5 の場合、減速なし。\n" +
-                    "m_Wear >= 17.5 の場合、最大ペナルティで車両は道路上で50%遅くなります。\n" +
-                    "道路インフォビュー参照: ひどく損傷した道路は赤く表示され、車両を減速させます。"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "道路メンテナンスをリセット" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "すべての値を**100%**（ゲーム既定値 / バニラ）に戻します。" },
 
                 // -------------------
                 // About tab

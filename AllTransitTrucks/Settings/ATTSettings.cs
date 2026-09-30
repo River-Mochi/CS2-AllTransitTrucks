@@ -7,7 +7,7 @@
 // ================= </copyright> ======================
 
 // File: Settings/ATTSettings.cs
-// Purpose: Options UI + saved settings for All Transit + Trucks (Public Transit + Industry + Parks/Roads + About).
+// Purpose: Options UI + saved settings for All Transit + Trucks (Public Transit + Industry + About).
 
 namespace PublicWorksPlus
 {
@@ -24,25 +24,22 @@ namespace PublicWorksPlus
     using UnityEngine;              // Application.OpenURL
 
     [FileLocation("ModsSettings/AllTransitTrucks/AllTransitTrucks")]
-    [SettingsUITabOrder(PublicTransitTab, IndustryTab, ParksRoadsTab, AboutTab)]
+    [SettingsUITabOrder(PublicTransitTab, IndustryTab, AboutTab)]
     [SettingsUIGroupOrder(
         LineVehiclesGroup, DepotGroup, ServiceFuelRangeGroup, PassengerGroup,
         DeliveryGroup, CargoStationsGroup,
-        RoadMaintenanceGroup, ParkMaintenanceGroup,
         AboutInfoGroup, AboutLinksGroup, DebugGroup
     )]
     [SettingsUIShowGroupName(
         LineVehiclesGroup, DepotGroup, ServiceFuelRangeGroup, PassengerGroup,
         DeliveryGroup, CargoStationsGroup,
-        RoadMaintenanceGroup, ParkMaintenanceGroup,
         AboutLinksGroup, DebugGroup
     )]
-    public sealed partial class ATTSettings : ModSetting
+    public partial class ATTSettings : ModSetting
     {
         // Tab ids (must match Locale ids).
         public const string PublicTransitTab = "Public-Transit";
         public const string IndustryTab = "Industry";
-        public const string ParksRoadsTab = "Parks-Roads";
         public const string AboutTab = "About";
 
         // Group ids (must match Locale ids).
@@ -54,8 +51,6 @@ namespace PublicWorksPlus
         public const string DeliveryGroup = "DeliveryVehicles";
         public const string CargoStationsGroup = "CargoStations";
 
-        public const string RoadMaintenanceGroup = "RoadMaintenance";
-        public const string ParkMaintenanceGroup = "ParkMaintenance";
 
         public const string AboutInfoGroup = "AboutInfo";
         public const string AboutLinksGroup = "AboutLinks";
@@ -90,16 +85,6 @@ namespace PublicWorksPlus
         public const float CargoStationMaxScalar = 5f;
         public const float CargoStationStepScalar = 1f;
 
-        // Parks+Roads: display as percent (100%..500% = 1x..5x).
-        public const float MaintenanceMinPercent = 100f;
-        public const float MaintenanceMaxPercent = 500f;
-        public const float MaintenanceStepPercent = 10f;
-
-        // Road wear speed: percent (10%..500% = 0.1x..5x).
-        public const float RoadWearMinPercent = 10f;
-        public const float RoadWearMaxPercent = 500f;
-        public const float RoadWearStepPercent = 10f;
-
         private const string UrlParadox =
             "https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime";
 
@@ -126,7 +111,6 @@ namespace PublicWorksPlus
         {
             SetDefaults_Transit();
             SetDefaults_Industry();
-            SetDefaults_ParksRoads();
 
             EnableDebugLogging = false;
         }
@@ -153,9 +137,7 @@ namespace PublicWorksPlus
             // Settings changes re-run systems once.
             TryEnableOnce<TransitSystem>(world, "TransitSystem");
             TryEnableOnce<TransitServiceRangeSystem>(world, "TransitServiceRangeSystem");
-            TryEnableOnce<MaintenanceSystem>(world, "MaintenanceSystem");
             TryEnableOnce<IndustrySystem>(world, "IndustrySystem");
-            TryEnableOnce<LaneWearSystem>(world, "LaneWearSystem");
             TryEnableOnce<VehicleCountPolicyTunerSystem>(world, "TransitLinePolicyTunerSystem");
         }
 
@@ -321,7 +303,6 @@ namespace PublicWorksPlus
         {
             RepairAndClamp_Transit();
             RepairAndClamp_Industry();
-            RepairAndClamp_ParksRoads();
 
         }
 
@@ -416,10 +397,8 @@ namespace PublicWorksPlus
         // Partial hooks keep files organized without duplicating boilerplate.
         partial void SetDefaults_Transit();
         partial void SetDefaults_Industry();
-        partial void SetDefaults_ParksRoads();
 
         partial void RepairAndClamp_Transit();
         partial void RepairAndClamp_Industry();
-        partial void RepairAndClamp_ParksRoads();
     }
 }

@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleKO : IDictionarySource
+    public class LocaleKO : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "대중교통" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "산업" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "공원-도로" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "정보" },
 
                 // --------------------
@@ -285,69 +284,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "화물역, 채취 시설, 창고, 산업 슬라이더를 **1×** (바닐라 값)로 되돌립니다.\n" +
                     "회사 트럭 제어 토글은 선택한 켜짐 또는 꺼짐 상태를 유지합니다." },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "공원 유지관리" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "작업 교대 용량" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "**작업 교대 용량** (차량 용량)에 대한 배수입니다.\n" +
-                    "트럭이 건물로 돌아가기 전에 수행할 수 있는 총 작업량입니다.\n" +
-                    "쉽게 말해: 보급이 많을수록 더 오래 현장에 머뭅니다." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "차량 작업률" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "**차량 작업률**에 대한 배수입니다.\n" +
-                    "작업률 = 정차 중 시뮬레이션 tick당 수행하는 작업량." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "차고 플릿 크기" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "차고 건물의 **최대 차량 수**에 대한 배수입니다.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "공원 유지관리 리셋" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "모든 값을 **100%** (게임 기본값 / 바닐라)로 되돌립니다." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "도로 유지관리" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "차고 플릿 크기" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "건물당 **차고 최대 차량 수**에 대한 배수입니다.\n" +
-                    "높을수록 = 트럭 증가.\n" +
-                    "<밸런스 참고: 너무 적거나 너무 많으면 교통에 악영향을 줄 수 있습니다.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "작업 교대 용량" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "**작업 교대 용량**에 대한 배수입니다.\n" +
-                    "트럭이 차고로 돌아가기 전에 수행할 수 있는 총 작업량입니다.\n" +
-                    "**높을수록 = 복귀 횟수 감소**. 더 효율적입니다." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "수리율" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "작업률 = 정차 중 시뮬레이션 tick당 수행하는 작업량.\n" +
-                    "최고 수리율에서도 트럭은 잠깐 멈췄다 가는 동작을 합니다. 단지 한 번 멈출 때 더 많은 작업을 수행합니다.\n" +
-                    "바닐라에서는 한 번의 정차로 도로가 반드시 100% 수리되는 것은 아니므로, 이 기능은 시간이 지날수록 더 유용해집니다.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "도로 마모" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<베타 기능>\n" +
-                    "**시간과 교통량** 요인으로 도로가 얼마나 빨리 손상되는지 제어합니다.\n" +
-                    "**10%** = 마모 10× 느림 (수리 필요 감소)\n" +
-                    "**100%** = 바닐라\n" +
-                    "**500%** = 손상 5× 빠름 (더 많은 수리/트럭 필요)\n" +
-                    "게임 내 작동 방식:\n" +
-                    "m_Wear <= 2.5 이면 감속 없음.\n" +
-                    "m_Wear >= 17.5 이면 최대 페널티, 도로 위 차량 속도가 50% 느려집니다.\n" +
-                    "도로 인포뷰 참조: 심하게 손상된 도로는 빨간색으로 표시되며 차량을 감속시킵니다."
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "도로 유지관리 리셋" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "모든 값을 **100%** (게임 기본값 / 바닐라)로 되돌립니다." },
 
                 // -------------------
                 // About tab

@@ -92,8 +92,6 @@ namespace PublicWorksPlus
 
             updateSystem.UpdateAfter<TransitSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<TransitServiceRangeSystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateAfter<MaintenanceSystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateAfter<LaneWearSystem>(SystemUpdatePhase.PrefabUpdate);
 
 
             // Rebuild DeliveryTruckSelectData from ATT's updated prefab capacities.
@@ -106,7 +104,6 @@ namespace PublicWorksPlus
 
 #if DEBUG
             updateSystem.UpdateAt<DeliveryCargoProbeSystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAt<LaneWearProbeSystem>(SystemUpdatePhase.GameSimulation);
 #endif
         }
 

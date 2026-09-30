@@ -1,6 +1,6 @@
 # All Transit + Trucks
 
-All Transit + Trucks lets you adjust **public transit**, **passenger capacity**, **industry deliveries and fleets**, and **parks/road maintenance** in *Cities Skylines II*.
+All Transit + Trucks lets you adjust **public transit**, **passenger capacity**, and **industry deliveries and fleets** in *Cities Skylines II*.
 
 Everything is optional—you choose which features to use.
 
@@ -32,11 +32,6 @@ Everything is optional—you choose which features to use.
 
 Supported game delivery paths can use the increased capacities. Live testing confirms above-vanilla loads for Semi Trucks, Delivery Vans, and Raw Material Trucks.
 
-### Parks & Roads
-- **Park maintenance:** depot fleet, work-shift capacity, and vehicle work rate
-- **Road maintenance:** depot fleet, work-shift capacity, and repair rate
-- **Road wear speed** (beta)
-
 ### Diagnostics
 Available on the About tab:
 - **Prefab Scan Report**
@@ -45,6 +40,7 @@ Available on the About tab:
 - Open log/report folders
 
 ## Notes
+- Park maintenance, road maintenance, and lane wear are now available separately in **Parks, Roads & Lane Wear**. Find it on [River-Mochi's Paradox Mods page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
 - Remove **Adjust Transit Capacity** before using this mod; its features are included here.
 - Settings apply while a city is loaded—no restart is required.
 - Avoid other mods that change the same capacities or policies, because one mod may overwrite another.

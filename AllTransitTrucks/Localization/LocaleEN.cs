@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleEN : IDictionarySource
+    public class LocaleEN : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Public-Transit" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Industry" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Parks-Roads" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "About" },
 
                 // --------------------
@@ -290,70 +289,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "Reset cargo stations, extractors, warehouses, and industry sliders to **1×** (vanilla values).\n" +
                     "The company truck control toggle stays ON or OFF as selected." },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Park maintenance" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Work shift capacity" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "Scales **work shift capacity** (vehicle capacity).\n" +
-                    "Total work a truck can do before it returns to the building.\n" +
-                    "Think: extra supplies = stays out longer." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Vehicle rate" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "Scales **vehicle work rate**.\n" +
-                    "**Rate** = how much work it does per simulation tick while stopped." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Depot fleet size" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "Depot building **maximum vehicles** allowed.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Reset park maintenance" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "Reset all values back to **100%** (game default / vanilla)." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Road maintenance" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Depot fleet size" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "Multiplier for **depot maximum vehicles** per building.\n" +
-                    "Higher = more trucks.\n" +
-                    "<Balance note: too few or too many can hurt traffic.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Work shift capacity" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "Scales **work shift capacity**.\n" +
-                    "Total work a truck can do before it returns to the depot.\n" +
-                    "**Higher = fewer returns** back to the main building, more efficient." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Repair rate" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "**Rate** = how much work it does per simulation tick while stopped.\n" +
-                    "Trucks still do a quick stop+go even with highest rate; they just do more work per stop.\n" +
-                    "In vanilla, one stop does not necessarily bring the road to 100% repaired; that is why this feature gets better over time.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Road wear" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
-                    "Controls how fast roads deteriorate from **time and traffic** factors.\n" +
-                    "**10%** = 10× slower wear (fewer repairs needed)\n" +
-                    "**100%** = vanilla\n" +
-                    "**500%** = 5× faster damage (more repairs/trucks needed)\n" +
-                    "How it works in game:\n" +
-                    "If m_Wear <= 2.5 factor, no slowdown.\n" +
-                    "If m_Wear >= 17.5, max penalty, vehicles are 50% slower on roads.\n" +
-                    "See Roads Infoview: shows red over badly damaged roads that slow vehicles down."
-
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Reset road maintenance" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "Set all values back to **100%** (game default / vanilla)." },
 
                 // -------------------
                 // About tab

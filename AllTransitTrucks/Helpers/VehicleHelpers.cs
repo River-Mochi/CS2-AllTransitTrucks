@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Utils/VehicleHelpers.cs
+// File: Helpers/VehicleHelpers.cs
 // Purpose: Shared helpers for prefab classification (delivery buckets, tractor/trailer info).
 // Notes:
 // - Not a system (no OnUpdate).

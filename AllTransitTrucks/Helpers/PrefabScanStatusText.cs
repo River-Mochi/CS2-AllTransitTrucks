@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Utils/PrefabScanStatusText.cs
+// File: Helpers/PrefabScanStatusText.cs
 // Purpose: Builds the localized prefab scan status text.
 
 namespace PublicWorksPlus

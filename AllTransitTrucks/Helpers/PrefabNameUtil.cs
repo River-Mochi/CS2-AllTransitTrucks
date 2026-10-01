@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Utils/PrefabNameUtil.cs
+// File: Helpers/PrefabNameUtil.cs
 // Purpose: name lookup (string). One place for safe prefab name lookup.
 // Notes:
 // - Logs exception only once (rare, but keeps logs clean).

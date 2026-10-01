@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Utils/PrefabComponentUtil.cs
+// File: Helpers/PrefabComponentUtil.cs
 // Purpose: Prefab components lookup (TransportDepot, PublicTransport, etc.).
 // Notes:
 // - Centralizes PrefabSystem.TryGetPrefab + PrefabBase.TryGet.

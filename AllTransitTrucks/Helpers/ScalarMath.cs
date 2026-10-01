@@ -6,7 +6,7 @@
 // all copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Utils/ScalarMath.cs
+// File: Helpers/ScalarMath.cs
 // Purpose: Centralized clamping + scaling helpers to keep math consistent across systems.
 // Notes:
 // - Rounds to int (AwayFromZero) so slider results feel stable.

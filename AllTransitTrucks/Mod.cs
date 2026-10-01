@@ -84,9 +84,11 @@ namespace PublicWorksPlus
                     localizationManager.AddSource("zh-HANT", new LocaleZH_HANT(setting));
                     // These locales not officially supported by the game, but work if players use alternate language mods.
                     localizationManager.AddSource("pt-PT", new LocalePT_PT(setting));
+                    localizationManager.AddSource("th-TH", new LocaleTH(setting));
                     localizationManager.AddSource("tr-TR", new LocaleTR(setting));
                     localizationManager.AddSource("vi-VN", new LocaleVI(setting));
                     localizationManager.AddSource("nl-NL", new LocaleNL(setting));
+                    localizationManager.AddSource("uk-UA", new LocaleUK(setting));
                 }
             }
             catch (Exception ex)

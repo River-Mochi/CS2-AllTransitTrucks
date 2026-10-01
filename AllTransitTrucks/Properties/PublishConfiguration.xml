@@ -87,9 +87,9 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <Dependency Id="" />
 <!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
-- Park maintenance, road maintenance, and lane wear moved to the separate Parks, Roads &amp; Lane Wear mod.
-- Added Service / Fuel Range adjusters for Bus, Train, Tram, Subway. 
-- Added Dutch (nl-NL) translation. Updated all translation files for tooltips clarity.
+- Park maintenance, road maintenance, and lane wear moved to the separate Parks, Roads + Lane Wear mod.
+- Added Service / Fuel Range adjusters for Bus, Train, Tram, Subway.
+- Added Dutch, Thai, and Ukrainian translations. Updated translations for tooltip clarity.
 - recent important: Industry Compatibility truck toggle [x]. If using another mod for ↑ total trucks, you can toggle this off.
 - fix order of sliders.
 </ChangeLog>

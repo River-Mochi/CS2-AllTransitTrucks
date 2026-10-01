@@ -1,12 +1,12 @@
 // <copyright file="ScalarMath.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
-// File: Utils/ScalarMath.cs
+// File: Helpers/ScalarMath.cs
 // Purpose: Centralized clamping + scaling helpers to keep math consistent across systems.
 // Notes:
 // - Rounds to int (AwayFromZero) so slider results feel stable.

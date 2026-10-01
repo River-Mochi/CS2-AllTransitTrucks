@@ -1,9 +1,9 @@
 // <copyright file="LocaleEN.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Localization/LocaleEN.cs
@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleEN : IDictionarySource
+    public class LocaleEN : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -27,25 +27,17 @@ namespace PublicWorksPlus
             IList<IDictionaryEntryError> errors,
             Dictionary<string, int> indexCounts)
         {
-            string title = Mod.ShortName;
-
-            if (!string.IsNullOrEmpty(Mod.ModVersion))
-            {
-                title = title + " (" + Mod.ModVersion + ")";
-            }
-
             return new Dictionary<string, string>
             {
                 // --------------------------
                 // Mod title / tabs / groups
                 // --------------------------
 
-                { m_Setting.GetSettingsLocaleID(), title },
+                { m_Setting.GetSettingsLocaleID(), Mod.ShortName },
 
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Public-Transit" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Industry" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Parks-Roads" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "About" },
 
                 // --------------------
@@ -292,70 +284,6 @@ namespace PublicWorksPlus
                     "The company truck control toggle stays ON or OFF as selected." },
 
                 // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Park maintenance" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Work shift capacity" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "Scales **work shift capacity** (vehicle capacity).\n" +
-                    "Total work a truck can do before it returns to the building.\n" +
-                    "Think: extra supplies = stays out longer." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Vehicle rate" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "Scales **vehicle work rate**.\n" +
-                    "**Rate** = how much work it does per simulation tick while stopped." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Depot fleet size" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "Depot building **maximum vehicles** allowed.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Reset park maintenance" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "Reset all values back to **100%** (game default / vanilla)." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Road maintenance" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Depot fleet size" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "Multiplier for **depot maximum vehicles** per building.\n" +
-                    "Higher = more trucks.\n" +
-                    "<Balance note: too few or too many can hurt traffic.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Work shift capacity" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "Scales **work shift capacity**.\n" +
-                    "Total work a truck can do before it returns to the depot.\n" +
-                    "**Higher = fewer returns** back to the main building, more efficient." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Repair rate" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "**Rate** = how much work it does per simulation tick while stopped.\n" +
-                    "Trucks still do a quick stop+go even with highest rate; they just do more work per stop.\n" +
-                    "In vanilla, one stop does not necessarily bring the road to 100% repaired; that is why this feature gets better over time.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Road wear" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Beta feature>\n" +
-                    "Controls how fast roads deteriorate from **time and traffic** factors.\n" +
-                    "**10%** = 10× slower wear (fewer repairs needed)\n" +
-                    "**100%** = vanilla\n" +
-                    "**500%** = 5× faster damage (more repairs/trucks needed)\n" +
-                    "How it works in game:\n" +
-                    "If m_Wear <= 2.5 factor, no slowdown.\n" +
-                    "If m_Wear >= 17.5, max penalty, vehicles are 50% slower on roads.\n" +
-                    "See Roads Infoview: shows red over badly damaged roads that slow vehicles down."
-
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Reset road maintenance" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "Set all values back to **100%** (game default / vanilla)." },
-
-                // -------------------
                 // About tab
                 // -------------------
 
@@ -367,7 +295,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModNameDisplay)), "Display name of this mod." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Version" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Current mod version." },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Current mod version and build type." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenParadoxMods)), "Paradox" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenParadoxMods)), "Open Paradox Mods website for the author's mods." },
@@ -393,10 +321,11 @@ namespace PublicWorksPlus
                     "**Disable** for normal gameplay.\n" +
                     "<This only increases logging and does not change gameplay values.>" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenLogButton)), "Open log folder" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenLogButton)), "Open log" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenLogButton)),
-                    "Open the logs folder.\n" +
-                    "Next: open <AllTransitTrucks.log> with your text editor (Notepad++ recommended)." },
+                    "Open <Logs/AllTransitTrucks.log>, or the Logs folder if the file does not exist yet.\n" +
+                    "Notepad++ can be used to view log files."
+                },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenReportButton)), "Open report folder" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenReportButton)),

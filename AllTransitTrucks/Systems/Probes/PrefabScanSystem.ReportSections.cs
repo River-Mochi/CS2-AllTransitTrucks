@@ -1,9 +1,9 @@
 // <copyright file="PrefabScanSystem.ReportSections.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Systems/Probes/PrefabScanSystem.ReportSections.cs
@@ -17,20 +17,13 @@
 namespace PublicWorksPlus
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
     using System.Text;
     using Colossal.PSI.Environment;
-    using CS2Shared.RiverMochi;
-    using Game;
     using Game.Companies;
     using Game.Economy;
     using Game.Net;
     using Game.Prefabs;
-    using Game.Routes;
-    using Game.SceneFlow;
-    using Unity.Collections;
     using Unity.Entities;
 
     public sealed partial class PrefabScanSystem
@@ -39,81 +32,6 @@ namespace PublicWorksPlus
         {
             public int Carrying;
             public int OverVanilla;
-        }
-
-        private void AppendLiveLaneUsage(StringBuilder sb, ref int lines, ref bool truncated)
-        {
-            if (truncated)
-                return;
-
-            AppendSectionHeader(sb, ref lines, ref truncated, "Live lane usage");
-            AppendCapped(sb, ref lines, ref truncated, "Counts live lane entities grouped by PrefabRef.m_Prefab (lane prefab).");
-            AppendCapped(sb, ref lines, ref truncated, "Proof: small set of lane prefabs power many road types.");
-            AppendCapped(sb, ref lines, ref truncated, "");
-
-            HashSet<Entity> wearPrefabs = new();
-
-            foreach ((RefRO<LaneDeteriorationData> _, Entity prefabEntity) in SystemAPI
-                         .Query<RefRO<LaneDeteriorationData>>()
-                         .WithAll<PrefabData>()
-                         .WithEntityAccess())
-            {
-                wearPrefabs.Add(prefabEntity);
-            }
-
-            Dictionary<Entity, int> counts = new(64);
-            long liveLaneTotal = 0;
-
-            foreach (RefRO<PrefabRef> prefabRefRO in SystemAPI
-                         .Query<RefRO<PrefabRef>>()
-                         .WithAll<LaneCondition>()
-                         .WithNone<PrefabData>())
-            {
-                Entity prefab = prefabRefRO.ValueRO.m_Prefab;
-                liveLaneTotal++;
-
-                if (counts.TryGetValue(prefab, out int c))
-                    counts[prefab] = c + 1;
-                else
-                    counts[prefab] = 1;
-            }
-
-            if (liveLaneTotal == 0 || counts.Count == 0)
-            {
-                AppendCapped(sb, ref lines, ref truncated, "No live lanes found (unexpected).");
-                return;
-            }
-
-            long covered = 0;
-            foreach (KeyValuePair<Entity, int> kvp in counts)
-            {
-                if (wearPrefabs.Contains(kvp.Key))
-                    covered += kvp.Value;
-            }
-
-            float pct = (float)covered * 100f / (float)liveLaneTotal;
-
-            AppendCapped(sb, ref lines, ref truncated, $"Live lanes summary: LiveLanes={liveLaneTotal:n0} UniqueLanePrefabs={counts.Count:n0}");
-            AppendCapped(sb, ref lines, ref truncated, $"Mod Coverage of LaneDeteriorationData prefabs: {covered:n0}/{liveLaneTotal:n0} ({pct:0.0}%)");
-            AppendCapped(sb, ref lines, ref truncated, "");
-
-            const int kTop = 30;
-
-            List<KeyValuePair<Entity, int>> top = new(counts);
-            top.Sort((a, b) => b.Value.CompareTo(a.Value));
-
-            int printed = 0;
-            for (int i = 0; i < top.Count && printed < kTop; i++)
-            {
-                KeyValuePair<Entity, int> kvp = top[i];
-                string name = PrefabNameUtil.GetNameSafe(m_PrefabSystem, kvp.Key);
-                bool isWear = wearPrefabs.Contains(kvp.Key);
-
-                AppendCapped(sb, ref lines, ref truncated, $"- {name} ({kvp.Key.Index}:{kvp.Key.Version}) UsedByLanes={kvp.Value:n0} WearPrefab={isWear}");
-                printed++;
-            }
-
-            AppendCapped(sb, ref lines, ref truncated, "");
         }
 
         private void AppendLiveDeliveryCargoSnapshot(
@@ -134,6 +52,7 @@ namespace PublicWorksPlus
 
             EntityQuery q = SystemAPI.QueryBuilder()
                 .WithAll<Game.Vehicles.DeliveryTruck, PrefabRef>()
+                .WithNone<global::Game.Common.Deleted, global::Game.Tools.Temp>()
                 .Build();
 
             if (q.IsEmptyIgnoreFilter)
@@ -160,7 +79,8 @@ namespace PublicWorksPlus
             int globalMaxAmount = 0;
             string globalMaxPrefabName = string.Empty;
 
-            using (NativeArray<Entity> entities = q.ToEntityArray(Allocator.Temp))
+            using (global::Unity.Collections.NativeArray<Entity> entities =
+                   q.ToEntityArray(global::Unity.Collections.Allocator.Temp))
             {
                 for (int i = 0; i < entities.Length; i++)
                 {
@@ -387,11 +307,6 @@ namespace PublicWorksPlus
         private static float InverseRelativeAppliedFromInput(float input)
         {
             return (-input) / (1f + input);
-        }
-
-        private static string Fmt(float v)
-        {
-            return float.IsNaN(v) ? "n/a" : v.ToString("0.###");
         }
 
         private static string FmtTons(int amount)

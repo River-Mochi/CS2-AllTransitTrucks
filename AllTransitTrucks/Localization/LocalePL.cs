@@ -1,9 +1,9 @@
 // <copyright file="LocalePL.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Localization/LocalePL.cs
@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocalePL : IDictionarySource
+    public class LocalePL : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Transport publiczny" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Przemysł" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Parki-Drogi" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "O modzie" },
 
                 // --------------------
@@ -285,69 +284,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "Ustaw suwaki stacji cargo, wydobycia, magazynów i przemysłu na **1×** (wartości vanilla).\n" +
                     "Przełącznik sterowania ciężarówkami firmowymi pozostaje WŁĄCZONY lub WYŁĄCZONY zgodnie z wyborem." },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Utrzymanie parków" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Pojemność zmiany roboczej" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "Mnożnik **pojemności zmiany roboczej** (pojemności pojazdu).\n" +
-                    "Całkowita ilość pracy, jaką ciężarówka może wykonać, zanim wróci do budynku.\n" +
-                    "Pomyśl: więcej zapasów = dłuższa praca w terenie." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Tempo pojazdu" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "Mnożnik **tempa pracy pojazdu**.\n" +
-                    "Tempo = ile pracy wykonuje w jednym ticku symulacji podczas postoju." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Rozmiar floty zajezdni" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "Mnożnik dla **maksymalnej liczby pojazdów** budynku zajezdni.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Resetuj utrzymanie parków" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "Resetuj wszystkie wartości do **100%** (domyślna wartość gry / vanilla)." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Utrzymanie dróg" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Rozmiar floty zajezdni" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "Mnożnik dla **maksymalnej liczby pojazdów zajezdni** na budynek.\n" +
-                    "Wyżej = więcej ciężarówek.\n" +
-                    "<Uwaga dot. balansu: zbyt mało lub zbyt dużo może szkodzić ruchowi.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Pojemność zmiany roboczej" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "Mnożnik **pojemności zmiany roboczej**.\n" +
-                    "Całkowita ilość pracy, jaką ciężarówka może wykonać, zanim wróci do zajezdni.\n" +
-                    "**Wyżej = mniej powrotów** do głównego budynku. Większa wydajność." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Tempo napraw" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "Tempo = ile pracy wykonuje w jednym ticku symulacji podczas postoju.\n" +
-                    "Ciężarówki nadal robią szybkie stop+ruszenie nawet przy najwyższym tempie; po prostu wykonują więcej pracy na jeden postój.\n" +
-                    "W vanilli jeden postój niekoniecznie przywraca drogę do 100% naprawy, więc ta funkcja z czasem daje coraz lepszy efekt.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Zużycie dróg" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Funkcja beta>\n" +
-                    "Kontroluje, jak szybko drogi niszczeją od czynników **czasu i ruchu**.\n" +
-                    "**10%** = 10× wolniejsze zużycie (mniej potrzebnych napraw)\n" +
-                    "**100%** = vanilla\n" +
-                    "**500%** = 5× szybsze uszkodzenia (więcej potrzebnych napraw/ciężarówek)\n" +
-                    "Jak to działa w grze:\n" +
-                    "Jeśli współczynnik m_Wear <= 2.5, brak spowolnienia.\n" +
-                    "Jeśli m_Wear >= 17.5, maksymalna kara, pojazdy są o 50% wolniejsze na drogach.\n" +
-                    "Zobacz widok informacji o drogach: mocno uszkodzone drogi są zaznaczone na czerwono i spowalniają pojazdy."
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Resetuj utrzymanie dróg" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "Ustaw wszystkie wartości z powrotem na **100%** (domyślna wartość gry / vanilla)." },
 
                 // -------------------
                 // About tab

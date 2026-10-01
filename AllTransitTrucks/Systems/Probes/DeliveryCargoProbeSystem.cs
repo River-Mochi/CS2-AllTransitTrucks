@@ -1,9 +1,9 @@
 // <copyright file="DeliveryCargoProbeSystem.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Systems/Probes/DeliveryCargoProbeSystem.cs
@@ -55,6 +55,7 @@ namespace PublicWorksPlus
 
             EntityQuery q = SystemAPI.QueryBuilder()
                 .WithAll<Game.Vehicles.DeliveryTruck, PrefabRef>()
+                .WithNone<global::Game.Common.Deleted, global::Game.Tools.Temp>()
                 .Build();
 
             RequireForUpdate(q);
@@ -111,6 +112,7 @@ namespace PublicWorksPlus
 
             foreach ((RefRO<Game.Vehicles.DeliveryTruck> truckRef, RefRO<PrefabRef> prRef, Entity entity) in SystemAPI
                          .Query<RefRO<Game.Vehicles.DeliveryTruck>, RefRO<PrefabRef>>()
+                         .WithNone<global::Game.Common.Deleted, global::Game.Tools.Temp>()
                          .WithEntityAccess())
             {
                 scanned++;

@@ -1,9 +1,9 @@
 // <copyright file="LocaleFR.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Localization/LocaleFR.cs
@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleFR : IDictionarySource
+    public class LocaleFR : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Transports publics" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Industrie" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Parcs-Routes" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "À propos" },
 
                 // --------------------
@@ -285,69 +284,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "Réinitialise les curseurs des stations de fret, extracteurs, entrepôts et industries à **1×** (valeurs vanilla).\n" +
                     "Le bouton de contrôle des camions d’entreprise reste ACTIVÉ ou DÉSACTIVÉ selon le choix." },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Entretien des parcs" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Capacité du quart de travail" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "Multiplicateur pour la **capacité du quart de travail** (capacité du véhicule).\n" +
-                    "Travail total qu’un camion peut effectuer avant de retourner au bâtiment.\n" +
-                    "En clair : plus de fournitures = reste dehors plus longtemps." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Cadence du véhicule" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "Multiplicateur pour la **cadence de travail du véhicule**.\n" +
-                    "Cadence = quantité de travail effectuée par tick de simulation à l’arrêt." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Taille de flotte du dépôt" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "Multiplicateur pour les **véhicules maximum** du bâtiment dépôt.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Réinitialiser l’entretien des parcs" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "Remet toutes les valeurs à **100%** (valeur par défaut du jeu / vanilla)." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Entretien des routes" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Taille de flotte du dépôt" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "Multiplicateur pour les **véhicules maximum du dépôt** par bâtiment.\n" +
-                    "Plus élevé = plus de camions.\n" +
-                    "<Note d’équilibrage : trop peu ou trop peuvent nuire au trafic.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Capacité du quart de travail" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "Multiplicateur pour la **capacité du quart de travail**.\n" +
-                    "Travail total qu’un camion peut effectuer avant de retourner au dépôt.\n" +
-                    "**Plus élevé = moins de retours** nécessaires vers le bâtiment principal. Plus efficace." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Cadence de réparation" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "Cadence = quantité de travail effectuée par tick de simulation à l’arrêt.\n" +
-                    "Les camions font quand même un arrêt+repart rapide même avec la cadence la plus élevée ; ils effectuent simplement plus de travail par arrêt.\n" +
-                    "En vanilla, un seul arrêt ne ramène pas forcément la route à 100% de réparation, donc cette fonctionnalité devient meilleure avec le temps.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Usure des routes" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Fonction bêta>\n" +
-                    "Contrôle la vitesse de détérioration des routes selon des facteurs de **temps et de trafic**.\n" +
-                    "**10%** = 10× plus lente (moins de réparations nécessaires)\n" +
-                    "**100%** = vanilla\n" +
-                    "**500%** = dégâts 5× plus rapides (plus de réparations/camions nécessaires)\n" +
-                    "Comment cela fonctionne en jeu :\n" +
-                    "Si le facteur m_Wear <= 2.5, pas de ralentissement.\n" +
-                    "Si m_Wear >= 17.5, pénalité maximale, les véhicules sont 50% plus lents sur les routes.\n" +
-                    "Voir l’infovue Routes : les routes très endommagées apparaissent en rouge et ralentissent les véhicules."
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Réinitialiser l’entretien des routes" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "Remet toutes les valeurs à **100%** (valeur par défaut du jeu / vanilla)." },
 
                 // -------------------
                 // About tab

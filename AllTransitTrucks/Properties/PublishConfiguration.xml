@@ -15,14 +15,11 @@
 - Scale many aspects for:
 - all Public Transit + Passengers (change total vehicles, capacity, service/fuel range).
 - Industry Delivery vehicles, Cargo stations, Extractors.
-- Parks/Roads Maintenance
 
 **Industry deliveries can use the increased vehicle capacities you set, including company shopping and road storage transfers.**
 
 ### Features
 - Transit Line adjuster: can allow as low as 1 bus or higher ~30-60 buses (tram, train, etc.).
-- **Parks + Roads Repairs**: fleet size, work shift + rate
-- Road wear (beta): scale speed roads accumulate damage over time
 - **Industry Deliveries**: capacity of Semi trucks, delivery vans/motorbike, Raw material trucks (coal, oil...)
 - **Total vehicles per facility:** Extractors, warehouses, and industrial Processing (Fish, Oil, etc.).
 - *Cargo Stations*: max active trucks (harbor/train/airport)
@@ -32,7 +29,7 @@
 
 - **Transit depots:** change max vehicles per depot (Bus, Ferry, Subway, Taxi, Tram, Train)
 - **Passengers:** change maximum seats (Bus, Tram, Train, Subway, Ship, Ferry, Airplane)
-- Includes everything from *Adjust Transit Capacity* (ATC) mod plus all new mods above are *combined* into one mod.
+- Includes the transit features from *Adjust Transit Capacity* (ATC).
 
 ### Notes 🚍🚋🚆✈️🚢
 - *Remove* "Adjust Transit Capacity" if you install this mod.
@@ -45,6 +42,7 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 
 
 ### Support and feedback
+- Park maintenance, road maintenance, and lane wear moved to the separate **Parks, Roads &amp; Lane Wear** mod. Find it on [River-Mochi's Paradox Mods page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
 - please don't forget to give it a Like button (top right).
 - All details not above might be answered in forums or in tool tips of the mod menu.
 - Feedback on: Github, Discord links on this page (right side).
@@ -68,7 +66,7 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 
 </LongDescription>
 <!--Thumbnail-->
-<Thumbnail Value="Properties/Thumbnail-All01.jpg" />
+<Thumbnail Value="Properties/Thumbnail-ALL01.jpg" />
 <!--Screenshot, can be set multiple times-->
 <Screenshot Value="Properties/image10-Transit.jpg" />
 <Screenshot Value="Properties/image15-Before-After.jpg" />
@@ -76,7 +74,6 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <Screenshot Value="Properties/image21-Oil-Fish.jpg" />
 <Screenshot Value="Properties/image30-TruckCompatibility.jpg" />
 <Screenshot Value="Properties/image35-IndustryTrucks.jpg" />
-<Screenshot Value="Properties/image40-Maintenance.jpg" />
 <!--Tag, can be set multiple times-->
 <Tag Value="Code Mod" />
 <!--Link to the forum post where the mod can be discussed-->
@@ -89,6 +86,7 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <Dependency Id="" />
 <!-- Change log for new version. Single line or multi line. Supports minimal markdown subset -->
 <ChangeLog>
+- Park maintenance, road maintenance, and lane wear moved to the separate Parks, Roads &amp; Lane Wear mod.
 - Added Service / Fuel Range adjusters for Bus, Train, Tram, Subway. 
 - Added Dutch (nl-NL) translation. Updated all translation files for tooltips clarity.
 - recent important: Industry Compatibility truck toggle [x]. If using another mod for ↑ total trucks, you can toggle this off.

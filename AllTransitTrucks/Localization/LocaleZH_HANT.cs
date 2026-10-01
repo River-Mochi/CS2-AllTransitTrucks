@@ -1,9 +1,9 @@
 // <copyright file="LocaleZH_HANT.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Localization/LocaleZH_HANT.cs
@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleZH_HANT : IDictionarySource
+    public class LocaleZH_HANT : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "大眾運輸" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "工業" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "公園-道路" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "關於" },
 
                 // --------------------
@@ -285,69 +284,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "將貨運站、採集設施、倉庫與工業滑桿重設為 **1×**（原版值）。\n" +
                     "公司卡車控制開關會保持所選的開啟或關閉狀態。" },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "公園維護" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "工作班次容量" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "**工作班次容量**（車輛容量）的倍率。\n" +
-                    "卡車在返回建築前可完成的總工作量。\n" +
-                    "可以理解為：補給更多 = 在外工作更久。" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "車輛工作速率" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "**車輛工作速率**的倍率。\n" +
-                    "速率 = 車輛停下時每個模擬 tick 完成的工作量。" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "車庫車隊規模" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "車庫建築**最大車輛數**的倍率。\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "重設公園維護" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "將所有數值重設回 **100%**（遊戲預設值 / 原版）。" },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "道路維護" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "車庫車隊規模" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "每棟建築**車庫最大車輛數**的倍率。\n" +
-                    "越高 = 卡車越多。\n" +
-                    "<平衡說明：太少或太多都可能傷害交通。>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "工作班次容量" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "**工作班次容量**的倍率。\n" +
-                    "卡車在返回車庫前可完成的總工作量。\n" +
-                    "**越高 = 返回主建築次數越少。** 效率更高。" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "修理速率" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "速率 = 車輛停下時每個模擬 tick 完成的工作量。\n" +
-                    "即使在最高速率下，卡車仍會短暫停車再前進；只是每次停車完成更多工作。\n" +
-                    "原版中，一次停車不一定能把道路修到 100%，所以這個功能會隨時間推移變得更有幫助。\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "道路磨損" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<測試功能>\n" +
-                    "控制道路因**時間與交通**因素而劣化的速度。\n" +
-                    "**10%** = 磨損速度慢 10×（所需維修更少）\n" +
-                    "**100%** = 原版\n" +
-                    "**500%** = 損壞速度快 5×（需要更多維修/卡車）\n" +
-                    "遊戲內運作方式：\n" +
-                    "如果 m_Wear <= 2.5，則無減速。\n" +
-                    "如果 m_Wear >= 17.5，則達到最大懲罰，車輛在道路上速度會降低 50%。\n" +
-                    "查看道路資訊檢視：嚴重損壞的道路會顯示為紅色，並減慢車輛速度。"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "重設道路維護" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "將所有數值恢復到 **100%**（遊戲預設值 / 原版）。" },
 
                 // -------------------
                 // About tab

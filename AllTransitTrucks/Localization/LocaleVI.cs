@@ -1,9 +1,9 @@
 // <copyright file="LocaleVI.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Localization/LocaleVI.cs
@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleVI : IDictionarySource
+    public class LocaleVI : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Giao thông công cộng" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Công nghiệp" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Công viên - Đường" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "Giới thiệu" },
 
                 // --------------------
@@ -285,69 +284,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "Đưa các thanh trượt ga hàng hóa, khai thác, kho và công nghiệp về **1×** (giá trị vanilla).\n" +
                     "Nút điều khiển xe tải công ty giữ nguyên BẬT hoặc TẮT như đã chọn." },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Bảo trì công viên" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Sức chứa ca làm" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "Tăng/giảm **sức chứa ca làm** (sức chứa xe).\n" +
-                    "Tổng lượng việc xe có thể làm trước khi quay về tòa nhà.\n" +
-                    "Hiểu đơn giản: nhiều vật tư hơn = ở ngoài lâu hơn." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Tốc độ làm việc" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "Tăng/giảm **tốc độ làm việc của xe**.\n" +
-                    "**Tốc độ** = lượng việc xe làm mỗi tick mô phỏng khi đang dừng." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Kích thước đội xe depot" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "Số **xe tối đa** mà depot cho phép.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Đặt lại bảo trì công viên" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "Đưa tất cả giá trị về **100%** (mặc định của game / vanilla)." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Bảo trì đường" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Kích thước đội xe depot" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "Hệ số cho **số xe tối đa của depot** trên mỗi tòa nhà.\n" +
-                    "Cao hơn = nhiều xe tải hơn.\n" +
-                    "<Ghi chú cân bằng: quá ít hoặc quá nhiều đều có thể làm giao thông tệ hơn.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Sức chứa ca làm" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "Tăng/giảm **sức chứa ca làm**.\n" +
-                    "Tổng lượng việc xe có thể làm trước khi quay về depot.\n" +
-                    "**Cao hơn = ít quay về** tòa nhà chính hơn, hiệu quả hơn." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Tốc độ sửa chữa" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "**Tốc độ** = lượng việc xe làm mỗi tick mô phỏng khi đang dừng.\n" +
-                    "Xe vẫn dừng-rồi-đi rất nhanh ngay cả ở mức cao nhất; chỉ là mỗi lần dừng làm được nhiều việc hơn.\n" +
-                    "Trong vanilla, một lần dừng không nhất thiết sửa đường về 100%; vì vậy tính năng này hiệu quả hơn theo thời gian.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Độ mòn đường" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Tính năng beta>\n" +
-                    "Điều khiển tốc độ đường xuống cấp do **thời gian và giao thông**.\n" +
-                    "**10%** = mòn chậm hơn 10× (ít cần sửa hơn)\n" +
-                    "**100%** = vanilla\n" +
-                    "**500%** = hư hại nhanh hơn 5× (cần nhiều sửa chữa/xe tải hơn)\n" +
-                    "Cách hoạt động trong game:\n" +
-                    "Nếu m_Wear <= 2.5, không bị chậm.\n" +
-                    "Nếu m_Wear >= 17.5, phạt tối đa, xe chạy chậm hơn 50% trên đường.\n" +
-                    "Xem Roads Infoview: hiển thị màu đỏ trên đường hư nặng làm xe chạy chậm."
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Đặt lại bảo trì đường" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "Đưa tất cả giá trị về **100%** (mặc định của game / vanilla)." },
 
                 // -------------------
                 // About tab

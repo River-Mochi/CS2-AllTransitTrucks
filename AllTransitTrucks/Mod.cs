@@ -1,9 +1,9 @@
 // <copyright file="Mod.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Mod.cs
@@ -29,6 +29,14 @@ namespace PublicWorksPlus
         public const string ModId = "AllTransitTrucks";
         public const string ModTag = "[ATT]";
 
+#if DEBUG
+        private const string kBuildType = "DEBUG";
+#else
+        private const string kBuildType = "RELEASE";
+#endif
+
+        public static string BuildDisplayName => kBuildType == "RELEASE" ? "Release" : "Debug";
+
         public static readonly string ModVersion =
             Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
 
@@ -46,7 +54,7 @@ namespace PublicWorksPlus
             if (!s_BannerLogged)
             {
                 s_BannerLogged = true;
-                LogUtils.Info(s_Log, () => $"{ModName} v{ModVersion} Loaded.");
+                LogUtils.Info(s_Log, () => $"{ModName} {ModTag} v{ModVersion} [{kBuildType}] OnLoad");
             }
 
             // Locales need the same settings instance used by Options.
@@ -92,8 +100,6 @@ namespace PublicWorksPlus
 
             updateSystem.UpdateAfter<TransitSystem>(SystemUpdatePhase.PrefabUpdate);
             updateSystem.UpdateAfter<TransitServiceRangeSystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateAfter<MaintenanceSystem>(SystemUpdatePhase.PrefabUpdate);
-            updateSystem.UpdateAfter<LaneWearSystem>(SystemUpdatePhase.PrefabUpdate);
 
 
             // Rebuild DeliveryTruckSelectData from ATT's updated prefab capacities.
@@ -106,7 +112,6 @@ namespace PublicWorksPlus
 
 #if DEBUG
             updateSystem.UpdateAt<DeliveryCargoProbeSystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAt<LaneWearProbeSystem>(SystemUpdatePhase.GameSimulation);
 #endif
         }
 

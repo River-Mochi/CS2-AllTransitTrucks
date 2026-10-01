@@ -1,9 +1,9 @@
 // <copyright file="LocaleNL.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Localization/LocaleNL.cs
@@ -14,7 +14,7 @@ namespace PublicWorksPlus
     using System.Collections.Generic;
     using Colossal;
 
-    public sealed class LocaleNL : IDictionarySource
+    public class LocaleNL : IDictionarySource
     {
         private readonly ATTSettings m_Setting;
 
@@ -45,7 +45,6 @@ namespace PublicWorksPlus
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Openbaar vervoer" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.IndustryTab),      "Industrie" },
-                { m_Setting.GetOptionTabLocaleID(ATTSettings.ParksRoadsTab),    "Parken-Wegen" },
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.AboutTab),         "Over" },
 
                 // --------------------
@@ -285,70 +284,6 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetCargoStationsToVanillaButton)),
                     "Zet vrachtstations, winningsbedrijven, magazijnen en industrie terug op **1×** (vanilla waarden).\n" +
                     "De schakelaar voor bedrijfstrucks blijft AAN of UIT zoals gekozen." },
-
-                // -------------------
-                // Parks-Roads
-                // -------------------
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.ParkMaintenanceGroup), "Parkonderhoud" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)), "Werkcapaciteit" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleCapacityScalar)),
-                    "Schaalt de **werkcapaciteit** van het voertuig.\n" +
-                    "Totale hoeveelheid werk die een truck kan doen voordat hij terugkeert naar het gebouw.\n" +
-                    "Denk aan: extra voorraden = langer op pad." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)), "Werksnelheid" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceVehicleRateScalar)),
-                    "Schaalt de **werksnelheid van het voertuig**.\n" +
-                    "**Snelheid** = hoeveel werk het per simulatietick doet terwijl het stilstaat." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)), "Depotvloot" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ParkMaintenanceDepotScalar)),
-                    "Maximaal toegestaan aantal voertuigen in het **depotgebouw**.\n" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)), "Parkonderhoud resetten" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetParkMaintenanceToVanillaButton)),
-                    "Zet alle waarden terug op **100%** (gamestandaard / vanilla)." },
-
-                { m_Setting.GetOptionGroupLocaleID(ATTSettings.RoadMaintenanceGroup), "Wegenonderhoud" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)), "Depotvloot" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceDepotScalar)),
-                    "Vermenigvuldigt het **maximum aantal depotvoertuigen** per gebouw.\n" +
-                    "Hoger = meer trucks.\n" +
-                    "<Balans: te weinig of te veel trucks kan het verkeer verslechteren.>" },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)), "Werkcapaciteit" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleCapacityScalar)),
-                    "Schaalt de **werkcapaciteit**.\n" +
-                    "Totale hoeveelheid werk die een truck kan doen voordat hij terugkeert naar het depot.\n" +
-                    "**Hoger = minder terugritten** naar het hoofdgebouw en efficiënter." },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)), "Reparatiesnelheid" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadMaintenanceVehicleRateScalar)),
-                    "**Snelheid** = hoeveel werk het voertuig per simulatietick doet terwijl het stilstaat.\n" +
-                    "Trucks stoppen nog steeds kort, zelfs op de hoogste waarde; ze doen gewoon meer werk per stop.\n" +
-                    "In vanilla herstelt één stop de weg niet altijd tot 100%; daarom wordt het effect duidelijker na verloop van tijd.\n"
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.RoadWearScalar)), "Wegslijtage" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.RoadWearScalar)),
-                    "<Bètafunctie>\n" +
-                    "Bepaalt hoe snel wegen slijten door **tijd en verkeer**.\n" +
-                    "**10%** = 10× langzamere slijtage (minder reparaties nodig)\n" +
-                    "**100%** = vanilla\n" +
-                    "**500%** = 5× snellere schade (meer reparaties/trucks nodig)\n" +
-                    "Zo werkt het in de game:\n" +
-                    "Als m_Wear <= 2.5, geen vertraging.\n" +
-                    "Als m_Wear >= 17.5, maximale straf: voertuigen rijden 50% langzamer op wegen.\n" +
-                    "Bekijk de wegen-infoweergave: zwaar beschadigde wegen die voertuigen vertragen worden rood weergegeven."
-
-                },
-
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)), "Wegenonderhoud resetten" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ResetRoadMaintenanceToVanillaButton)),
-                    "Zet alle waarden terug op **100%** (gamestandaard / vanilla)." },
 
                 // -------------------
                 // About tab

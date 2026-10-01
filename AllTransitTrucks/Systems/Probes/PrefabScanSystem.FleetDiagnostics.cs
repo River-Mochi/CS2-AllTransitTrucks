@@ -1,9 +1,9 @@
 // <copyright file="PrefabScanSystem.FleetDiagnostics.cs" company="River-Mochi">
 // Copyright (c) 2026 River-Mochi. All rights reserved.
-// Licensed under the MIT License. You may not use this file except in compliance with this License.
-// See LICENSE file in the project root for full license information.
-// This notice and the MIT License notice must be kept with
-// all copies or substantial portions of this code.
+// Licensed under the GNU General Public License v3.0 or later,
+// with the Cities: Skylines II Linking Exception.
+// See LICENSE and LICENSE-EXCEPTION in the project root.
+// This notice MUST be kept with copies or substantial portions of this code.
 // ================= </copyright> ======================
 
 // File: Systems/Probes/PrefabScanSystem.FleetDiagnostics.cs
@@ -12,9 +12,7 @@
 namespace PublicWorksPlus
 {
     using System.Text;
-    using Game.Companies;
     using Game.Prefabs;
-    using Unity.Collections;
     using Unity.Entities;
 
     public sealed partial class PrefabScanSystem
@@ -136,8 +134,8 @@ namespace PublicWorksPlus
                     Game.Prefabs.PrefabData>()
                 .Build();
 
-            using NativeArray<Entity> entities =
-                query.ToEntityArray(Allocator.Temp);
+            using global::Unity.Collections.NativeArray<Entity> entities =
+                query.ToEntityArray(global::Unity.Collections.Allocator.Temp);
 
             for (int i = 0; i < entities.Length; i++)
             {
@@ -145,8 +143,8 @@ namespace PublicWorksPlus
                     break;
 
                 Entity entity = entities[i];
-                TransportCompanyData company =
-                    EntityManager.GetComponentData<TransportCompanyData>(entity);
+                global::Game.Companies.TransportCompanyData company =
+                    EntityManager.GetComponentData<global::Game.Companies.TransportCompanyData>(entity);
 
                 int vanillaMax = company.m_MaxTransports;
                 if (PrefabComponentUtil.TryGetComponent(
@@ -203,8 +201,8 @@ namespace PublicWorksPlus
                 .WithNone<Game.Prefabs.OutsideConnectionData>()
                 .Build();
 
-            using NativeArray<Entity> entities =
-                query.ToEntityArray(Allocator.Temp);
+            using global::Unity.Collections.NativeArray<Entity> entities =
+                query.ToEntityArray(global::Unity.Collections.Allocator.Temp);
 
             for (int i = 0; i < entities.Length; i++)
             {
@@ -212,8 +210,8 @@ namespace PublicWorksPlus
                     break;
 
                 Entity entity = entities[i];
-                TransportCompanyData company =
-                    EntityManager.GetComponentData<TransportCompanyData>(entity);
+                global::Game.Companies.TransportCompanyData company =
+                    EntityManager.GetComponentData<global::Game.Companies.TransportCompanyData>(entity);
                 StorageCompanyData storage =
                     EntityManager.GetComponentData<StorageCompanyData>(entity);
 
@@ -274,8 +272,8 @@ namespace PublicWorksPlus
                 .WithNone<Game.Companies.ServiceCompanyData>()
                 .Build();
 
-            using NativeArray<Entity> entities =
-                query.ToEntityArray(Allocator.Temp);
+            using global::Unity.Collections.NativeArray<Entity> entities =
+                query.ToEntityArray(global::Unity.Collections.Allocator.Temp);
 
             int included = 0;
             int skippedOffice = 0;
@@ -286,8 +284,8 @@ namespace PublicWorksPlus
                     break;
 
                 Entity entity = entities[i];
-                TransportCompanyData company =
-                    EntityManager.GetComponentData<TransportCompanyData>(entity);
+                global::Game.Companies.TransportCompanyData company =
+                    EntityManager.GetComponentData<global::Game.Companies.TransportCompanyData>(entity);
                 IndustrialProcessData process =
                     EntityManager.GetComponentData<IndustrialProcessData>(entity);
 

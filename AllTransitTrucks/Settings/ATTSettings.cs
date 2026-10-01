@@ -282,6 +282,7 @@ namespace PublicWorksPlus
         }
 #endif
 
+        [SettingsUIButtonGroup(DebugGroup)]
         [SettingsUIButton]
         [SettingsUISection(AboutTab, DebugGroup)]
         public bool OpenLogButton

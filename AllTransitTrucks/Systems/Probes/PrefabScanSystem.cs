@@ -114,7 +114,7 @@ namespace PublicWorksPlus
             }
 
             global::Game.SceneFlow.GameManager gm = global::Game.SceneFlow.GameManager.instance;
-            if (gm == null || !gm.gameMode.IsGame())
+            if (gm == null || (gm.gameMode & global::Game.GameMode.Game) != global::Game.GameMode.Game)
             {
                 PrefabScanState.MarkFailed(PrefabScanState.FailCode.NoCityLoaded, null);
                 Enabled = false;

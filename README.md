@@ -71,4 +71,4 @@ The live delivery cargo section is a **one-time snapshot**, not a long-running a
 - Support Discord: https://discord.gg/gwXgvtyhjc
 
 ## License
-MIT
+GPL-3.0-or-later with the Cities: Skylines II Linking Exception.

@@ -136,8 +136,8 @@ namespace PublicWorksPlus
                     Game.Prefabs.PrefabData>()
                 .Build();
 
-            using NativeArray<Entity> entities =
-                query.ToEntityArray(Allocator.Temp);
+            using global::Unity.Collections.NativeArray<Entity> entities =
+                query.ToEntityArray(global::Unity.Collections.Allocator.Temp);
 
             for (int i = 0; i < entities.Length; i++)
             {
@@ -203,8 +203,8 @@ namespace PublicWorksPlus
                 .WithNone<Game.Prefabs.OutsideConnectionData>()
                 .Build();
 
-            using NativeArray<Entity> entities =
-                query.ToEntityArray(Allocator.Temp);
+            using global::Unity.Collections.NativeArray<Entity> entities =
+                query.ToEntityArray(global::Unity.Collections.Allocator.Temp);
 
             for (int i = 0; i < entities.Length; i++)
             {
@@ -274,8 +274,8 @@ namespace PublicWorksPlus
                 .WithNone<Game.Companies.ServiceCompanyData>()
                 .Build();
 
-            using NativeArray<Entity> entities =
-                query.ToEntityArray(Allocator.Temp);
+            using global::Unity.Collections.NativeArray<Entity> entities =
+                query.ToEntityArray(global::Unity.Collections.Allocator.Temp);
 
             int included = 0;
             int skippedOffice = 0;

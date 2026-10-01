@@ -17,8 +17,8 @@
 namespace PublicWorksPlus
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
+    // using System.Collections.Generic;
+    // using System.Diagnostics;
     using System.IO;
     using System.Text;
     using Colossal.PSI.Environment;
@@ -28,8 +28,8 @@ namespace PublicWorksPlus
     using Game.Economy;
     using Game.Net;
     using Game.Prefabs;
-    using Game.Routes;
-    using Game.SceneFlow;
+    // using Game.Routes;
+    // using Game.SceneFlow;
     using Unity.Collections;
     using Unity.Entities;
 
@@ -86,7 +86,8 @@ namespace PublicWorksPlus
             int globalMaxAmount = 0;
             string globalMaxPrefabName = string.Empty;
 
-            using (NativeArray<Entity> entities = q.ToEntityArray(Allocator.Temp))
+            using (global::Unity.Collections.NativeArray<Entity> entities =
+                   q.ToEntityArray(global::Unity.Collections.Allocator.Temp))
             {
                 for (int i = 0; i < entities.Length; i++)
                 {

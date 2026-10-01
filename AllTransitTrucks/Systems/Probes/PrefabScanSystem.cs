@@ -21,11 +21,11 @@ namespace PublicWorksPlus
     using CS2Shared.RiverMochi;
     using Game;
     using Game.Companies;
-    using Game.Net;
+    // using Game.Net;
     using Game.Prefabs;
     using Game.Routes;
     using Game.SceneFlow;
-    using Unity.Collections;
+    // using Unity.Collections;
     using Unity.Entities;
 
     public sealed partial class PrefabScanSystem : GameSystemBase
@@ -133,7 +133,6 @@ namespace PublicWorksPlus
             int keywordMatches = 0;
             int extractorCompanies = 0;
             int deliveryTotal = 0;
-            int depotTotal = 0;
             int cargoTotal = 0;
 
             try

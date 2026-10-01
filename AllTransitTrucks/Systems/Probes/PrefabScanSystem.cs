@@ -16,15 +16,11 @@ namespace PublicWorksPlus
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Text;
-    using CS2Shared.RiverMochi;
     using Game;
-    using Game.Companies;
     // using Game.Net;
     using Game.Prefabs;
     using Game.Routes;
-    using Game.SceneFlow;
     // using Unity.Collections;
     using Unity.Entities;
 
@@ -117,7 +113,7 @@ namespace PublicWorksPlus
                 return;
             }
 
-            GameManager gm = GameManager.instance;
+            global::Game.SceneFlow.GameManager gm = global::Game.SceneFlow.GameManager.instance;
             if (gm == null || !gm.gameMode.IsGame())
             {
                 PrefabScanState.MarkFailed(PrefabScanState.FailCode.NoCityLoaded, null);
@@ -127,7 +123,7 @@ namespace PublicWorksPlus
 
             PrefabScanState.MarkRunning();
 
-            Stopwatch sw = Stopwatch.StartNew();
+            global::System.Diagnostics.Stopwatch sw = global::System.Diagnostics.Stopwatch.StartNew();
 
             int transitLinePrefabTotal = 0;
             int keywordMatches = 0;
@@ -150,7 +146,7 @@ namespace PublicWorksPlus
 
                 // Header
                 Append($"Prefab Scan Report for: {Mod.ModName} {Mod.ModVersion}");
-                Append($"Timestamp (local): {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                Append($"Timestamp (local): {(global::System.DateTime.Now):yyyy-MM-dd HH:mm:ss}");
                 Append("");
 
                 AppendATTSettingsSnapshot(sb, ref lines, ref truncated);
@@ -160,7 +156,7 @@ namespace PublicWorksPlus
                 Append("Vehicle targets are based on route time estimate (segment durations + stop count).");
                 Append("");
 
-                Dictionary<TransportType, TransitDefaultsStats> perType = new();
+                global::System.Collections.Generic.Dictionary<TransportType, TransitDefaultsStats> perType = new();
 
                 foreach ((RefRO<TransportLineData> lineRef, Entity entity) in SystemAPI
                              .Query<RefRO<TransportLineData>>()
@@ -194,7 +190,7 @@ namespace PublicWorksPlus
                 }
                 else
                 {
-                    foreach (KeyValuePair<TransportType, TransitDefaultsStats> kvp in perType)
+                    foreach (global::System.Collections.Generic.KeyValuePair<TransportType, TransitDefaultsStats> kvp in perType)
                     {
                         TransportType type = kvp.Key;
                         TransitDefaultsStats s2 = kvp.Value;
@@ -237,7 +233,7 @@ namespace PublicWorksPlus
                         for (int i = 0; i < buf.Length; i++)
                         {
                             RouteModifierData item = buf[i];
-                            if (item.m_Type != RouteModifierType.VehicleInterval)
+                            if (item.m_Type != global::Game.Routes.RouteModifierType.VehicleInterval)
                                 continue;
 
                             foundVehicleInterval = true;
@@ -405,15 +401,15 @@ namespace PublicWorksPlus
 
                 // Cargo stations
                 Append("== Cargo Transport Stations (CargoTransportStationData + TransportCompanyData) ==");
-                foreach ((RefRO<TransportCompanyData> tcRef, Entity e) in SystemAPI
-                             .Query<RefRO<TransportCompanyData>>()
+                foreach ((RefRO<global::Game.Companies.TransportCompanyData> tcRef, Entity e) in SystemAPI
+                             .Query<RefRO<global::Game.Companies.TransportCompanyData>>()
                              .WithAll<CargoTransportStationData, PrefabData>()
                              .WithEntityAccess())
                 {
                     if (truncated) break;
 
                     cargoTotal++;
-                    TransportCompanyData tc = tcRef.ValueRO;
+                    global::Game.Companies.TransportCompanyData tc = tcRef.ValueRO;
 
                     int vanillaMax = tc.m_MaxTransports;
                     if (m_PrefabSystem.TryGetPrefab(e, out PrefabBase pb) &&
@@ -483,19 +479,19 @@ namespace PublicWorksPlus
 
                 PrefabScanState.MarkDone(sw.Elapsed, reportPath);
 
-                LogUtils.Info(Mod.s_Log, () => $"{Mod.ModTag} Prefab scan done in {sw.Elapsed.TotalSeconds:0.0}s. Report: {reportPath}");
-                LogUtils.Info(
+                global::CS2Shared.RiverMochi.LogUtils.Info(Mod.s_Log, () => $"{Mod.ModTag} Prefab scan done in {sw.Elapsed.TotalSeconds:0.0}s. Report: {reportPath}");
+                global::CS2Shared.RiverMochi.LogUtils.Info(
                     Mod.s_Log,
                     () =>
                     $"{Mod.ModTag} PrefabScan counts (prefab entities): " +
                     $"TransitLines={transitLinePrefabTotal}, DeliveryTrucks={deliveryTotal}, " +
                     $"CargoStations={cargoTotal}, ExtractorCompanies={extractorCompanies}, KeywordHits={keywordMatches}");
             }
-            catch (Exception ex)
+            catch (global::System.Exception ex)
             {
                 sw.Stop();
                 PrefabScanState.MarkFailed(PrefabScanState.FailCode.Exception, $"{ex.GetType().Name}: {ex.Message}");
-                LogUtils.Warn(Mod.s_Log, () => $"{Mod.ModTag} Prefab scan failed: {ex.GetType().Name}: {ex.Message}");
+                global::CS2Shared.RiverMochi.LogUtils.Warn(Mod.s_Log, () => $"{Mod.ModTag} Prefab scan failed: {ex.GetType().Name}: {ex.Message}");
             }
 
             Enabled = false;

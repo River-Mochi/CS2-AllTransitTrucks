@@ -12,9 +12,7 @@
 namespace PublicWorksPlus
 {
     using System.Text;
-    using Game.Companies;
     using Game.Prefabs;
-    using Unity.Collections;
     using Unity.Entities;
 
     public sealed partial class PrefabScanSystem
@@ -145,8 +143,8 @@ namespace PublicWorksPlus
                     break;
 
                 Entity entity = entities[i];
-                TransportCompanyData company =
-                    EntityManager.GetComponentData<TransportCompanyData>(entity);
+                global::Game.Companies.TransportCompanyData company =
+                    EntityManager.GetComponentData<global::Game.Companies.TransportCompanyData>(entity);
 
                 int vanillaMax = company.m_MaxTransports;
                 if (PrefabComponentUtil.TryGetComponent(
@@ -212,8 +210,8 @@ namespace PublicWorksPlus
                     break;
 
                 Entity entity = entities[i];
-                TransportCompanyData company =
-                    EntityManager.GetComponentData<TransportCompanyData>(entity);
+                global::Game.Companies.TransportCompanyData company =
+                    EntityManager.GetComponentData<global::Game.Companies.TransportCompanyData>(entity);
                 StorageCompanyData storage =
                     EntityManager.GetComponentData<StorageCompanyData>(entity);
 
@@ -286,8 +284,8 @@ namespace PublicWorksPlus
                     break;
 
                 Entity entity = entities[i];
-                TransportCompanyData company =
-                    EntityManager.GetComponentData<TransportCompanyData>(entity);
+                global::Game.Companies.TransportCompanyData company =
+                    EntityManager.GetComponentData<global::Game.Companies.TransportCompanyData>(entity);
                 IndustrialProcessData process =
                     EntityManager.GetComponentData<IndustrialProcessData>(entity);
 

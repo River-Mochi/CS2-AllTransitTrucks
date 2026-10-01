@@ -29,6 +29,14 @@ namespace PublicWorksPlus
         public const string ModId = "AllTransitTrucks";
         public const string ModTag = "[ATT]";
 
+#if DEBUG
+        private const string kBuildType = "DEBUG";
+#else
+        private const string kBuildType = "RELEASE";
+#endif
+
+        public static string BuildDisplayName => kBuildType == "RELEASE" ? "Release" : "Debug";
+
         public static readonly string ModVersion =
             Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
 
@@ -46,7 +54,7 @@ namespace PublicWorksPlus
             if (!s_BannerLogged)
             {
                 s_BannerLogged = true;
-                LogUtils.Info(s_Log, () => $"{ModName} v{ModVersion} Loaded.");
+                LogUtils.Info(s_Log, () => $"{ModName} {ModTag} v{ModVersion} [{kBuildType}] OnLoad");
             }
 
             // Locales need the same settings instance used by Options.

@@ -165,7 +165,7 @@ namespace PublicWorksPlus
         public string ModNameDisplay => $"{Mod.ModName} {Mod.ModTag}";
 
         [SettingsUISection(AboutTab, AboutInfoGroup)]
-        public string ModVersionDisplay => Mod.ModVersion;
+        public string ModVersionDisplay => $"{Mod.ModVersion} {Mod.BuildDisplayName}";
 
         [SettingsUIButtonGroup(AboutLinksGroup)]
         [SettingsUIButton]

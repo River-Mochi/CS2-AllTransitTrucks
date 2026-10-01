@@ -27,20 +27,13 @@ namespace PublicWorksPlus
             IList<IDictionaryEntryError> errors,
             Dictionary<string, int> indexCounts)
         {
-            string title = Mod.ShortName;
-
-            if (!string.IsNullOrEmpty(Mod.ModVersion))
-            {
-                title = title + " (" + Mod.ModVersion + ")";
-            }
-
             return new Dictionary<string, string>
             {
                 // --------------------------
                 // Mod title / tabs / groups
                 // --------------------------
 
-                { m_Setting.GetSettingsLocaleID(), title },
+                { m_Setting.GetSettingsLocaleID(), Mod.ShortName },
 
                 // Tabs (match ATTSettings.cs tab ids)
                 { m_Setting.GetOptionTabLocaleID(ATTSettings.PublicTransitTab), "Public-Transit" },
@@ -302,7 +295,7 @@ namespace PublicWorksPlus
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModNameDisplay)), "Display name of this mod." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Version" },
-                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Current mod version." },
+                { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.ModVersionDisplay)), "Current mod version and build type." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenParadoxMods)), "Paradox" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenParadoxMods)), "Open Paradox Mods website for the author's mods." },
@@ -328,10 +321,11 @@ namespace PublicWorksPlus
                     "**Disable** for normal gameplay.\n" +
                     "<This only increases logging and does not change gameplay values.>" },
 
-                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenLogButton)), "Open log folder" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenLogButton)), "Open log" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenLogButton)),
-                    "Open the logs folder.\n" +
-                    "Next: open <AllTransitTrucks.log> with your text editor (Notepad++ recommended)." },
+                    "Open <Logs/AllTransitTrucks.log>, or the Logs folder if the file does not exist yet.\n" +
+                    "Notepad++ can be used to view log files."
+                },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(ATTSettings.OpenReportButton)), "Open report folder" },
                 { m_Setting.GetOptionDescLocaleID(nameof(ATTSettings.OpenReportButton)),

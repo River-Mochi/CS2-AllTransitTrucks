@@ -11,8 +11,6 @@
 
 namespace PublicWorksPlus
 {
-    using Game;              // IsGame
-    using Game.SceneFlow;    // GameManager
     using Game.Settings;     // Settings UI attributes
     using Game.UI;           // Unit
 
@@ -31,12 +29,6 @@ namespace PublicWorksPlus
 
                 m_EnableLineVehicleCountTuner = value;
 
-                // No auto-save on toggles. Apply immediately when a city is loaded.
-                GameManager gm = GameManager.instance;
-                if (gm != null && gm.gameMode.IsGame())
-                {
-                    Apply();
-                }
             }
         }
 

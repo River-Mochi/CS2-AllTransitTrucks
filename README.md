@@ -40,7 +40,7 @@ Available on the About tab:
 - Open log/report folders
 
 ## Notes
-- Park maintenance, road maintenance, and lane wear are now in a separate mod in **Parks, Roads & Lane Wear**. See [River-Mochi's Paradox Mods page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
+- Park maintenance, road maintenance, and lane wear are now in a separate mod called **Parks, Roads + Lane Wear**. See [River-Mochi's Paradox Mods page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
 - Remove **Adjust Transit Capacity** before using this mod; its features are included here.
 - Settings apply while a city is loaded—no restart is required.
 - Avoid other mods that change the same capacities or policies, because one mod may overwrite another.

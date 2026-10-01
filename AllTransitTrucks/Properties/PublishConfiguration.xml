@@ -42,21 +42,22 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 
 
 ### Support and feedback
-- Park maintenance, road maintenance, and lane wear moved to the separate **Parks, Roads &amp; Lane Wear** mod. Find it on [River-Mochi's Paradox Mods page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
-- please don't forget to give it a Like button (top right).
-- All details not above might be answered in forums or in tool tips of the mod menu.
-- Feedback on: Github, Discord links on this page (right side).
+- Parks + Road Repairs + Lane wear moved to the separate **Parks, Roads + Lane Wear** mod. Find it on [River-Mochi's Paradox page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
+- Support by clicking Like 👍 (top right). No donations requested.
+- Feedback and PRs welcome through the GitHub and Discord links (icons on the right).
+- All details not above might be answered in forums or in tooltips of mod Options meu.
+
 
 ### Credits
 - River-Mochi: author
 - yenyang: code review and testing.
 - The Transit section is inspired by Wayz's original Depot Capacity Changer.
-- Nukprach, BugsyG, Necko1996: testing
+- MayorCheeks, Nukprach, BugsyG, Necko1996: testing
 
 ### Performance advantage
 Applies changes when you change Options, then goes idle; it does not run every frame to impact the city. Scan Report runs only when the report button is clicked.
 
-### 12+ Languages Supported
+### 15+ Languages Supported
 - Français, Deutsch, Español, Italiano, Nederlands, Polski
 - Português Brasileiro, Português (Portugal), Türkçe
 - 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt

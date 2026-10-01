@@ -55,6 +55,7 @@ namespace PublicWorksPlus
 
             EntityQuery q = SystemAPI.QueryBuilder()
                 .WithAll<Game.Vehicles.DeliveryTruck, PrefabRef>()
+                .WithNone<global::Game.Common.Deleted, global::Game.Tools.Temp>()
                 .Build();
 
             RequireForUpdate(q);
@@ -111,6 +112,7 @@ namespace PublicWorksPlus
 
             foreach ((RefRO<Game.Vehicles.DeliveryTruck> truckRef, RefRO<PrefabRef> prRef, Entity entity) in SystemAPI
                          .Query<RefRO<Game.Vehicles.DeliveryTruck>, RefRO<PrefabRef>>()
+                         .WithNone<global::Game.Common.Deleted, global::Game.Tools.Temp>()
                          .WithEntityAccess())
             {
                 scanned++;

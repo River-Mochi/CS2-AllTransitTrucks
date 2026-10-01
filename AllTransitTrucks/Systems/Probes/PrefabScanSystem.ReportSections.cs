@@ -59,6 +59,7 @@ namespace PublicWorksPlus
 
             EntityQuery q = SystemAPI.QueryBuilder()
                 .WithAll<Game.Vehicles.DeliveryTruck, PrefabRef>()
+                .WithNone<global::Game.Common.Deleted, global::Game.Tools.Temp>()
                 .Build();
 
             if (q.IsEmptyIgnoreFilter)

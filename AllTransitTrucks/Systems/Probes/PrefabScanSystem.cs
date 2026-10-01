@@ -293,6 +293,7 @@ namespace PublicWorksPlus
 
                 EntityQuery cargoStationWatchQuery = SystemAPI.QueryBuilder()
                     .WithAll<Game.Buildings.CargoTransportStation, PrefabRef>()
+                    .WithNone<global::Game.Common.Deleted, global::Game.Tools.Temp>()
                     .Build();
 
                 Append("== DeliveryTruckData Prefabs ==");

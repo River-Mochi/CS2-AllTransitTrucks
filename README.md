@@ -40,7 +40,7 @@ Available on the About tab:
 - Open log/report folders
 
 ## Notes
-- Park maintenance, road maintenance, and lane wear are now available separately in **Parks, Roads & Lane Wear**. Find it on [River-Mochi's Paradox Mods page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
+- Park maintenance, road maintenance, and lane wear are now in a separate mod in **Parks, Roads & Lane Wear**. See [River-Mochi's Paradox Mods page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
 - Remove **Adjust Transit Capacity** before using this mod; its features are included here.
 - Settings apply while a city is loaded—no restart is required.
 - Avoid other mods that change the same capacities or policies, because one mod may overwrite another.
@@ -63,7 +63,7 @@ The live delivery cargo section is a **one-time snapshot**, not a long-running a
 
 ## Credits
 - River-Mochi — author and maintainer
-- Inspired by Wayz’s original **Depot Capacity Changer**
+- Based in part on Wayz / Jacob Rice’s original **Depot Capacity Changer**, used under the MIT License
 
 ## Links
 - GitHub: https://github.com/River-Mochi/CS2-AllTransitTrucks
@@ -72,3 +72,5 @@ The live delivery cargo section is a **one-time snapshot**, not a long-running a
 
 ## License
 GPL-3.0-or-later with the Cities: Skylines II Linking Exception.
+
+Portions derived from the original **Depot Capacity Changer** remain available under their original MIT License. See `LICENSE-WAYZ-MIT`.

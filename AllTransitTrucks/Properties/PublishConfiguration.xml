@@ -45,7 +45,7 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 - Parks + Road Repairs + Lane wear moved to the separate **Parks, Roads + Lane Wear** mod. Find it on [River-Mochi's Paradox page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
 - Support by clicking Like 👍 (top right). No donations requested.
 - Feedback and PRs welcome through the GitHub and Discord links (icons on the right).
-- All details not above might be answered in forums or in tooltips of mod Options meu.
+- All details not above might be answered in forums or in tooltips of the mod Options meu.
 
 
 ### Credits
@@ -57,7 +57,7 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 ### Performance advantage
 Applies changes when you change Options, then goes idle; it does not run every frame to impact the city. Scan Report runs only when the report button is clicked.
 
-### 15+ Languages Supported
+### 16+ Languages Supported
 - Français, Deutsch, Español, Italiano, Nederlands, Polski
 - Português Brasileiro, Português (Portugal), Türkçe, ไทย, Українська
 - 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt

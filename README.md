@@ -50,8 +50,8 @@ Available on the About tab:
 - No Harmony patches used.
 - This mod applies changes when a city loads or when you change Options settings, then goes idle, no city impact for the best performance.
 
-## Languages (15)
-English, Nederlands, Français, Deutsch, Español, Italiano, Polski, Português (Brasil), Português (Portugal), Türkçe, 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt
+## Languages (17)
+English, Nederlands, Français, Deutsch, Español, Italiano, Polski, Português (Brasil), Português (Portugal), Türkçe, 한국어, 日本語, 简体中文, 繁體中文, Tiếng Việt, ไทย, Українська
 
 ## Transit Line Slider Notes
 The maximum vehicle count is not fixed. The game calculates it from route travel time, stops, traffic, and boarding delays. The same setting can therefore show different maximums in different cities or on different routes.

@@ -10,43 +10,37 @@
 <LongDescription>
 ### All Transit + Trucks (AT+T)
 
-### Do what you need reliably without UI bloat.
+- Adjust public transit, passengers, fuel range, industry trucks, and cargo — without adding extra in-city UI or bloat (every fps counts).
 
-- Scale many aspects for:
-- all Public Transit + Passengers (change total vehicles, capacity, service/fuel range).
-- Industry Delivery vehicles, Cargo stations, Extractors.
+### Public Transit
+- Transit lines: expand the in-game vehicle slider range (as low as 1 bus or higher 30-60).
+- Service / fuel range: increase how far they can travel before refueling (Bus, Train, Tram, Subway).
+- Passengers: change vehicle capacity
+- Depots: allow more vehicles per each depot.
 
-**Industry deliveries can use the increased vehicle capacities you set, including company shopping and road storage transfers.**
+### Industry + Cargo
+- Delivery capacity: Semi trucks, vans, raw material trucks, motorbikes
+- Total trucks: Cargo stations, extractors, warehouses, industry
+- Compatibility toggle if another mod also changes industry truck counts
 
-### Features
-- Transit Line adjuster: can allow as low as 1 bus or higher ~30-60 buses (tram, train, etc.).
-- **Industry Deliveries**: capacity of Semi trucks, delivery vans/motorbike, Raw material trucks (coal, oil...)
-- **Total vehicles per facility:** Extractors, warehouses, and industrial Processing (Fish, Oil, etc.).
-- *Cargo Stations*: max active trucks (harbor/train/airport)
-- **Industry compatibility toggle:** restores Extractor, Warehouse, and Industry fleets to vanilla.
-
-#### Public Transit
-
-- **Transit depots:** change max vehicles per depot (Bus, Ferry, Subway, Taxi, Tram, Train)
-- **Passengers:** change maximum seats (Bus, Tram, Train, Subway, Ship, Ferry, Airplane)
-- Includes the transit features from *Adjust Transit Capacity* (ATC).
 
 ### Notes 🚍🚋🚆✈️🚢
 - *Remove* "Adjust Transit Capacity" if you install this mod.
-- Avoid other depot/passenger capacity mods to avoid conflicts (they override each other).
-- No Harmony patch, more compatible - less likely to break on patch days.
-- Safe to remove any time (use Reset buttons to return to vanilla game default values).
-- ✅ Transit Line checkbox: Pick only one mod to adjust this - Don't use other mods that also adjust the in-game slider. There may be conflicts if you also have Transit Policy Adjuster or Smart transportation.
-If both are enabled, it's not going to explode, it may be inconsistent like two people changing the radio station.
-- How Transit lines is different: follows the game’s method (travel time + stops); you can have just 1 bus per line or ~30-60+ buses (see before/after screenshot).
+- No Harmony patch - less likely to break on patch days.
+- Safe to remove any time; use Reset buttons first if you want vanilla values restored.
 
+### Compatibility
+- ✅ Transit Line checkbox: Pick only one mod to adjust this. Conflicts with Transit Policy Adjuster.
+If both are enabled, it's not going to explode, it may be inconsistent and have weird numbers, like two people changing the radio station.
+You can disable the checkbox for this if you prefer to use Transit Policy from another mod, but prefer all other features in this mod.
 
 ### Support and feedback
-- Parks + Road Repairs + Lane wear moved to the separate **Parks, Roads + Lane Wear** mod. Find it on [River-Mochi's Paradox page](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
 - Support by clicking Like 👍 (top right). No donations requested.
-- Feedback and PRs welcome through the GitHub and Discord links (icons on the right).
+- Feedback and PRs welcome through GitHub and Discord (icons on the right).
 - All details not above might be answered in forums or in tooltips of the mod Options meu.
 
+### Parks + Roads
+- Parks and Road Repairs moved to a separate new mod [Parks, Roads + Lane Wear](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2).
 
 ### Credits
 - River-Mochi: author
@@ -55,7 +49,7 @@ If both are enabled, it's not going to explode, it may be inconsistent like two 
 - MayorCheeks, Nukprach, BugsyG, Necko1996: testing
 
 ### Performance advantage
-Applies changes when you change Options, then goes idle; it does not run every frame to impact the city. Scan Report runs only when the report button is clicked.
+Applies changes when needed, then goes idle. Scan Report only runs when clicked.
 
 ### 16+ Languages Supported
 - Français, Deutsch, Español, Italiano, Nederlands, Polski
@@ -71,10 +65,10 @@ delivery trucks vans, industry semi-trucks, cargo station depot capacity, Extrac
 <!--Screenshot, can be set multiple times-->
 <Screenshot Value="Properties/image10-Transit.jpg" />
 <Screenshot Value="Properties/image15-Before-After.jpg" />
-<Screenshot Value="Properties/image20-Passengers.jpg" />
+<Screenshot Value="Properties/image20-Fuel-Passengers.jpg" />
 <Screenshot Value="Properties/image21-Oil-Fish.jpg" />
-<Screenshot Value="Properties/image30-TruckCompatibility.jpg" />
 <Screenshot Value="Properties/image35-IndustryTrucks.jpg" />
+<Screenshot Value="Properties/image40-ShowIndustryTrucks.jpg" />
 <!--Tag, can be set multiple times-->
 <Tag Value="Code Mod" />
 <!--Link to the forum post where the mod can be discussed-->
